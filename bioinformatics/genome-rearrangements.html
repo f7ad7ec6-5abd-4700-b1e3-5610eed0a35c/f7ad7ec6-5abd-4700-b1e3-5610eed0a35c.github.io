@@ -1,0 +1,1348 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chapter 6: Genome Rearrangements</title>
+  <!-- SEO (generated) -->
+  <meta name="description" content="Measuring how far two genomes have been rearranged: reversals, breakpoints, and the graph in which every rearrangement becomes one operation.">
+  <link rel="canonical" href="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/bioinformatics/genome-rearrangements.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:title" content="Chapter 6: Genome Rearrangements">
+  <meta property="og:description" content="Measuring how far two genomes have been rearranged: reversals, breakpoints, and the graph in which every rearrangement becomes one operation.">
+  <meta property="og:url" content="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/bioinformatics/genome-rearrangements.html">
+  <meta property="og:locale" content="en_US">
+  <!-- /SEO -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</head>
+<body>
+  <script src="../nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>Chapter 6: Are There Fragile Regions in the Human Genome?</h1>
+    </header>
+
+    <p>
+      Chapters 1 to 5 compared sequences letter by letter. Over the distance separating a human from
+      a mouse that comparison stops working: the letters have changed too much, but whole blocks of
+      the genome are still recognisably the same, sitting in a different order. This chapter measures
+      the cost of that reordering, and uses the measurement to decide whether the places where
+      genomes break are spread at random or concentrated in a few fragile spots.
+    </p>
+
+    <h2>Synteny Blocks</h2>
+
+    <p>
+      Comparing a human genome with a mouse genome finds long stretches that carry the same genes in
+      the same internal order. Such a stretch is a <strong>synteny block</strong>. Between the two
+      species the blocks themselves are nearly intact, and what differs is the order they appear in
+      along the chromosome and the direction each one points.
+    </p>
+
+    <p>
+      A <strong>genome rearrangement</strong> is a mutation that cuts the chromosome and reassembles
+      the pieces in a different arrangement. These mutations are rare, and they are rare for a
+      reason: a cut that lands inside a gene destroys it, and an organism carrying a large
+      rearrangement is usually dead or sterile. What survives to be compared is the small remainder
+      that did no harm.
+    </p>
+
+    <p>
+      Writing each block as a number and its direction as a sign turns a genome into a
+      <strong>signed permutation</strong>, and turns the comparison of two genomes into a question
+      about permutations.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="394.2" height="168" viewBox="41.8 44 394.2 168">
+      <path class="fig-cell" d="M 118 56 L 154 56 L 164 68 L 154 80 L 118 80 Z"/>
+      <text class="fig-text fig-tick" x="141" y="73" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 170 56 L 206 56 L 216 68 L 206 80 L 170 80 Z"/>
+      <text class="fig-text fig-tick" x="193" y="73" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 222 56 L 258 56 L 268 68 L 258 80 L 222 80 Z"/>
+      <text class="fig-text fig-tick" x="245" y="73" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 274 56 L 310 56 L 320 68 L 310 80 L 274 80 Z"/>
+      <text class="fig-text fig-tick" x="297" y="73" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 326 56 L 362 56 L 372 68 L 362 80 L 326 80 Z"/>
+      <text class="fig-text fig-tick" x="349" y="73" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 378 56 L 414 56 L 424 68 L 414 80 L 378 80 Z"/>
+      <text class="fig-text fig-tick" x="401" y="73" text-anchor="middle">6</text>
+      <path class="fig-cell" d="M 118 176 L 154 176 L 164 188 L 154 200 L 118 200 Z"/>
+      <text class="fig-text fig-tick" x="141" y="193" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 216 176 L 180 176 L 170 188 L 180 200 L 216 200 Z"/>
+      <text class="fig-text fig-tick" x="193" y="193" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 222 176 L 258 176 L 268 188 L 258 200 L 222 200 Z"/>
+      <text class="fig-text fig-tick" x="245" y="193" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 274 176 L 310 176 L 320 188 L 310 200 L 274 200 Z"/>
+      <text class="fig-text fig-tick" x="297" y="193" text-anchor="middle">6</text>
+      <path class="fig-cell" d="M 372 176 L 336 176 L 326 188 L 336 200 L 372 200 Z"/>
+      <text class="fig-text fig-tick" x="349" y="193" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 378 176 L 414 176 L 424 188 L 414 200 L 378 200 Z"/>
+      <text class="fig-text fig-tick" x="401" y="193" text-anchor="middle">2</text>
+      <line class="fig-guide" x1="141" y1="84" x2="141" y2="172"/>
+      <line class="fig-guide" x1="297" y1="84" x2="193" y2="172"/>
+      <line class="fig-guide" x1="245" y1="84" x2="245" y2="172"/>
+      <line class="fig-guide" x1="401" y1="84" x2="297" y2="172"/>
+      <line class="fig-guide" x1="349" y1="84" x2="349" y2="172"/>
+      <line class="fig-guide" x1="193" y1="84" x2="401" y2="172"/>
+      <text class="fig-text fig-note" x="102" y="73" text-anchor="end">genome P</text>
+      <text class="fig-text fig-note" x="102" y="193" text-anchor="end">genome Q</text>
+      </svg>
+      <figcaption>Two genomes over the same six synteny blocks. A synteny block is a stretch of DNA that survives in both genomes with its internal order intact, so the two genomes differ only in the order of the blocks and the direction each one points. An arrow pointing left is a block that has been reversed. Everything in this chapter is about the cheapest way to turn the top row into the bottom one.</figcaption>
+    </figure>
+
+    <p>
+      <strong>Random Breakage Model.</strong> Proposed by Nadeau and Taylor in 1984: rearrangements
+      cut the chromosome at positions chosen uniformly at random, with no position more likely than
+      any other.
+    </p>
+
+    <p>
+      The model makes a prediction that can be checked. If breakage points fall uniformly, the
+      lengths of the synteny blocks they carve out follow an exponential distribution, and the
+      measured block lengths did fit one. The model stood for nearly twenty years. Testing it
+      properly needs a way to count how many rearrangements separate two genomes, and that count is
+      what the rest of the chapter builds.
+    </p>
+
+    <h2>Reversals</h2>
+
+    <p>
+      A <strong>reversal</strong> cuts a chromosome in two places and reinserts the segment between
+      the cuts back to front. The blocks in that segment reverse their order, and each one also
+      reverses direction, so each of their signs flips.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="636" height="288.8" viewBox="86.7 27.2 636 288.8">
+      <rect class="fig-cell-alt" x="140" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="162" y="78" text-anchor="middle">1</text>
+      <rect class="fig-shape" x="184" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="206" y="78" text-anchor="middle">2</text>
+      <rect class="fig-shape" x="228" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="250" y="78" text-anchor="middle">3</text>
+      <circle class="fig-hole" cx="277" cy="73.5" r="5.5"/>
+      <rect class="fig-shape" x="282" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="304" y="78" text-anchor="middle">4</text>
+      <rect class="fig-cell-alt" x="326" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="348" y="78" text-anchor="middle">5</text>
+      <text class="fig-text fig-note" x="128" y="77.5" text-anchor="end">before</text>
+      <line class="fig-free" x1="184" y1="57" x2="184" y2="90"/>
+      <line class="fig-free" x1="326" y1="57" x2="326" y2="90"/>
+      <line class="fig-free" x1="184" y1="119" x2="184" y2="152"/>
+      <line class="fig-free" x1="326" y1="119" x2="326" y2="152"/>
+      <text class="fig-text fig-note" x="255" y="49" text-anchor="middle">two breaks</text>
+      <line class="fig-accent" x1="162" y1="93" x2="162" y2="114"/>
+      <path class="fig-dot" d="M 162 120 L 159.3 114 L 164.7 114 Z"/>
+      <rect class="fig-cell-alt" x="140" y="128" width="44" height="15"/>
+      <text class="fig-text fig-note" x="162" y="140" text-anchor="middle">1</text>
+      <rect class="fig-shape" x="184" y="128" width="44" height="15"/>
+      <text class="fig-text fig-note" x="206" y="140" text-anchor="middle">4</text>
+      <rect class="fig-shape" x="228" y="128" width="44" height="15"/>
+      <text class="fig-text fig-note" x="250" y="140" text-anchor="middle">3</text>
+      <circle class="fig-hole" cx="277" cy="135.5" r="5.5"/>
+      <rect class="fig-shape" x="282" y="128" width="44" height="15"/>
+      <text class="fig-text fig-note" x="304" y="140" text-anchor="middle">2</text>
+      <rect class="fig-cell-alt" x="326" y="128" width="44" height="15"/>
+      <text class="fig-text fig-note" x="348" y="140" text-anchor="middle">5</text>
+      <text class="fig-text fig-note" x="128" y="139.5" text-anchor="end">after</text>
+      <line class="fig-axis" x1="229" y1="101" x2="281" y2="101"/>
+      <path class="fig-dot" d="M 281 101 L 265 96 L 265 106 Z"/>
+      <line class="fig-axis" x1="229" y1="163" x2="281" y2="163"/>
+      <path class="fig-dot" d="M 229 163 L 245 158 L 245 168 Z"/>
+      <text class="fig-text fig-note" x="400" y="110" text-anchor="start">the piece between the two breaks goes back the other way round</text>
+      <path class="fig-cell" d="M 140 218 L 176 218 L 186 230 L 176 242 L 140 242 Z"/>
+      <text class="fig-text fig-tick" x="163" y="235" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 192 218 L 228 218 L 238 230 L 228 242 L 192 242 Z"/>
+      <text class="fig-text fig-tick" x="215" y="235" text-anchor="middle">2</text>
+      <path class="fig-shape" d="M 244 218 L 280 218 L 290 230 L 280 242 L 244 242 Z"/>
+      <text class="fig-text fig-tick" x="267" y="235" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 296 218 L 332 218 L 342 230 L 332 242 L 296 242 Z"/>
+      <text class="fig-text fig-tick" x="319" y="235" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 348 218 L 384 218 L 394 230 L 384 242 L 348 242 Z"/>
+      <text class="fig-text fig-tick" x="371" y="235" text-anchor="middle">5</text>
+      <line class="fig-accent" x1="267" y1="250" x2="267" y2="266"/>
+      <path class="fig-dot" d="M 267 272 L 264.3 266 L 269.7 266 Z"/>
+      <path class="fig-cell" d="M 140 280 L 176 280 L 186 292 L 176 304 L 140 304 Z"/>
+      <text class="fig-text fig-tick" x="163" y="297" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 238 280 L 202 280 L 192 292 L 202 304 L 238 304 Z"/>
+      <text class="fig-text fig-tick" x="215" y="297" text-anchor="middle">4</text>
+      <path class="fig-shape" d="M 290 280 L 254 280 L 244 292 L 254 304 L 290 304 Z"/>
+      <text class="fig-text fig-tick" x="267" y="297" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 342 280 L 306 280 L 296 292 L 306 304 L 342 304 Z"/>
+      <text class="fig-text fig-tick" x="319" y="297" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 348 280 L 384 280 L 394 292 L 384 304 L 348 304 Z"/>
+      <text class="fig-text fig-tick" x="371" y="297" text-anchor="middle">5</text>
+      </svg>
+      <figcaption>A reversal on the chromosome and on the blocks. Both breaks fall between blocks, so the piece that moves is exactly blocks 2, 3 and 4; block 1 and block 5 do not move, and the centromere sits inside the reversed stretch and travels with it. The small arrow shows the stretch changing direction, which is why each block inside it comes back with its sign flipped while the blocks outside keep theirs.</figcaption>
+    </figure>
+
+    <p>
+      <strong>Reversal Distance Problem.</strong> Given two signed permutations of the same length,
+      find the minimum number of reversals transforming one into the other.
+    </p>
+
+    <p>
+      Relabelling the blocks so that the second genome reads $(+1\ +2\ \dots\ +n)$ costs nothing and
+      turns every instance into the same shape: reversals are reversible, so the distance from $P$ to
+      $Q$ is the distance from $Q^{-1}P$ to the identity. The problem is therefore to sort a signed
+      permutation using as few reversals as possible.
+    </p>
+
+    <h2>Greedy Sorting</h2>
+
+    <p>
+      The obvious approach fixes one position at a time. To settle position $k$, find the block $k$
+      wherever it currently sits and reverse the stretch from position $k$ to that position, which
+      brings it home; if it arrives pointing the wrong way, reverse it alone to flip its sign.
+      Positions $1$ through $k$ are then correct and are never touched again.
+    </p>
+
+    <pre><code class="language-python">def greedy_sorting(permutation):
+    order, steps = list(permutation), []
+    for k in range(1, len(order) + 1):
+        if abs(order[k - 1]) != k:
+            position = next(i for i in range(k - 1, len(order)) if abs(order[i]) == k)
+            order[k - 1:position + 1] = [-x for x in reversed(order[k - 1:position + 1])]
+            steps.append(list(order))
+        if order[k - 1] == -k:
+            order[k - 1] = k
+            steps.append(list(order))
+    return steps</code></pre>
+
+    <figure class="figure-block">
+      <svg class="figure" width="323.4" height="352" viewBox="92.6 2 323.4 352">
+      <path class="fig-cell" d="M 196 52 L 160 52 L 150 64 L 160 76 L 196 76 Z"/>
+      <text class="fig-text fig-tick" x="173" y="69" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 202 52 L 238 52 L 248 64 L 238 76 L 202 76 Z"/>
+      <text class="fig-text fig-tick" x="225" y="69" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 254 52 L 290 52 L 300 64 L 290 76 L 254 76 Z"/>
+      <text class="fig-text fig-tick" x="277" y="69" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 306 52 L 342 52 L 352 64 L 342 76 L 306 76 Z"/>
+      <text class="fig-text fig-tick" x="329" y="69" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 404 52 L 368 52 L 358 64 L 368 76 L 404 76 Z"/>
+      <text class="fig-text fig-tick" x="381" y="69" text-anchor="middle">2</text>
+      <text class="fig-text fig-note" x="134" y="69" text-anchor="end">start</text>
+      <path class="fig-shape" d="M 196 90 L 160 90 L 150 102 L 160 114 L 196 114 Z"/>
+      <text class="fig-text fig-tick" x="173" y="107" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 248 90 L 212 90 L 202 102 L 212 114 L 248 114 Z"/>
+      <text class="fig-text fig-tick" x="225" y="107" text-anchor="middle">4</text>
+      <path class="fig-shape" d="M 254 90 L 290 90 L 300 102 L 290 114 L 254 114 Z"/>
+      <text class="fig-text fig-tick" x="277" y="107" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 306 90 L 342 90 L 352 102 L 342 114 L 306 114 Z"/>
+      <text class="fig-text fig-tick" x="329" y="107" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 404 90 L 368 90 L 358 102 L 368 114 L 404 114 Z"/>
+      <text class="fig-text fig-tick" x="381" y="107" text-anchor="middle">2</text>
+      <text class="fig-text fig-note" x="134" y="107" text-anchor="end">step 1</text>
+      <path class="fig-shape" d="M 150 128 L 186 128 L 196 140 L 186 152 L 150 152 Z"/>
+      <text class="fig-text fig-tick" x="173" y="145" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 248 128 L 212 128 L 202 140 L 212 152 L 248 152 Z"/>
+      <text class="fig-text fig-tick" x="225" y="145" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 254 128 L 290 128 L 300 140 L 290 152 L 254 152 Z"/>
+      <text class="fig-text fig-tick" x="277" y="145" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 306 128 L 342 128 L 352 140 L 342 152 L 306 152 Z"/>
+      <text class="fig-text fig-tick" x="329" y="145" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 404 128 L 368 128 L 358 140 L 368 152 L 404 152 Z"/>
+      <text class="fig-text fig-tick" x="381" y="145" text-anchor="middle">2</text>
+      <text class="fig-text fig-note" x="134" y="145" text-anchor="end">step 2</text>
+      <path class="fig-cell" d="M 150 166 L 186 166 L 196 178 L 186 190 L 150 190 Z"/>
+      <text class="fig-text fig-tick" x="173" y="183" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 202 166 L 238 166 L 248 178 L 238 190 L 202 190 Z"/>
+      <text class="fig-text fig-tick" x="225" y="183" text-anchor="middle">2</text>
+      <path class="fig-shape" d="M 300 166 L 264 166 L 254 178 L 264 190 L 300 190 Z"/>
+      <text class="fig-text fig-tick" x="277" y="183" text-anchor="middle">5</text>
+      <path class="fig-shape" d="M 352 166 L 316 166 L 306 178 L 316 190 L 352 190 Z"/>
+      <text class="fig-text fig-tick" x="329" y="183" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 358 166 L 394 166 L 404 178 L 394 190 L 358 190 Z"/>
+      <text class="fig-text fig-tick" x="381" y="183" text-anchor="middle">4</text>
+      <text class="fig-text fig-note" x="134" y="183" text-anchor="end">step 3</text>
+      <path class="fig-cell" d="M 150 204 L 186 204 L 196 216 L 186 228 L 150 228 Z"/>
+      <text class="fig-text fig-tick" x="173" y="221" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 202 204 L 238 204 L 248 216 L 238 228 L 202 228 Z"/>
+      <text class="fig-text fig-tick" x="225" y="221" text-anchor="middle">2</text>
+      <path class="fig-shape" d="M 254 204 L 290 204 L 300 216 L 290 228 L 254 228 Z"/>
+      <text class="fig-text fig-tick" x="277" y="221" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 306 204 L 342 204 L 352 216 L 342 228 L 306 228 Z"/>
+      <text class="fig-text fig-tick" x="329" y="221" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 358 204 L 394 204 L 404 216 L 394 228 L 358 228 Z"/>
+      <text class="fig-text fig-tick" x="381" y="221" text-anchor="middle">4</text>
+      <text class="fig-text fig-note" x="134" y="221" text-anchor="end">step 4</text>
+      <path class="fig-cell" d="M 150 242 L 186 242 L 196 254 L 186 266 L 150 266 Z"/>
+      <text class="fig-text fig-tick" x="173" y="259" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 202 242 L 238 242 L 248 254 L 238 266 L 202 266 Z"/>
+      <text class="fig-text fig-tick" x="225" y="259" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 254 242 L 290 242 L 300 254 L 290 266 L 254 266 Z"/>
+      <text class="fig-text fig-tick" x="277" y="259" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 352 242 L 316 242 L 306 254 L 316 266 L 352 266 Z"/>
+      <text class="fig-text fig-tick" x="329" y="259" text-anchor="middle">4</text>
+      <path class="fig-shape" d="M 404 242 L 368 242 L 358 254 L 368 266 L 404 266 Z"/>
+      <text class="fig-text fig-tick" x="381" y="259" text-anchor="middle">5</text>
+      <text class="fig-text fig-note" x="134" y="259" text-anchor="end">step 5</text>
+      <path class="fig-cell" d="M 150 280 L 186 280 L 196 292 L 186 304 L 150 304 Z"/>
+      <text class="fig-text fig-tick" x="173" y="297" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 202 280 L 238 280 L 248 292 L 238 304 L 202 304 Z"/>
+      <text class="fig-text fig-tick" x="225" y="297" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 254 280 L 290 280 L 300 292 L 290 304 L 254 304 Z"/>
+      <text class="fig-text fig-tick" x="277" y="297" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 306 280 L 342 280 L 352 292 L 342 304 L 306 304 Z"/>
+      <text class="fig-text fig-tick" x="329" y="297" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 404 280 L 368 280 L 358 292 L 368 304 L 404 304 Z"/>
+      <text class="fig-text fig-tick" x="381" y="297" text-anchor="middle">5</text>
+      <text class="fig-text fig-note" x="134" y="297" text-anchor="end">step 6</text>
+      <path class="fig-cell" d="M 150 318 L 186 318 L 196 330 L 186 342 L 150 342 Z"/>
+      <text class="fig-text fig-tick" x="173" y="335" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 202 318 L 238 318 L 248 330 L 238 342 L 202 342 Z"/>
+      <text class="fig-text fig-tick" x="225" y="335" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 254 318 L 290 318 L 300 330 L 290 342 L 254 342 Z"/>
+      <text class="fig-text fig-tick" x="277" y="335" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 306 318 L 342 318 L 352 330 L 342 342 L 306 342 Z"/>
+      <text class="fig-text fig-tick" x="329" y="335" text-anchor="middle">4</text>
+      <path class="fig-shape" d="M 358 318 L 394 318 L 404 330 L 394 342 L 358 342 Z"/>
+      <text class="fig-text fig-tick" x="381" y="335" text-anchor="middle">5</text>
+      <text class="fig-text fig-note" x="134" y="335" text-anchor="end">sorted</text>
+      <line class="fig-guide" x1="173" y1="30" x2="173" y2="42"/>
+      <text class="fig-text fig-note" x="173" y="24" text-anchor="middle">1</text>
+      <line class="fig-guide" x1="225" y1="30" x2="225" y2="42"/>
+      <text class="fig-text fig-note" x="225" y="24" text-anchor="middle">2</text>
+      <line class="fig-guide" x1="277" y1="30" x2="277" y2="42"/>
+      <text class="fig-text fig-note" x="277" y="24" text-anchor="middle">3</text>
+      <line class="fig-guide" x1="329" y1="30" x2="329" y2="42"/>
+      <text class="fig-text fig-note" x="329" y="24" text-anchor="middle">4</text>
+      <line class="fig-guide" x1="381" y1="30" x2="381" y2="42"/>
+      <text class="fig-text fig-note" x="381" y="24" text-anchor="middle">5</text>
+      </svg>
+      <figcaption>Greedy sorting of $(-3\ {+}4\ {+}1\ {+}5\ {-}2)$. Position $k$ is settled before position $k + 1$ is looked at: block $k$ is brought to position $k$ by one reversal, and a second reversal flips it if it landed pointing the wrong way. Shaded blocks are the ones that moved. Each of the first $n-1$ positions costs at most two reversals and the last costs at most one, so no permutation costs greedy more than $2n-1$. This run takes seven.</figcaption>
+    </figure>
+
+    <p>
+      Each of the first $n - 1$ positions costs at most two reversals and the last costs at most one,
+      so greedy sorting never uses more than $2n - 1$ reversals, and it does the work in $O(n^2)$
+      time. The bound is tight: $(-2\ -4\ +1\ -5\ +3)$ costs it 9.
+    </p>
+
+    <p>
+      What the algorithm does not give is any reason to believe $2n - 1$ is close to the true
+      distance. On $(+n\ +(n-1)\ \dots\ +2\ +1)$ it spends $n + 1$ reversals, and a single reversal
+      of the whole chromosome followed by $n$ sign flips would do the same job. Deciding whether an
+      answer is good needs a lower bound on the distance, which greedy sorting does not supply.
+    </p>
+
+    <h2>Breakpoints</h2>
+
+    <p>
+      Pad the permutation with $0$ in front and $n + 1$ behind. Each of the $n + 1$ gaps between
+      consecutive values is an <strong>adjacency</strong> when the right value is exactly one more
+      than the left, and a <strong>breakpoint</strong> otherwise. Every gap is one or the other, so
+      the two counts always sum to $n + 1$.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="430" height="118" viewBox="84 62 430 118">
+      <rect class="fig-cell" x="96" y="84" width="46" height="24"/>
+      <text class="fig-text fig-note" x="119" y="101" text-anchor="middle">0</text>
+      <path class="fig-cell" d="M 156 84 L 192 84 L 202 96 L 192 108 L 156 108 Z"/>
+      <text class="fig-text fig-tick" x="179" y="101" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 216 84 L 252 84 L 262 96 L 252 108 L 216 108 Z"/>
+      <text class="fig-text fig-tick" x="239" y="101" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 322 84 L 286 84 L 276 96 L 286 108 L 322 108 Z"/>
+      <text class="fig-text fig-tick" x="299" y="101" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 336 84 L 372 84 L 382 96 L 372 108 L 336 108 Z"/>
+      <text class="fig-text fig-tick" x="359" y="101" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 396 84 L 432 84 L 442 96 L 432 108 L 396 108 Z"/>
+      <text class="fig-text fig-tick" x="419" y="101" text-anchor="middle">4</text>
+      <rect class="fig-cell" x="456" y="84" width="46" height="24"/>
+      <text class="fig-text fig-note" x="479" y="101" text-anchor="middle">6</text>
+      <line class="fig-accent" x1="149" y1="74" x2="149" y2="118"/>
+      <text class="fig-text fig-note" x="149" y="134" text-anchor="middle">adj</text>
+      <line class="fig-accent" x1="209" y1="74" x2="209" y2="118"/>
+      <text class="fig-text fig-note" x="209" y="134" text-anchor="middle">adj</text>
+      <line class="fig-free" x1="269" y1="74" x2="269" y2="118"/>
+      <text class="fig-text fig-note" x="269" y="134" text-anchor="middle">break</text>
+      <line class="fig-free" x1="329" y1="74" x2="329" y2="118"/>
+      <text class="fig-text fig-note" x="329" y="134" text-anchor="middle">break</text>
+      <line class="fig-accent" x1="389" y1="74" x2="389" y2="118"/>
+      <text class="fig-text fig-note" x="389" y="134" text-anchor="middle">adj</text>
+      <line class="fig-free" x1="449" y1="74" x2="449" y2="118"/>
+      <text class="fig-text fig-note" x="449" y="134" text-anchor="middle">break</text>
+      <text class="fig-text fig-tick" x="276" y="164" text-anchor="middle">3 adjacencies + 3 breakpoints = n + 1 = 6</text>
+      </svg>
+      <figcaption>The permutation is padded with 0 in front and $n + 1$ behind, which gives it $n + 1$ gaps. A gap is an adjacency when the right value is exactly one more than the left, and a breakpoint otherwise. Every gap is one or the other, so adjacencies and breakpoints always sum to $n + 1$. The identity permutation is the only one with no breakpoints, so sorting means destroying breakpoints.</figcaption>
+    </figure>
+
+    <p>
+      <strong>Breakpoint Counting Problem.</strong> Given a signed permutation, count its
+      breakpoints.
+    </p>
+
+    <pre><code class="language-python">def breakpoints(permutation):
+    extended = [0] + list(permutation) + [len(permutation) + 1]
+    return sum(1 for a, b in zip(extended, extended[1:]) if b - a != 1)</code></pre>
+
+    <p>
+      The count costs $O(n)$. On $(+3\ +4\ +5\ -12\ -8\ -7\ -6\ +1\ +2\ +10\ +9\ -11\ +13\ +14)$ it
+      returns 8. The identity permutation is the only one with no breakpoints, so sorting is the
+      destruction of breakpoints, and counting them measures how far there is to go.
+    </p>
+
+    <h2>A Lower Bound</h2>
+
+    <p>
+      A reversal touches only the two gaps at its boundaries. Every gap strictly inside the reversed
+      segment survives it, because reversing a run of blocks reverses the whole run and leaves the
+      differences within it unchanged, and every gap outside the segment is never looked at.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="548.4" height="200" viewBox="60.7 46 548.4 200">
+      <rect class="fig-cell" x="118" y="88" width="46" height="24"/>
+      <text class="fig-text fig-note" x="141" y="105" text-anchor="middle">0</text>
+      <path class="fig-cell" d="M 178 88 L 214 88 L 224 100 L 214 112 L 178 112 Z"/>
+      <text class="fig-text fig-tick" x="201" y="105" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 284 88 L 248 88 L 238 100 L 248 112 L 284 112 Z"/>
+      <text class="fig-text fig-tick" x="261" y="105" text-anchor="middle">3</text>
+      <path class="fig-shape" d="M 344 88 L 308 88 L 298 100 L 308 112 L 344 112 Z"/>
+      <text class="fig-text fig-tick" x="321" y="105" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 358 88 L 394 88 L 404 100 L 394 112 L 358 112 Z"/>
+      <text class="fig-text fig-tick" x="381" y="105" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 418 88 L 454 88 L 464 100 L 454 112 L 418 112 Z"/>
+      <text class="fig-text fig-tick" x="441" y="105" text-anchor="middle">5</text>
+      <rect class="fig-cell" x="478" y="88" width="46" height="24"/>
+      <text class="fig-text fig-note" x="501" y="105" text-anchor="middle">6</text>
+      <line class="fig-accent" x1="171" y1="78" x2="171" y2="122"/>
+      <line class="fig-free" x1="231" y1="78" x2="231" y2="122"/>
+      <line class="fig-accent" x1="291" y1="78" x2="291" y2="122"/>
+      <line class="fig-free" x1="351" y1="78" x2="351" y2="122"/>
+      <line class="fig-accent" x1="411" y1="78" x2="411" y2="122"/>
+      <line class="fig-accent" x1="471" y1="78" x2="471" y2="122"/>
+      <text class="fig-text fig-note" x="532" y="105" text-anchor="start">2 breakpoints</text>
+      <rect class="fig-cell" x="118" y="200" width="46" height="24"/>
+      <text class="fig-text fig-note" x="141" y="217" text-anchor="middle">0</text>
+      <path class="fig-cell" d="M 178 200 L 214 200 L 224 212 L 214 224 L 178 224 Z"/>
+      <text class="fig-text fig-tick" x="201" y="217" text-anchor="middle">1</text>
+      <path class="fig-shape" d="M 238 200 L 274 200 L 284 212 L 274 224 L 238 224 Z"/>
+      <text class="fig-text fig-tick" x="261" y="217" text-anchor="middle">2</text>
+      <path class="fig-shape" d="M 298 200 L 334 200 L 344 212 L 334 224 L 298 224 Z"/>
+      <text class="fig-text fig-tick" x="321" y="217" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 358 200 L 394 200 L 404 212 L 394 224 L 358 224 Z"/>
+      <text class="fig-text fig-tick" x="381" y="217" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 418 200 L 454 200 L 464 212 L 454 224 L 418 224 Z"/>
+      <text class="fig-text fig-tick" x="441" y="217" text-anchor="middle">5</text>
+      <rect class="fig-cell" x="478" y="200" width="46" height="24"/>
+      <text class="fig-text fig-note" x="501" y="217" text-anchor="middle">6</text>
+      <line class="fig-accent" x1="171" y1="190" x2="171" y2="234"/>
+      <line class="fig-accent" x1="231" y1="190" x2="231" y2="234"/>
+      <line class="fig-accent" x1="291" y1="190" x2="291" y2="234"/>
+      <line class="fig-accent" x1="351" y1="190" x2="351" y2="234"/>
+      <line class="fig-accent" x1="411" y1="190" x2="411" y2="234"/>
+      <line class="fig-accent" x1="471" y1="190" x2="471" y2="234"/>
+      <text class="fig-text fig-note" x="532" y="217" text-anchor="start">0 breakpoints</text>
+      <text class="fig-text fig-note" x="231" y="68" text-anchor="middle">boundary</text>
+      <text class="fig-text fig-note" x="351" y="68" text-anchor="middle">boundary</text>
+      <line class="fig-accent" x1="328" y1="134" x2="328" y2="174"/>
+      <path class="fig-dot" d="M 328 180 L 325.3 174 L 330.7 174 Z"/>
+      <text class="fig-text fig-note" x="102" y="105" text-anchor="end">before</text>
+      <text class="fig-text fig-note" x="102" y="217" text-anchor="end">after</text>
+      </svg>
+      <figcaption>One reversal of the two shaded blocks, and the two breakpoints are gone. A reversal can only ever change the two gaps at its boundaries: every gap strictly inside the reversed segment survives, because reversing a run of blocks reverses the run whole and the differences inside it are untouched, and every gap outside is never looked at. Two gaps change, so at most two breakpoints go, and a permutation with $b$ breakpoints needs at least $b/2$ reversals.</figcaption>
+    </figure>
+
+    <p>
+      <strong>Theorem.</strong> $d_{\text{rev}}(P) \ge \text{breakpoints}(P) / 2$.
+    </p>
+
+    <p>
+      Each reversal removes at most two breakpoints, and sorting must remove all of them, so no
+      sequence shorter than $\text{breakpoints}(P)/2$ can finish. This is the first statement in the
+      chapter about the distance itself rather than about one algorithm's behaviour. It is only a
+      bound, though, and it is not tight: there are permutations whose reversal distance exceeds
+      half their breakpoint count.
+    </p>
+
+    <h2>Rearrangements Across Chromosomes</h2>
+
+    <p>
+      A reversal keeps the chromosome intact. Real genomes are several chromosomes, and
+      rearrangements move material between them. A <strong>translocation</strong> exchanges the ends
+      of two chromosomes, a <strong>fusion</strong> joins two chromosomes into one, and a
+      <strong>fission</strong> splits one into two.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="587.9" height="355" viewBox="37.1 27 587.9 355">
+      <rect class="fig-shape" x="132" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="154" y="78" text-anchor="middle">1</text>
+      <circle class="fig-hole" cx="181" cy="73.5" r="5.5"/>
+      <rect class="fig-shape" x="186" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="208" y="78" text-anchor="middle">2</text>
+      <rect class="fig-shape" x="230" y="66" width="44" height="15"/>
+      <text class="fig-text fig-note" x="252" y="78" text-anchor="middle">3</text>
+      <text class="fig-text fig-note" x="120" y="77.5" text-anchor="end">chromosome A</text>
+      <rect class="fig-cell-alt" x="132" y="100" width="44" height="15"/>
+      <text class="fig-text fig-note" x="154" y="112" text-anchor="middle">4</text>
+      <circle class="fig-hole" cx="181" cy="107.5" r="5.5"/>
+      <rect class="fig-cell-alt" x="186" y="100" width="44" height="15"/>
+      <text class="fig-text fig-note" x="208" y="112" text-anchor="middle">5</text>
+      <rect class="fig-cell-alt" x="230" y="100" width="44" height="15"/>
+      <text class="fig-text fig-note" x="252" y="112" text-anchor="middle">6</text>
+      <text class="fig-text fig-note" x="120" y="111.5" text-anchor="end">chromosome B</text>
+      <line class="fig-free" x1="230" y1="57" x2="230" y2="90"/>
+      <line class="fig-free" x1="230" y1="91" x2="230" y2="124"/>
+      <text class="fig-text fig-note" x="230" y="49" text-anchor="middle">break</text>
+      <line class="fig-accent" x1="176" y1="134" x2="176" y2="148"/>
+      <path class="fig-dot" d="M 176 154 L 173.3 148 L 178.7 148 Z"/>
+      <rect class="fig-shape" x="132" y="162" width="44" height="15"/>
+      <text class="fig-text fig-note" x="154" y="174" text-anchor="middle">1</text>
+      <circle class="fig-hole" cx="181" cy="169.5" r="5.5"/>
+      <rect class="fig-shape" x="186" y="162" width="44" height="15"/>
+      <text class="fig-text fig-note" x="208" y="174" text-anchor="middle">2</text>
+      <rect class="fig-cell-alt" x="230" y="162" width="44" height="15"/>
+      <text class="fig-text fig-note" x="252" y="174" text-anchor="middle">6</text>
+      <text class="fig-text fig-note" x="120" y="173.5" text-anchor="end">A after</text>
+      <rect class="fig-cell-alt" x="132" y="196" width="44" height="15"/>
+      <text class="fig-text fig-note" x="154" y="208" text-anchor="middle">4</text>
+      <circle class="fig-hole" cx="181" cy="203.5" r="5.5"/>
+      <rect class="fig-cell-alt" x="186" y="196" width="44" height="15"/>
+      <text class="fig-text fig-note" x="208" y="208" text-anchor="middle">5</text>
+      <rect class="fig-shape" x="230" y="196" width="44" height="15"/>
+      <text class="fig-text fig-note" x="252" y="208" text-anchor="middle">3</text>
+      <text class="fig-text fig-note" x="120" y="207.5" text-anchor="end">B after</text>
+      <line class="fig-free" x1="230" y1="154" x2="230" y2="220"/>
+      <text class="fig-text fig-note" x="302" y="184" text-anchor="start">only what lies past the break changes chromosome</text>
+      <line class="fig-axis" x1="162" y1="254" x2="312" y2="254"/>
+      <line class="fig-axis" x1="162" y1="274" x2="312" y2="274"/>
+      <line class="fig-cell" x1="172" y1="257" x2="172" y2="271"/>
+      <line class="fig-cell" x1="182" y1="257" x2="182" y2="271"/>
+      <line class="fig-cell" x1="192" y1="257" x2="192" y2="271"/>
+      <line class="fig-cell" x1="202" y1="257" x2="202" y2="271"/>
+      <line class="fig-cell" x1="212" y1="257" x2="212" y2="271"/>
+      <line class="fig-cell" x1="222" y1="257" x2="222" y2="271"/>
+      <line class="fig-cell" x1="242" y1="257" x2="242" y2="271"/>
+      <line class="fig-cell" x1="252" y1="257" x2="252" y2="271"/>
+      <line class="fig-cell" x1="262" y1="257" x2="262" y2="271"/>
+      <line class="fig-cell" x1="272" y1="257" x2="272" y2="271"/>
+      <line class="fig-cell" x1="282" y1="257" x2="282" y2="271"/>
+      <line class="fig-cell" x1="292" y1="257" x2="292" y2="271"/>
+      <line class="fig-cell" x1="302" y1="257" x2="302" y2="271"/>
+      <path class="fig-free" d="M 230 247 L 225 259 L 235 269 L 230 281"/>
+      <text class="fig-text fig-note" x="152" y="266" text-anchor="end">DNA</text>
+      <text class="fig-text fig-note" x="328" y="266" text-anchor="start">both strands are cut and rejoined to the other chromosome</text>
+      <path class="fig-cell" d="M 132 314 L 168 314 L 178 326 L 168 338 L 132 338 Z"/>
+      <text class="fig-text fig-tick" x="155" y="331" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 184 314 L 220 314 L 230 326 L 220 338 L 184 338 Z"/>
+      <text class="fig-text fig-tick" x="207" y="331" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 236 314 L 272 314 L 282 326 L 272 338 L 236 338 Z"/>
+      <text class="fig-text fig-tick" x="259" y="331" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 132 346 L 168 346 L 178 358 L 168 370 L 132 370 Z"/>
+      <text class="fig-text fig-tick" x="155" y="363" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 184 346 L 220 346 L 230 358 L 220 370 L 184 370 Z"/>
+      <text class="fig-text fig-tick" x="207" y="363" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 236 346 L 272 346 L 282 358 L 272 370 L 236 370 Z"/>
+      <text class="fig-text fig-tick" x="259" y="363" text-anchor="middle">6</text>
+      <line class="fig-accent" x1="308" y1="338" x2="332" y2="338"/>
+      <path class="fig-dot" d="M 338 338 L 332 340.7 L 332 335.3 Z"/>
+      <path class="fig-cell" d="M 354 314 L 390 314 L 400 326 L 390 338 L 354 338 Z"/>
+      <text class="fig-text fig-tick" x="377" y="331" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 406 314 L 442 314 L 452 326 L 442 338 L 406 338 Z"/>
+      <text class="fig-text fig-tick" x="429" y="331" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 458 314 L 494 314 L 504 326 L 494 338 L 458 338 Z"/>
+      <text class="fig-text fig-tick" x="481" y="331" text-anchor="middle">6</text>
+      <path class="fig-cell" d="M 354 346 L 390 346 L 400 358 L 390 370 L 354 370 Z"/>
+      <text class="fig-text fig-tick" x="377" y="363" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 406 346 L 442 346 L 452 358 L 442 370 L 406 370 Z"/>
+      <text class="fig-text fig-tick" x="429" y="363" text-anchor="middle">5</text>
+      <path class="fig-cell" d="M 458 346 L 494 346 L 504 358 L 494 370 L 458 370 Z"/>
+      <text class="fig-text fig-tick" x="481" y="363" text-anchor="middle">3</text>
+      </svg>
+      <figcaption><span class="cap-part">A translocation, at three levels of description. <span class="cap-lead">Top:</span> two chromosomes, each pinched at its centromere, break at one point apiece, and each keeps everything before its break and receives everything past the other one's. Blocks 3 and 6 change chromosome; blocks 1, 2, 4 and 5 do not move. The exchange between human chromosomes 9 and 22 is this, and the fused gene it creates drives chronic myeloid leukaemia.</span><span class="cap-part"><span class="cap-lead">Middle:</span> at the level of the molecule, both strands of the double helix are cut and rejoined to the other chromosome.</span><span class="cap-part"><span class="cap-lead">Bottom:</span> the same event over synteny blocks. Two adjacency edges are removed, between 2 and 3 and between 5 and 6, and two are added, between 2 and 6 and between 5 and 3: four block ends, two edges out, two in.</span></figcaption>
+    </figure>
+
+    <figure class="figure-block">
+      <svg class="figure" width="555.1" height="228.1" viewBox="108.9 43.9 555.1 228.1">
+      <rect class="fig-shape" x="150" y="70" width="44" height="15"/>
+      <text class="fig-text fig-note" x="172" y="82" text-anchor="middle">1</text>
+      <circle class="fig-hole" cx="199" cy="77.5" r="5.5"/>
+      <rect class="fig-shape" x="204" y="70" width="44" height="15"/>
+      <text class="fig-text fig-note" x="226" y="82" text-anchor="middle">2</text>
+      <text class="fig-text fig-note" x="138" y="81.5" text-anchor="end">two</text>
+      <rect class="fig-cell-alt" x="150" y="102" width="44" height="15"/>
+      <text class="fig-text fig-note" x="172" y="114" text-anchor="middle">3</text>
+      <circle class="fig-hole" cx="199" cy="109.5" r="5.5"/>
+      <rect class="fig-cell-alt" x="204" y="102" width="44" height="15"/>
+      <text class="fig-text fig-note" x="226" y="114" text-anchor="middle">4</text>
+      <line class="fig-accent" x1="294" y1="78" x2="332" y2="78"/>
+      <path class="fig-dot" d="M 338 78 L 332 80.7 L 332 75.3 Z"/>
+      <text class="fig-text fig-note" x="316" y="66" text-anchor="middle">fusion</text>
+      <line class="fig-accent" x1="338" y1="110" x2="300" y2="110"/>
+      <path class="fig-dot" d="M 294 110 L 300 107.3 L 300 112.7 Z"/>
+      <text class="fig-text fig-note" x="316" y="126" text-anchor="middle">fission</text>
+      <rect class="fig-shape" x="354" y="86" width="44" height="15"/>
+      <text class="fig-text fig-note" x="376" y="98" text-anchor="middle">1</text>
+      <circle class="fig-hole" cx="403" cy="93.5" r="5.5"/>
+      <rect class="fig-shape" x="408" y="86" width="44" height="15"/>
+      <text class="fig-text fig-note" x="430" y="98" text-anchor="middle">2</text>
+      <rect class="fig-cell-alt" x="452" y="86" width="44" height="15"/>
+      <text class="fig-text fig-note" x="474" y="98" text-anchor="middle">3</text>
+      <rect class="fig-cell-alt" x="496" y="86" width="44" height="15"/>
+      <text class="fig-text fig-note" x="518" y="98" text-anchor="middle">4</text>
+      <text class="fig-text fig-note" x="442" y="116" text-anchor="middle">one</text>
+      <text class="fig-text fig-note" x="220" y="166" text-anchor="middle">two chromosomes</text>
+      <path class="fig-cell" d="M 150 182 L 186 182 L 196 194 L 186 206 L 150 206 Z"/>
+      <text class="fig-text fig-tick" x="173" y="199" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 202 182 L 238 182 L 248 194 L 238 206 L 202 206 Z"/>
+      <text class="fig-text fig-tick" x="225" y="199" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 150 214 L 186 214 L 196 226 L 186 238 L 150 238 Z"/>
+      <text class="fig-text fig-tick" x="173" y="231" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 202 214 L 238 214 L 248 226 L 238 238 L 202 238 Z"/>
+      <text class="fig-text fig-tick" x="225" y="231" text-anchor="middle">4</text>
+      <text class="fig-text fig-note" x="220" y="256" text-anchor="middle">4 telomeres</text>
+      <text class="fig-text fig-note" x="520" y="166" text-anchor="middle">one chromosome</text>
+      <path class="fig-cell" d="M 450 198 L 486 198 L 496 210 L 486 222 L 450 222 Z"/>
+      <text class="fig-text fig-tick" x="473" y="215" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 502 198 L 538 198 L 548 210 L 538 222 L 502 222 Z"/>
+      <text class="fig-text fig-tick" x="525" y="215" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 554 198 L 590 198 L 600 210 L 590 222 L 554 222 Z"/>
+      <text class="fig-text fig-tick" x="577" y="215" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 606 198 L 642 198 L 652 210 L 642 222 L 606 222 Z"/>
+      <text class="fig-text fig-tick" x="629" y="215" text-anchor="middle">4</text>
+      <text class="fig-text fig-note" x="520" y="256" text-anchor="middle">2 telomeres</text>
+      </svg>
+      <figcaption>A fusion joins two chromosomes end to end and a fission splits one in two. No block moves relative to its neighbours; what changes is the number of chromosome ends, four becoming two or two becoming four. Because a chromosome end carries no adjacency edge, these are the two rearrangements that are not 2-breaks until every telomere is given an edge of its own.</figcaption>
+    </figure>
+
+    <p>
+      These are not exotic. Human chromosome 2 is a fusion of two chromosomes that remain separate in
+      the chimpanzee, which is why humans carry 23 pairs and chimpanzees 24. Translocations also
+      appear in cancer: a specific exchange between chromosomes 9 and 22 creates a fused gene whose
+      protein drives chronic myeloid leukaemia, and the drug imatinib works by blocking exactly that
+      protein.
+    </p>
+
+    <p>
+      A signed permutation cannot express any of the three, because it describes a single sequence of
+      blocks. Reversal distance is the wrong measurement for real genomes, and a representation that
+      covers all four operations is needed before the distance can be defined at all.
+    </p>
+
+    <h2>Genomes as Graphs</h2>
+
+    <p>
+      Give every block two ends, a tail and a head, and read a block pointing right as tail then
+      head, one pointing left as head then tail. Block $i$ owns the two nodes $2i - 1$ and $2i$.
+      Joining the two ends of a block gives a <strong>block edge</strong>, and joining consecutive
+      blocks gives an <strong>adjacency edge</strong>. Treating each chromosome as circular, which
+      costs nothing and removes the special case at the ends, makes each chromosome a cycle that
+      alternates between the two kinds of edge.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="474" height="190" viewBox="96 44 474 190">
+      <path class="fig-cell" d="M 108 56 L 144 56 L 154 68 L 144 80 L 108 80 Z"/>
+      <text class="fig-text fig-tick" x="131" y="73" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 206 56 L 170 56 L 160 68 L 170 80 L 206 80 Z"/>
+      <text class="fig-text fig-tick" x="183" y="73" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 258 56 L 222 56 L 212 68 L 222 80 L 258 80 Z"/>
+      <text class="fig-text fig-tick" x="235" y="73" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 264 56 L 300 56 L 310 68 L 300 80 L 264 80 Z"/>
+      <text class="fig-text fig-tick" x="287" y="73" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 154 92 L 118 92 L 108 104 L 118 116 L 154 116 Z"/>
+      <text class="fig-text fig-tick" x="131" y="109" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 160 92 L 196 92 L 206 104 L 196 116 L 160 116 Z"/>
+      <text class="fig-text fig-tick" x="183" y="109" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 212 92 L 248 92 L 258 104 L 248 116 L 212 116 Z"/>
+      <text class="fig-text fig-tick" x="235" y="109" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 310 92 L 274 92 L 264 104 L 274 116 L 310 116 Z"/>
+      <text class="fig-text fig-tick" x="287" y="109" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 154 128 L 118 128 L 108 140 L 118 152 L 154 152 Z"/>
+      <text class="fig-text fig-tick" x="131" y="145" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 206 128 L 170 128 L 160 140 L 170 152 L 206 152 Z"/>
+      <text class="fig-text fig-tick" x="183" y="145" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 212 128 L 248 128 L 258 140 L 248 152 L 212 152 Z"/>
+      <text class="fig-text fig-tick" x="235" y="145" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 264 128 L 300 128 L 310 140 L 300 152 L 264 152 Z"/>
+      <text class="fig-text fig-tick" x="287" y="145" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 154 164 L 118 164 L 108 176 L 118 188 L 154 188 Z"/>
+      <text class="fig-text fig-tick" x="131" y="181" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 206 164 L 170 164 L 160 176 L 170 188 L 206 188 Z"/>
+      <text class="fig-text fig-tick" x="183" y="181" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 212 164 L 248 164 L 258 176 L 248 188 L 212 188 Z"/>
+      <text class="fig-text fig-tick" x="235" y="181" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 264 164 L 300 164 L 310 176 L 300 188 L 264 188 Z"/>
+      <text class="fig-text fig-tick" x="287" y="181" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 402 56 L 366 56 L 356 68 L 366 80 L 402 80 Z"/>
+      <text class="fig-text fig-tick" x="379" y="73" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 408 56 L 444 56 L 454 68 L 444 80 L 408 80 Z"/>
+      <text class="fig-text fig-tick" x="431" y="73" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 460 56 L 496 56 L 506 68 L 496 80 L 460 80 Z"/>
+      <text class="fig-text fig-tick" x="483" y="73" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 558 56 L 522 56 L 512 68 L 522 80 L 558 80 Z"/>
+      <text class="fig-text fig-tick" x="535" y="73" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 356 92 L 392 92 L 402 104 L 392 116 L 356 116 Z"/>
+      <text class="fig-text fig-tick" x="379" y="109" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 454 92 L 418 92 L 408 104 L 418 116 L 454 116 Z"/>
+      <text class="fig-text fig-tick" x="431" y="109" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 506 92 L 470 92 L 460 104 L 470 116 L 506 116 Z"/>
+      <text class="fig-text fig-tick" x="483" y="109" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 512 92 L 548 92 L 558 104 L 548 116 L 512 116 Z"/>
+      <text class="fig-text fig-tick" x="535" y="109" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 356 128 L 392 128 L 402 140 L 392 152 L 356 152 Z"/>
+      <text class="fig-text fig-tick" x="379" y="145" text-anchor="middle">4</text>
+      <path class="fig-cell" d="M 408 128 L 444 128 L 454 140 L 444 152 L 408 152 Z"/>
+      <text class="fig-text fig-tick" x="431" y="145" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 506 128 L 470 128 L 460 140 L 470 152 L 506 152 Z"/>
+      <text class="fig-text fig-tick" x="483" y="145" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 558 128 L 522 128 L 512 140 L 522 152 L 558 152 Z"/>
+      <text class="fig-text fig-tick" x="535" y="145" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 356 164 L 392 164 L 402 176 L 392 188 L 356 188 Z"/>
+      <text class="fig-text fig-tick" x="379" y="181" text-anchor="middle">3</text>
+      <path class="fig-cell" d="M 408 164 L 444 164 L 454 176 L 444 188 L 408 188 Z"/>
+      <text class="fig-text fig-tick" x="431" y="181" text-anchor="middle">2</text>
+      <path class="fig-cell" d="M 506 164 L 470 164 L 460 176 L 470 188 L 506 188 Z"/>
+      <text class="fig-text fig-tick" x="483" y="181" text-anchor="middle">1</text>
+      <path class="fig-cell" d="M 558 164 L 522 164 L 512 176 L 522 188 L 558 188 Z"/>
+      <text class="fig-text fig-tick" x="535" y="181" text-anchor="middle">4</text>
+      <text class="fig-text fig-tick" x="333" y="218" text-anchor="middle">eight ways of writing one circular chromosome</text>
+      </svg>
+      <figcaption>A circular chromosome of $n$ blocks can be written down in $2n$ ways: $n$ places to start reading, times two directions to read in. All eight rows here are the same molecule. Nothing in the chapter may depend on which one is written, which is the reason to work with the graph, where all eight give the identical picture.</figcaption>
+    </figure>
+
+    <figure class="figure-block">
+      <svg class="figure" width="297.5" height="300.8" viewBox="61.7 50.6 297.5 300.8">
+      <line class="fig-curve" x1="210" y1="94" x2="285" y2="125"/>
+      <line class="fig-curve" x1="316" y1="200" x2="285" y2="275"/>
+      <line class="fig-curve" x1="210" y1="306" x2="135" y2="275"/>
+      <line class="fig-curve" x1="104" y1="200" x2="135" y2="125"/>
+      <line class="fig-free-solid" x1="285" y1="125" x2="316" y2="200"/>
+      <line class="fig-free-solid" x1="285" y1="275" x2="210" y2="306"/>
+      <line class="fig-free-solid" x1="135" y1="275" x2="104" y2="200"/>
+      <line class="fig-free-solid" x1="135" y1="125" x2="210" y2="94"/>
+      <circle class="fig-dot" cx="210" cy="94" r="4"/>
+      <text class="fig-text fig-note" x="210" y="72.6" text-anchor="middle">1t</text>
+      <circle class="fig-dot" cx="285" cy="125" r="4"/>
+      <text class="fig-text fig-note" x="302.9" y="111.1" text-anchor="middle">1h</text>
+      <circle class="fig-dot" cx="316" cy="200" r="4"/>
+      <text class="fig-text fig-note" x="341.4" y="204" text-anchor="middle">2h</text>
+      <circle class="fig-dot" cx="285" cy="275" r="4"/>
+      <text class="fig-text fig-note" x="302.9" y="296.9" text-anchor="middle">2t</text>
+      <circle class="fig-dot" cx="210" cy="306" r="4"/>
+      <text class="fig-text fig-note" x="210" y="335.4" text-anchor="middle">3h</text>
+      <circle class="fig-dot" cx="135" cy="275" r="4"/>
+      <text class="fig-text fig-note" x="117.1" y="296.9" text-anchor="middle">3t</text>
+      <circle class="fig-dot" cx="104" cy="200" r="4"/>
+      <text class="fig-text fig-note" x="78.6" y="204" text-anchor="middle">4t</text>
+      <circle class="fig-dot" cx="135" cy="125" r="4"/>
+      <text class="fig-text fig-note" x="117.1" y="111.1" text-anchor="middle">4h</text>
+      <text class="fig-text fig-note" x="210" y="194" text-anchor="middle">block edge</text>
+      <line class="fig-curve" x1="168" y1="206" x2="198" y2="206"/>
+      <line class="fig-free-solid" x1="222" y1="206" x2="252" y2="206"/>
+      <text class="fig-text fig-note" x="210" y="226" text-anchor="middle">adjacency edge</text>
+      </svg>
+      <figcaption>The chromosome $(+1\ {-}2\ {-}3\ {+}4)$, drawn as a graph. Every block becomes two nodes, its tail and its head, joined by a block edge; a block pointing left contributes its head first. Consecutive blocks are joined by an adjacency edge. Reading the circle is reading the chromosome, and because the chromosome is treated as circular the graph is a single cycle alternating between the two kinds of edge. The block edges never change: a rearrangement can only ever touch the adjacency edges.</figcaption>
+    </figure>
+
+    <p>
+      A block edge is a fact about a block and never changes. Every rearrangement is therefore a
+      change to the adjacency edges alone, and the whole genome is recoverable from that list of
+      edges.
+    </p>
+
+    <pre><code class="language-python">def chromosome_to_cycle(chromosome):
+    nodes = []
+    for block in chromosome:
+        nodes += [2 * block - 1, 2 * block] if block &gt; 0 else [-2 * block, -2 * block - 1]
+    return nodes
+
+
+def cycle_to_chromosome(nodes):
+    chromosome = []
+    for j in range(0, len(nodes), 2):
+        head, tail = nodes[j], nodes[j + 1]
+        chromosome.append(tail // 2 if head &lt; tail else -head // 2)
+    return chromosome
+
+
+def colored_edges(genome):
+    edges = []
+    for chromosome in genome:
+        cycle = chromosome_to_cycle(chromosome)
+        for j in range(len(chromosome)):
+            edges.append((cycle[2 * j + 1], cycle[(2 * j + 2) % len(cycle)]))
+    return edges</code></pre>
+
+    <p>
+      Going back is a walk: from any unvisited node, cross its block edge to the partner end, follow
+      the adjacency edge to the next block, and continue until the cycle closes. Each cycle recovered
+      this way is one chromosome.
+    </p>
+
+    <pre><code class="language-python">def graph_to_genome(edges):
+    neighbour = {}
+    for a, b in edges:
+        neighbour.setdefault(a, []).append(b)
+        neighbour.setdefault(b, []).append(a)
+    partner = lambda node: node + 1 if node % 2 else node - 1
+
+    genome, seen = [], set()
+    for start in sorted(neighbour):
+        if start in seen:
+            continue
+        nodes, node = [], start
+        while node not in seen:
+            seen.add(node)
+            seen.add(partner(node))
+            nodes += [node, partner(node)]
+            options = [x for x in neighbour[partner(node)] if x not in seen]
+            node = options[0] if options else start
+        genome.append(cycle_to_chromosome(nodes))
+    return genome</code></pre>
+
+    <p>
+      Both directions cost $O(n)$ for a genome of $n$ blocks, and
+      <code>graph_to_genome(colored_edges(P))</code> returns $P$.
+    </p>
+
+    <h2>Every Rearrangement Is a 2-Break</h2>
+
+    <p>
+      A <strong>2-break</strong> deletes two adjacency edges and adds two new adjacency edges on the
+      same four nodes. That is the whole definition, and it is the only operation the chapter needs.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="582.3" height="282.8" viewBox="5.3 33 582.3 282.8">
+      <line class="fig-curve" x1="140" y1="86" x2="205.1" y2="112.9"/>
+      <line class="fig-curve" x1="232" y1="178" x2="205.1" y2="243.1"/>
+      <line class="fig-curve" x1="140" y1="270" x2="74.9" y2="243.1"/>
+      <line class="fig-curve" x1="48" y1="178" x2="74.9" y2="112.9"/>
+      <line class="fig-free-solid" x1="205.1" y1="112.9" x2="232" y2="178"/>
+      <line class="fig-free" x1="205.1" y1="243.1" x2="140" y2="270"/>
+      <line class="fig-free-solid" x1="74.9" y1="243.1" x2="48" y2="178"/>
+      <line class="fig-free" x1="74.9" y1="112.9" x2="140" y2="86"/>
+      <circle class="fig-dot" cx="140" cy="86" r="4"/>
+      <text class="fig-text fig-note" x="140" y="64.2" text-anchor="middle">1t</text>
+      <circle class="fig-dot" cx="205.1" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="223.3" y="98.7" text-anchor="middle">1h</text>
+      <circle class="fig-dot" cx="232" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="257.8" y="182" text-anchor="middle">2h</text>
+      <circle class="fig-dot" cx="205.1" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="223.3" y="265.3" text-anchor="middle">2t</text>
+      <circle class="fig-dot" cx="140" cy="270" r="4"/>
+      <text class="fig-text fig-note" x="140" y="299.8" text-anchor="middle">3h</text>
+      <circle class="fig-dot" cx="74.9" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="56.7" y="265.3" text-anchor="middle">3t</text>
+      <circle class="fig-dot" cx="48" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="22.2" y="182" text-anchor="middle">4t</text>
+      <circle class="fig-dot" cx="74.9" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="56.7" y="98.7" text-anchor="middle">4h</text>
+      <line class="fig-curve" x1="452" y1="86" x2="517.1" y2="112.9"/>
+      <line class="fig-curve" x1="544" y1="178" x2="517.1" y2="243.1"/>
+      <line class="fig-curve" x1="452" y1="270" x2="386.9" y2="243.1"/>
+      <line class="fig-curve" x1="360" y1="178" x2="386.9" y2="112.9"/>
+      <line class="fig-free-solid" x1="517.1" y1="112.9" x2="544" y2="178"/>
+      <line class="fig-free-solid" x1="386.9" y1="243.1" x2="360" y2="178"/>
+      <line class="fig-free-solid" x1="517.1" y1="243.1" x2="452" y2="86"/>
+      <line class="fig-free-solid" x1="386.9" y1="112.9" x2="452" y2="270"/>
+      <circle class="fig-dot" cx="452" cy="86" r="4"/>
+      <text class="fig-text fig-note" x="452" y="64.2" text-anchor="middle">1t</text>
+      <circle class="fig-dot" cx="517.1" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="535.3" y="98.7" text-anchor="middle">1h</text>
+      <circle class="fig-dot" cx="544" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="569.8" y="182" text-anchor="middle">2h</text>
+      <circle class="fig-dot" cx="517.1" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="535.3" y="265.3" text-anchor="middle">2t</text>
+      <circle class="fig-dot" cx="452" cy="270" r="4"/>
+      <text class="fig-text fig-note" x="452" y="299.8" text-anchor="middle">3h</text>
+      <circle class="fig-dot" cx="386.9" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="368.7" y="265.3" text-anchor="middle">3t</text>
+      <circle class="fig-dot" cx="360" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="334.2" y="182" text-anchor="middle">4t</text>
+      <circle class="fig-dot" cx="386.9" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="368.7" y="98.7" text-anchor="middle">4h</text>
+      <text class="fig-text fig-tick" x="140" y="56" text-anchor="middle">one chromosome</text>
+      <text class="fig-text fig-tick" x="452" y="56" text-anchor="middle">two chromosomes</text>
+      <line class="fig-accent" x1="272" y1="178" x2="314" y2="178"/>
+      <path class="fig-dot" d="M 320 178 L 314 180.7 L 314 175.3 Z"/>
+      <text class="fig-text fig-note" x="296" y="166" text-anchor="middle">2-break</text>
+      </svg>
+      <figcaption>A 2-break deletes two adjacency edges and adds two new ones on the same four nodes. Here the two dashed edges go and the cycle falls into two, which is a fission: $(+1\ {-}2\ {-}3\ {+}4)$ becomes $(+1\ {-}2)(-3\ {+}4)$. Choose a different pair of edges and the same operation performs a reversal, a translocation or a fusion instead. The four rearrangements that look so different in a genome are one operation in the graph, which is the reason to work here rather than there.</figcaption>
+    </figure>
+
+    <p>
+      A reversal and a translocation are each one 2-break already. They look nothing alike in a
+      genome, but in the graph a reversal removes two adjacency edges of one chromosome and a
+      translocation removes one from each of two chromosomes, and both put two edges back on the
+      same four block ends.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="582.3" height="282.8" viewBox="5.3 33 582.3 282.8">
+      <line class="fig-curve" x1="140" y1="86" x2="205.1" y2="112.9"/>
+      <line class="fig-curve" x1="232" y1="178" x2="205.1" y2="243.1"/>
+      <line class="fig-curve" x1="140" y1="270" x2="74.9" y2="243.1"/>
+      <line class="fig-curve" x1="48" y1="178" x2="74.9" y2="112.9"/>
+      <line class="fig-free-solid" x1="205.1" y1="112.9" x2="232" y2="178"/>
+      <line class="fig-free" x1="205.1" y1="243.1" x2="140" y2="270"/>
+      <line class="fig-free-solid" x1="74.9" y1="243.1" x2="48" y2="178"/>
+      <line class="fig-free" x1="74.9" y1="112.9" x2="140" y2="86"/>
+      <circle class="fig-dot" cx="140" cy="86" r="4"/>
+      <text class="fig-text fig-note" x="140" y="64.2" text-anchor="middle">1t</text>
+      <circle class="fig-dot" cx="205.1" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="223.3" y="98.7" text-anchor="middle">1h</text>
+      <circle class="fig-dot" cx="232" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="257.8" y="182" text-anchor="middle">2h</text>
+      <circle class="fig-dot" cx="205.1" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="223.3" y="265.3" text-anchor="middle">2t</text>
+      <circle class="fig-dot" cx="140" cy="270" r="4"/>
+      <text class="fig-text fig-note" x="140" y="299.8" text-anchor="middle">3h</text>
+      <circle class="fig-dot" cx="74.9" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="56.7" y="265.3" text-anchor="middle">3t</text>
+      <circle class="fig-dot" cx="48" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="22.2" y="182" text-anchor="middle">4t</text>
+      <circle class="fig-dot" cx="74.9" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="56.7" y="98.7" text-anchor="middle">4h</text>
+      <line class="fig-curve" x1="452" y1="86" x2="517.1" y2="112.9"/>
+      <line class="fig-curve" x1="544" y1="178" x2="517.1" y2="243.1"/>
+      <line class="fig-curve" x1="452" y1="270" x2="386.9" y2="243.1"/>
+      <line class="fig-curve" x1="360" y1="178" x2="386.9" y2="112.9"/>
+      <line class="fig-free-solid" x1="517.1" y1="112.9" x2="544" y2="178"/>
+      <line class="fig-free-solid" x1="386.9" y1="243.1" x2="360" y2="178"/>
+      <line class="fig-free-solid" x1="517.1" y1="243.1" x2="386.9" y2="112.9"/>
+      <line class="fig-free-solid" x1="452" y1="270" x2="452" y2="86"/>
+      <circle class="fig-dot" cx="452" cy="86" r="4"/>
+      <text class="fig-text fig-note" x="452" y="64.2" text-anchor="middle">1t</text>
+      <circle class="fig-dot" cx="517.1" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="535.3" y="98.7" text-anchor="middle">1h</text>
+      <circle class="fig-dot" cx="544" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="569.8" y="182" text-anchor="middle">2h</text>
+      <circle class="fig-dot" cx="517.1" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="535.3" y="265.3" text-anchor="middle">2t</text>
+      <circle class="fig-dot" cx="452" cy="270" r="4"/>
+      <text class="fig-text fig-note" x="452" y="299.8" text-anchor="middle">3h</text>
+      <circle class="fig-dot" cx="386.9" cy="243.1" r="4"/>
+      <text class="fig-text fig-note" x="368.7" y="265.3" text-anchor="middle">3t</text>
+      <circle class="fig-dot" cx="360" cy="178" r="4"/>
+      <text class="fig-text fig-note" x="334.2" y="182" text-anchor="middle">4t</text>
+      <circle class="fig-dot" cx="386.9" cy="112.9" r="4"/>
+      <text class="fig-text fig-note" x="368.7" y="98.7" text-anchor="middle">4h</text>
+      <text class="fig-text fig-tick" x="140" y="56" text-anchor="middle">(+1 &#8722;2 &#8722;3 +4)</text>
+      <text class="fig-text fig-tick" x="452" y="56" text-anchor="middle">(+1 &#8722;2 &#8722;4 +3)</text>
+      <line class="fig-accent" x1="272" y1="178" x2="314" y2="178"/>
+      <path class="fig-dot" d="M 320 178 L 314 180.7 L 314 175.3 Z"/>
+      <text class="fig-text fig-note" x="296" y="166" text-anchor="middle">2-break</text>
+      </svg>
+      <figcaption>The same two adjacency edges as the previous figure, cut and reconnected the other way. Joining $2t$ to $4h$ and $3h$ to $1t$ leaves one cycle rather than two, so this 2-break is a reversal instead of a fission. One cut, two ways to rejoin, two rearrangements that a biologist would call completely different things.</figcaption>
+    </figure>
+
+    <p>
+      Fusion and fission need one more piece. A chromosome end carries no adjacency edge, so a
+      fusion has only one edge to add and a fission only one to remove. Giving every chromosome end,
+      every <strong>telomere</strong>, an edge of its own restores the balance: a fusion trades the
+      two telomere edges it consumes for one adjacency edge and one empty chromosome, and a fission
+      is the reverse. With telomere edges in place all four rearrangements are one operation, two
+      edges out and two edges in, and which name a biologist gives the result depends only on which
+      four ends were rejoined.
+    </p>
+
+    <p>
+      Everything from here on works with circular chromosomes, which costs nothing and removes the
+      telomeres again. There a 2-break within one cycle is a reversal or a fission depending on how
+      the ends are rejoined, and a 2-break across two cycles is a fusion.
+    </p>
+
+    <pre><code class="language-python">def two_break_on_graph(edges, i1, i2, i3, i4):
+    kept = [e for e in edges if set(e) not in ({i1, i2}, {i3, i4})]
+    return kept + [(i1, i3), (i2, i4)]
+
+
+def two_break_on_genome(genome, i1, i2, i3, i4):
+    return graph_to_genome(two_break_on_graph(colored_edges(genome), i1, i2, i3, i4))</code></pre>
+
+    <p>
+      <strong>2-Break Distance Problem.</strong> Given two genomes on the same synteny blocks, find
+      the minimum number of 2-breaks transforming one into the other.
+    </p>
+
+    <h2>The Breakpoint Graph</h2>
+
+    <p>
+      Both genomes are built from the same blocks, so both have adjacency edges on the same $2n$
+      nodes. Drawing both sets at once gives the <strong>breakpoint graph</strong> of $P$ and $Q$.
+      Every node has exactly one adjacency edge from $P$ and exactly one from $Q$, so every node has
+      degree two and the graph falls apart into cycles that alternate between the two genomes.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="446.7" height="316.4" viewBox="73.3 52.8 446.7 316.4">
+      <line class="fig-axis" x1="230" y1="94" x2="288" y2="109.5"/>
+      <line class="fig-axis" x1="330.5" y1="152" x2="346" y2="210"/>
+      <line class="fig-axis" x1="330.5" y1="268" x2="288" y2="310.5"/>
+      <line class="fig-axis" x1="230" y1="326" x2="172" y2="310.5"/>
+      <line class="fig-axis" x1="129.5" y1="268" x2="114" y2="210"/>
+      <line class="fig-axis" x1="129.5" y1="152" x2="172" y2="109.5"/>
+      <line class="fig-curve" x1="288" y1="109.5" x2="330.5" y2="152"/>
+      <line class="fig-curve" x1="346" y1="210" x2="330.5" y2="268"/>
+      <line class="fig-curve" x1="288" y1="310.5" x2="230" y2="326"/>
+      <line class="fig-curve" x1="172" y1="310.5" x2="129.5" y2="268"/>
+      <path class="fig-curve" d="M 114 210 Q 130.5 183.3 129.5 152"/>
+      <line class="fig-curve" x1="172" y1="109.5" x2="230" y2="94"/>
+      <line class="fig-free" x1="288" y1="109.5" x2="288" y2="310.5"/>
+      <line class="fig-free" x1="330.5" y1="268" x2="172" y2="109.5"/>
+      <path class="fig-free" d="M 129.5 152 Q 130.5 183.3 114 210"/>
+      <line class="fig-free" x1="129.5" y1="268" x2="230" y2="94"/>
+      <line class="fig-free" x1="346" y1="210" x2="172" y2="310.5"/>
+      <line class="fig-free" x1="230" y1="326" x2="330.5" y2="152"/>
+      <circle class="fig-dot" cx="230" cy="94" r="4"/>
+      <text class="fig-text fig-note" x="230" y="74.8" text-anchor="middle">1</text>
+      <circle class="fig-dot" cx="288" cy="109.5" r="4"/>
+      <text class="fig-text fig-note" x="299.6" y="93.4" text-anchor="middle">2</text>
+      <circle class="fig-dot" cx="330.5" cy="152" r="4"/>
+      <text class="fig-text fig-note" x="350.6" y="144.4" text-anchor="middle">3</text>
+      <circle class="fig-dot" cx="346" cy="210" r="4"/>
+      <text class="fig-text fig-note" x="369.2" y="214" text-anchor="middle">4</text>
+      <circle class="fig-dot" cx="330.5" cy="268" r="4"/>
+      <text class="fig-text fig-note" x="350.6" y="283.6" text-anchor="middle">5</text>
+      <circle class="fig-dot" cx="288" cy="310.5" r="4"/>
+      <text class="fig-text fig-note" x="299.6" y="334.6" text-anchor="middle">6</text>
+      <circle class="fig-dot" cx="230" cy="326" r="4"/>
+      <text class="fig-text fig-note" x="230" y="353.2" text-anchor="middle">7</text>
+      <circle class="fig-dot" cx="172" cy="310.5" r="4"/>
+      <text class="fig-text fig-note" x="160.4" y="334.6" text-anchor="middle">8</text>
+      <circle class="fig-dot" cx="129.5" cy="268" r="4"/>
+      <text class="fig-text fig-note" x="109.4" y="283.6" text-anchor="middle">9</text>
+      <circle class="fig-dot" cx="114" cy="210" r="4"/>
+      <text class="fig-text fig-note" x="90.8" y="214" text-anchor="middle">10</text>
+      <circle class="fig-dot" cx="129.5" cy="152" r="4"/>
+      <text class="fig-text fig-note" x="109.4" y="144.4" text-anchor="middle">11</text>
+      <circle class="fig-dot" cx="172" cy="109.5" r="4"/>
+      <text class="fig-text fig-note" x="160.4" y="93.4" text-anchor="middle">12</text>
+      <line class="fig-axis" x1="400" y1="150" x2="428" y2="150"/>
+      <text class="fig-text fig-note" x="436" y="154" text-anchor="start">block edge</text>
+      <line class="fig-curve" x1="400" y1="172" x2="428" y2="172"/>
+      <text class="fig-text fig-note" x="436" y="176" text-anchor="start">adjacency in P</text>
+      <line class="fig-free" x1="400" y1="194" x2="428" y2="194"/>
+      <text class="fig-text fig-note" x="436" y="198" text-anchor="start">adjacency in Q</text>
+      <text class="fig-text fig-tick" x="400" y="232" text-anchor="start">3 cycles</text>
+      </svg>
+      <figcaption>The breakpoint graph of $P = (+1\ {+}2\ {+}3\ {+}4\ {+}5\ {+}6)$ against $Q = (+1\ {-}3\ {-}6\ {-}5)(+2\ {-}4)$. Block $i$ owns the two nodes $2i-1$ and $2i$. Both genomes are drawn on those same nodes, $P$ solid and $Q$ dashed, and every node has exactly one edge of each kind, so the two sets of edges fall apart into cycles that alternate between them. There are three here: one of length six, one of length four, and one of length two.</figcaption>
+    </figure>
+
+    <p>
+      Write $\text{Cycles}(P, Q)$ for the number of these cycles and $\text{Blocks}(P, Q)$ for the
+      number of synteny blocks. A genome against itself gives the most cycles there can be: every
+      $P$ edge coincides with a $Q$ edge, each pair forming a cycle of length two, so
+      $\text{Cycles}(P, P) = \text{Blocks}$. The further apart the genomes, the fewer and longer the
+      cycles.
+    </p>
+
+    <h2>The Cycle Theorem</h2>
+
+    <p>
+      <strong>Cycle Theorem.</strong> A 2-break applied to $P$ changes $\text{Cycles}(P, Q)$ by at
+      most $+1$.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="461" height="204.5" viewBox="49.5 62 461 204.5">
+      <line class="fig-curve" x1="140" y1="102" x2="214" y2="176"/>
+      <line class="fig-free" x1="214" y1="176" x2="140" y2="250"/>
+      <line class="fig-curve" x1="140" y1="250" x2="66" y2="176"/>
+      <line class="fig-free" x1="66" y1="176" x2="140" y2="102"/>
+      <path class="fig-curve" d="M 420 102 Q 371.7 127.7 346 176"/>
+      <path class="fig-free" d="M 420 102 Q 394.3 150.3 346 176"/>
+      <path class="fig-curve" d="M 494 176 Q 445.7 201.7 420 250"/>
+      <path class="fig-free" d="M 494 176 Q 468.3 224.3 420 250"/>
+      <circle class="fig-dot" cx="140" cy="102" r="4.5"/>
+      <circle class="fig-dot" cx="214" cy="176" r="4.5"/>
+      <circle class="fig-dot" cx="140" cy="250" r="4.5"/>
+      <circle class="fig-dot" cx="66" cy="176" r="4.5"/>
+      <circle class="fig-dot" cx="420" cy="102" r="4.5"/>
+      <circle class="fig-dot" cx="494" cy="176" r="4.5"/>
+      <circle class="fig-dot" cx="420" cy="250" r="4.5"/>
+      <circle class="fig-dot" cx="346" cy="176" r="4.5"/>
+      <text class="fig-text fig-note" x="140" y="84" text-anchor="middle">one cycle of length four</text>
+      <text class="fig-text fig-note" x="420" y="84" text-anchor="middle">two cycles of length two</text>
+      <line class="fig-accent" x1="240" y1="176" x2="294" y2="176"/>
+      <path class="fig-dot" d="M 300 176 L 294 178.7 L 294 173.3 Z"/>
+      <text class="fig-text fig-note" x="270" y="166" text-anchor="middle">2-break</text>
+      </svg>
+      <figcaption>A 2-break replaces two solid edges by two others, and the best it can do is cut one cycle in two. It cannot do better: the two new edges touch the same four nodes as the two it removed, so at most one cycle can become two. Since $P$ starts with $\text{Cycles}(P,Q)$ cycles and $Q$ against itself has one cycle per block, getting there needs at least $\text{Blocks} - \text{Cycles}$ steps.</figcaption>
+    </figure>
+
+    <p>
+      The two new edges touch the same four nodes as the two deleted ones. Deleting two edges of a
+      cycle splits it into at most two pieces, and the two new edges rejoin those pieces into either
+      one cycle or two, so the count rises by at most one. If the two deleted edges lie in different
+      cycles, the two cycles merge and the count falls.
+    </p>
+
+    <h2>The 2-Break Distance</h2>
+
+    <p>
+      <strong>2-Break Distance Theorem.</strong>
+      $d(P, Q) = \text{Blocks}(P, Q) - \text{Cycles}(P, Q)$.
+    </p>
+
+    <p>
+      Transforming $P$ into $Q$ means turning the breakpoint graph of $P$ against $Q$ into the
+      breakpoint graph of $Q$ against itself, which has $\text{Blocks}$ cycles. Each 2-break gains at
+      most one cycle, so at least $\text{Blocks} - \text{Cycles}$ of them are needed. That many also
+      suffice: as long as some cycle is longer than two, a 2-break exists that splits it and gains
+      exactly one, so the bound is reached.
+    </p>
+
+    <figure class="figure-block">
+      <svg class="figure" width="572.7" height="315" viewBox="27.3 39 572.7 315">
+      <line class="fig-axis" x1="160" y1="94" x2="208" y2="106.9"/>
+      <line class="fig-axis" x1="243.1" y1="142" x2="256" y2="190"/>
+      <line class="fig-axis" x1="243.1" y1="238" x2="208" y2="273.1"/>
+      <line class="fig-axis" x1="160" y1="286" x2="112" y2="273.1"/>
+      <line class="fig-axis" x1="76.9" y1="238" x2="64" y2="190"/>
+      <line class="fig-axis" x1="76.9" y1="142" x2="112" y2="106.9"/>
+      <path class="fig-curve" d="M 208 106.9 Q 219.2 130.8 243.1 142"/>
+      <path class="fig-curve" d="M 256 190 Q 240.9 211.7 243.1 238"/>
+      <path class="fig-curve" d="M 208 273.1 Q 181.7 270.9 160 286"/>
+      <path class="fig-curve" d="M 112 273.1 Q 100.8 249.2 76.9 238"/>
+      <path class="fig-curve" d="M 64 190 Q 79.1 168.3 76.9 142"/>
+      <path class="fig-curve" d="M 112 106.9 Q 138.3 109.1 160 94"/>
+      <path class="fig-free" d="M 208 106.9 Q 231.9 118.1 243.1 142"/>
+      <path class="fig-free" d="M 256 190 Q 258.3 216.3 243.1 238"/>
+      <path class="fig-free" d="M 208 273.1 Q 186.3 288.3 160 286"/>
+      <path class="fig-free" d="M 112 273.1 Q 88.1 261.9 76.9 238"/>
+      <path class="fig-free" d="M 64 190 Q 61.7 163.7 76.9 142"/>
+      <path class="fig-free" d="M 112 106.9 Q 133.7 91.7 160 94"/>
+      <circle class="fig-dot" cx="160" cy="94" r="4"/>
+      <text class="fig-text fig-note" x="160" y="78.8" text-anchor="middle">1</text>
+      <circle class="fig-dot" cx="208" cy="106.9" r="4"/>
+      <text class="fig-text fig-note" x="217.6" y="94.2" text-anchor="middle">2</text>
+      <circle class="fig-dot" cx="243.1" cy="142" r="4"/>
+      <text class="fig-text fig-note" x="259.8" y="136.4" text-anchor="middle">3</text>
+      <circle class="fig-dot" cx="256" cy="190" r="4"/>
+      <text class="fig-text fig-note" x="275.2" y="194" text-anchor="middle">4</text>
+      <circle class="fig-dot" cx="243.1" cy="238" r="4"/>
+      <text class="fig-text fig-note" x="259.8" y="251.6" text-anchor="middle">5</text>
+      <circle class="fig-dot" cx="208" cy="273.1" r="4"/>
+      <text class="fig-text fig-note" x="217.6" y="293.8" text-anchor="middle">6</text>
+      <circle class="fig-dot" cx="160" cy="286" r="4"/>
+      <text class="fig-text fig-note" x="160" y="309.2" text-anchor="middle">7</text>
+      <circle class="fig-dot" cx="112" cy="273.1" r="4"/>
+      <text class="fig-text fig-note" x="102.4" y="293.8" text-anchor="middle">8</text>
+      <circle class="fig-dot" cx="76.9" cy="238" r="4"/>
+      <text class="fig-text fig-note" x="60.2" y="251.6" text-anchor="middle">9</text>
+      <circle class="fig-dot" cx="64" cy="190" r="4"/>
+      <text class="fig-text fig-note" x="44.8" y="194" text-anchor="middle">10</text>
+      <circle class="fig-dot" cx="76.9" cy="142" r="4"/>
+      <text class="fig-text fig-note" x="60.2" y="136.4" text-anchor="middle">11</text>
+      <circle class="fig-dot" cx="112" cy="106.9" r="4"/>
+      <text class="fig-text fig-note" x="102.4" y="94.2" text-anchor="middle">12</text>
+      <line class="fig-axis" x1="470" y1="94" x2="518" y2="106.9"/>
+      <line class="fig-axis" x1="553.1" y1="142" x2="566" y2="190"/>
+      <line class="fig-axis" x1="553.1" y1="238" x2="518" y2="273.1"/>
+      <line class="fig-axis" x1="470" y1="286" x2="422" y2="273.1"/>
+      <line class="fig-axis" x1="386.9" y1="238" x2="374" y2="190"/>
+      <line class="fig-axis" x1="386.9" y1="142" x2="422" y2="106.9"/>
+      <line class="fig-curve" x1="518" y1="106.9" x2="553.1" y2="142"/>
+      <line class="fig-curve" x1="566" y1="190" x2="553.1" y2="238"/>
+      <line class="fig-curve" x1="518" y1="273.1" x2="470" y2="286"/>
+      <line class="fig-curve" x1="422" y1="273.1" x2="386.9" y2="238"/>
+      <path class="fig-curve" d="M 374 190 Q 389.1 168.3 386.9 142"/>
+      <line class="fig-curve" x1="422" y1="106.9" x2="470" y2="94"/>
+      <line class="fig-free" x1="518" y1="106.9" x2="518" y2="273.1"/>
+      <line class="fig-free" x1="553.1" y1="238" x2="422" y2="106.9"/>
+      <path class="fig-free" d="M 386.9 142 Q 389.1 168.3 374 190"/>
+      <line class="fig-free" x1="386.9" y1="238" x2="470" y2="94"/>
+      <line class="fig-free" x1="566" y1="190" x2="422" y2="273.1"/>
+      <line class="fig-free" x1="470" y1="286" x2="553.1" y2="142"/>
+      <circle class="fig-dot" cx="470" cy="94" r="4"/>
+      <text class="fig-text fig-note" x="470" y="78.8" text-anchor="middle">1</text>
+      <circle class="fig-dot" cx="518" cy="106.9" r="4"/>
+      <text class="fig-text fig-note" x="527.6" y="94.2" text-anchor="middle">2</text>
+      <circle class="fig-dot" cx="553.1" cy="142" r="4"/>
+      <text class="fig-text fig-note" x="569.8" y="136.4" text-anchor="middle">3</text>
+      <circle class="fig-dot" cx="566" cy="190" r="4"/>
+      <text class="fig-text fig-note" x="585.2" y="194" text-anchor="middle">4</text>
+      <circle class="fig-dot" cx="553.1" cy="238" r="4"/>
+      <text class="fig-text fig-note" x="569.8" y="251.6" text-anchor="middle">5</text>
+      <circle class="fig-dot" cx="518" cy="273.1" r="4"/>
+      <text class="fig-text fig-note" x="527.6" y="293.8" text-anchor="middle">6</text>
+      <circle class="fig-dot" cx="470" cy="286" r="4"/>
+      <text class="fig-text fig-note" x="470" y="309.2" text-anchor="middle">7</text>
+      <circle class="fig-dot" cx="422" cy="273.1" r="4"/>
+      <text class="fig-text fig-note" x="412.4" y="293.8" text-anchor="middle">8</text>
+      <circle class="fig-dot" cx="386.9" cy="238" r="4"/>
+      <text class="fig-text fig-note" x="370.2" y="251.6" text-anchor="middle">9</text>
+      <circle class="fig-dot" cx="374" cy="190" r="4"/>
+      <text class="fig-text fig-note" x="354.8" y="194" text-anchor="middle">10</text>
+      <circle class="fig-dot" cx="386.9" cy="142" r="4"/>
+      <text class="fig-text fig-note" x="370.2" y="136.4" text-anchor="middle">11</text>
+      <circle class="fig-dot" cx="422" cy="106.9" r="4"/>
+      <text class="fig-text fig-note" x="412.4" y="94.2" text-anchor="middle">12</text>
+      <text class="fig-text fig-tick" x="160" y="62" text-anchor="middle">P against itself</text>
+      <text class="fig-text fig-tick" x="470" y="62" text-anchor="middle">P against Q</text>
+      <text class="fig-text fig-note" x="160" y="318" text-anchor="middle">6 blocks, 6 cycles</text>
+      <text class="fig-text fig-tick" x="160" y="338" text-anchor="middle">distance 6 &#8722; 6 = 0</text>
+      <text class="fig-text fig-note" x="470" y="318" text-anchor="middle">6 blocks, 3 cycles</text>
+      <text class="fig-text fig-tick" x="470" y="338" text-anchor="middle">distance 6 &#8722; 3 = 3</text>
+      </svg>
+      <figcaption>Why the distance is a subtraction. A genome against itself gives one small cycle per block, the most cycles there can be, and the distance is zero. Every cycle short of that maximum is one 2-break still owed, because a 2-break gains at most one cycle and there is always one available that gains exactly one. So the 2-break distance is $\text{Blocks}(P,Q) - \text{Cycles}(P,Q)$, and it is computed by counting connected components rather than by searching for a sequence of rearrangements.</figcaption>
+    </figure>
+
+    <pre><code class="language-python">def cycles(genome_p, genome_q):
+    neighbour = {}
+    for a, b in colored_edges(genome_p) + colored_edges(genome_q):
+        neighbour.setdefault(a, []).append(b)
+        neighbour.setdefault(b, []).append(a)
+    seen, total = set(), 0
+    for start in neighbour:
+        if start in seen:
+            continue
+        total += 1
+        stack = [start]
+        while stack:
+            node = stack.pop()
+            if node in seen:
+                continue
+            seen.add(node)
+            stack += neighbour[node]
+    return total
+
+
+def two_break_distance(genome_p, genome_q):
+    blocks = sum(len(chromosome) for chromosome in genome_p)
+    return blocks - cycles(genome_p, genome_q)</code></pre>
+
+    <p>
+      Building the graph and counting its components costs $O(n)$. A distance that looked like it
+      required searching through sequences of rearrangements is a subtraction between two counts.
+      For $P = (+1\ +2\ +3\ +4\ +5\ +6)$ and $Q = (+1\ -3\ -6\ -5)(+2\ -4)$ it returns
+      $6 - 3 = 3$.
+    </p>
+
+    <h2>Sorting by 2-Breaks</h2>
+
+    <p>
+      The proof is constructive, so it is also the algorithm. While some cycle is longer than two,
+      pick an adjacency edge of $Q$ that is not yet an edge of $P$, and apply the 2-break that
+      installs it. That edge closes off part of its cycle, gaining one, and $\text{Blocks} -
+      \text{Cycles}$ steps land on $Q$.
+    </p>
+
+    <pre><code class="language-python">def two_break_sorting(genome_p, genome_q):
+    path = [genome_p]
+    while two_break_distance(path[-1], genome_q):
+        red = colored_edges(path[-1])
+        neighbour = {}
+        for a, b in red:
+            neighbour[a] = b
+            neighbour[b] = a
+        installed = {frozenset(e) for e in red}
+        for j1, j2 in colored_edges(genome_q):
+            if frozenset((j1, j2)) in installed:
+                continue
+            path.append(two_break_on_genome(path[-1], j1, neighbour[j1], j2, neighbour[j2]))
+            break
+    return path</code></pre>
+
+    <p>
+      Every round installs one edge of $Q$ for good, so there are $d(P, Q)$ rounds and the whole
+      procedure costs $O(n^2)$. On the pair above it produces
+      $(+1\ +2\ +3\ +4\ +5\ +6)$, then $(+1\ -3\ -2\ +4\ +5\ +6)$, then
+      $(+1\ -3\ -6\ -5\ -4\ +2)$, then $(+1\ -3\ -6\ -5)(+2\ -4)$: three 2-breaks, matching the
+      distance. The last of them is a fission, which is where the second chromosome comes from.
+    </p>
+
+    <h2>Finding the Blocks</h2>
+
+    <p>
+      Everything so far assumed the synteny blocks were already known. They are not; they have to be
+      found from the two sequences, and the tool is the k-mer.
+    </p>
+
+    <p>
+      <strong>Shared k-mers Problem.</strong> Given two strings, find every pair of positions
+      $(i, j)$ such that the k-mer at position $i$ of the first equals the k-mer at position $j$ of
+      the second, or its reverse complement.
+    </p>
+
+    <p>
+      The reverse complement is included because a synteny block may sit on either strand, using
+      <code>reverse_complement</code> from <a href="replication-origins.html">Chapter 1</a>. Indexing
+      the first string's k-mers in a dictionary makes the search one pass over the second.
+    </p>
+
+    <pre><code class="language-python">def shared_kmers(k, first, second):
+    index = {}
+    for i in range(len(first) - k + 1):
+        index.setdefault(first[i:i + k], []).append(i)
+    pairs = []
+    for j in range(len(second) - k + 1):
+        window = second[j:j + k]
+        for pattern in {window, reverse_complement(window)}:
+            for i in index.get(pattern, []):
+                pairs.append((i, j))
+    return sorted(set(pairs))</code></pre>
+
+    <p>
+      The cost is $O(nk)$ for strings of length $n$, and on <code>AAACTCATC</code> against
+      <code>TTTCAAATC</code> with $k = 3$ it returns $(0,0)$, $(0,4)$, $(4,2)$ and $(6,6)$.
+    </p>
+
+    <p>
+      Plotting every returned pair as a point, with one genome on each axis, gives a
+      <strong>genomic dot plot</strong>. A synteny block shared by the two genomes appears as a
+      diagonal run of points, sloping one way if the block points the same way in both and the other
+      way if it is reversed. Isolated points are k-mers that match by chance. Reading the blocks off
+      a dot plot is what supplies the signed permutations the rest of the chapter consumes.
+    </p>
+
+    <h2>Application: Are There Fragile Regions?</h2>
+
+    <p>
+      The Random Breakage Model says breakage points fall uniformly at random. A uniform process
+      almost never uses the same position twice, so under that model the endpoints of the synteny
+      blocks between two genomes should be nearly all distinct.
+    </p>
+
+    <p>
+      The 2-break machinery makes this checkable. Take the synteny blocks of human against mouse,
+      compute a shortest sequence of 2-breaks between the two genomes, and count how often a
+      breakage point is used more than once along it. Under random breakage the count should be close
+      to zero.
+    </p>
+
+    <p>
+      It is not. Pevzner and Tesler carried out this comparison in 2003 and found extensive
+      <strong>breakpoint reuse</strong>: the same regions are broken again and again across
+      independent rearrangements, far more often than a uniform process would allow. The observation
+      that had supported the Random Breakage Model, the exponential distribution of block lengths,
+      turns out to be consistent with other models too, so it never distinguished them.
+    </p>
+
+    <p>
+      <strong>Fragile Breakage Model.</strong> Rearrangements do not cut anywhere. The genome
+      contains a limited number of fragile regions, and breakage happens there.
+    </p>
+
+    <p>
+      The question the chapter opened on has an answer, and it came from counting. Whether breakage
+      is random or concentrated is not a question that can be settled by looking at genomes, only by
+      measuring the distance between them, and that measurement rests on the observation that a
+      reversal, a translocation, a fusion and a fission are one operation once a genome is written as
+      a graph.
+    </p>
+  </main>
+</body>
+</html>

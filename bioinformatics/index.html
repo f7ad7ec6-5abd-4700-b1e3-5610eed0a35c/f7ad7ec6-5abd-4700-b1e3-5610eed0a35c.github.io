@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bioinformatics</title>
+  <!-- SEO (generated) -->
+  <meta name="description" content="A course on bioinformatics algorithms for computer scientists: replication origins, motif finding, genome assembly, peptide sequencing and sequence alignment.">
+  <link rel="canonical" href="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/bioinformatics/index.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:title" content="Bioinformatics">
+  <meta property="og:description" content="A course on bioinformatics algorithms for computer scientists: replication origins, motif finding, genome assembly, peptide sequencing and sequence alignment.">
+  <meta property="og:url" content="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/bioinformatics/index.html">
+  <meta property="og:locale" content="en_US">
+  <!-- /SEO -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="../style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/themes/prism.min.css" />
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/prism.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/prismjs@1.29.0/components/prism-python.min.js"></script>
+</head>
+<body>
+  <script src="../nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>Bioinformatics</h1>
+    </header>
+
+    <p>
+      Notes on <em>Bioinformatics Algorithms</em> by Phillip Compeau and Pavel Pevzner.
+    </p>
+
+    <hr>
+
+    <p>
+      <strong><a href="replication-origins.html">Chapter 1: Replication Origins</a></strong><br>
+      Where on a bacterial chromosome does copying begin? Frequent k-mers, clumps, approximate
+      matching, and the running count of G minus C that locates the origin of
+      <em>Escherichia coli</em> to within 150 nucleotides out of four and a half million.
+    </p>
+
+    <p>
+      <strong><a href="motif-finding.html">Chapter 2: Motif Finding</a></strong><br>
+      A regulatory pattern is shared by a collection of DNA regions but occurs nowhere exactly.
+      Scoring a set of motifs, the median string, greedy search, and the randomized algorithms that
+      beat it.
+    </p>
+
+    <p>
+      <strong><a href="genome-assembly.html">Chapter 3: Genome Assembly</a></strong><br>
+      No machine reads a chromosome end to end. Rebuilding one from short reads is a Hamiltonian
+      path problem until the reads are moved from the nodes of the graph onto its edges, at which
+      point it becomes an Eulerian path problem and is solved in linear time.
+    </p>
+
+    <p>
+      <strong><a href="antibiotic-sequencing.html">Chapter 4: Antibiotic Sequencing</a></strong><br>
+      Some antibiotics are assembled by an enzyme rather than transcribed from a gene, so no gene
+      spells them out. Their sequence has to be recovered from a list of fragment masses, by branch
+      and bound, a leaderboard, and the spectral convolution.
+    </p>
+
+    <p>
+      <strong><a href="sequence-alignment.html">Chapter 5: Sequence Alignment</a></strong><br>
+      Comparing two sequences is finding a longest path in a directed acyclic graph. Global, local,
+      fitting and overlap alignment are one algorithm with different ends freed, and the chapter
+      ends by finding the homeobox shared by a fly gene and a human one.
+    </p>
+
+    <p>
+      <strong><a href="genome-rearrangements.html">Chapter 6: Genome Rearrangements</a></strong><br>
+      Two genomes too far apart to compare letter by letter still share whole blocks in a different
+      order. Reversals, breakpoints, and the graph in which a reversal, a translocation, a fusion and
+      a fission all turn out to be one operation, which makes the distance a subtraction.
+    </p>
+
+    <p>
+      <strong><a href="evolutionary-trees.html">Chapter 7: Evolutionary Trees</a></strong><br>
+      Reconstructing who descended from whom, first from a matrix of pairwise distances and then
+      from the sequences themselves, and using it to name the animal that gave us SARS.
+    </p>
+
+    <p>
+      <strong><a href="clustering.html">Chapter 8: Gene Clustering</a></strong><br>
+      Yeast ferments sugar into alcohol even when it could burn it, and switches to burning the
+      alcohol only once the sugar is gone. Partitioning genes by how their activity moves, with
+      k-centres, k-means, expectation maximization and a dendrogram, reads that switch off the data.
+    </p>
+
+    <p>
+      <strong><a href="read-mapping.html">Chapter 9: Read Mapping</a></strong><br>
+      Finding a patient's disease-causing mutation means placing a billion short reads on a
+      reference genome. Tries, suffix trees and suffix arrays each answer the question and each one
+      runs out of memory, until the Burrows-Wheeler transform shrinks the index to something that
+      fits and locates a pathogenic variant in KAT6B.
+    </p>
+
+    <p>
+      <strong><a href="hidden-markov-models.html">Chapter 10: Hidden Markov Models</a></strong><br>
+      A machine that emits symbols while moving between states nobody can see. Recovering what it was
+      doing from what it produced finds CG-islands on human chromosome X, and a model of a whole
+      family of sequences rediscovers the consensus of the HIV envelope V3 loop and tells its members
+      from everything else.
+    </p>
+
+    <p>
+      <strong><a href="computational-proteomics.html">Chapter 11: Computational Proteomics</a></strong><br>
+      A fossil keeps no DNA but may keep protein, and a mass spectrometer reads it as a list of
+      numbers. Spectrum graphs, peptide and spectral vectors, a search over 27 million residues, and
+      the spectral dictionary that says what a match is worth, applied to the collagen peptides
+      reported from a <em>Tyrannosaurus rex</em> femur.
+    </p>
+  </main>
+</body>
+</html>

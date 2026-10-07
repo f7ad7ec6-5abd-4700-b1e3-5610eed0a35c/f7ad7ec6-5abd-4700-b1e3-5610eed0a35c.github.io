@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Notes</title>
+  <!-- SEO (generated) -->
+  <meta name="description" content="Personal notes on mathematics, computer science and bioinformatics.">
+  <link rel="canonical" href="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:title" content="Notes">
+  <meta property="og:description" content="Personal notes on mathematics, computer science and bioinformatics.">
+  <meta property="og:url" content="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/">
+  <meta property="og:locale" content="en_US">
+  <!-- /SEO -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script src="nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>About</h1>
+    </header>
+
+    <p>
+      This site is a collection of personal notes on mathematics, computer science and bioinformatics. It is not intended as a reference and may contain mistakes.
+    </p>
+
+  </main>
+
+  <script>
+    function setLang(lang) {
+      localStorage.setItem('lang', lang);
+      document.querySelectorAll('[data-en][data-fr]').forEach(el => {
+        el.innerHTML = el.getAttribute('data-' + lang);
+      });
+      document.getElementById('lang-en').classList.toggle('active', lang === 'en');
+      document.getElementById('lang-fr').classList.toggle('active', lang === 'fr');
+      document.documentElement.lang = lang;
+    }
+
+    // Apply saved preference on load
+    (function() {
+      var lang = localStorage.getItem('lang') || 'en';
+      if (lang === 'fr') setLang('fr');
+    })();
+
+    // ── SPA routing ──
+    function renderMath() {
+      if (typeof renderMathInElement === 'function') {
+        renderMathInElement(document.querySelector('main'), {
+          delimiters: [
+            {left: '\\[', right: '\\]', display: true},
+            {left: '$$', right: '$$', display: false},
+            {left: '$', right: '$', display: false}
+          ]
+        });
+      }
+    }
+
+    function resolveUrl(attr, baseUrl) {
+      if (!attr) return '';
+      try { return new URL(attr, baseUrl).href; } catch(e) { return attr; }
+    }
+
+    function loadScript(src) {
+      return new Promise(function(resolve) {
+        var s = document.createElement('script');
+        s.src = src;
+        s.onload = resolve;
+        s.onerror = resolve;
+        document.head.appendChild(s);
+      });
+    }
+
+    function loadStylesheet(href) {
+      return new Promise(function(resolve) {
+        var l = document.createElement('link');
+        l.rel = 'stylesheet';
+        l.href = href;
+        l.onload = resolve;
+        l.onerror = resolve;
+        document.head.appendChild(l);
+      });
+    }
+
+    function isLoaded(tag, attr, resolvedUrl) {
+      var els = document.querySelectorAll(tag + '[' + attr + ']');
+      for (var i = 0; i < els.length; i++) {
+        if (els[i][attr] === resolvedUrl) return true;
+      }
+      return false;
+    }
+
+    async function navigateTo(url, pushState) {
+      try {
+        var resp = await fetch(url);
+        if (!resp.ok) { window.location.href = url; return; }
+        var html = await resp.text();
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var newMain = doc.querySelector('main');
+        if (!newMain) { window.location.href = url; return; }
+
+        // Load CSS from target page head
+        var links = doc.querySelectorAll('head link[rel="stylesheet"]');
+        for (var i = 0; i < links.length; i++) {
+          var href = resolveUrl(links[i].getAttribute('href'), url);
+          if (!isLoaded('link', 'href', href)) await loadStylesheet(href);
+        }
+
+        // Load scripts from target page head (in order, waiting for each)
+        var headScripts = doc.querySelectorAll('head script[src]');
+        for (var i = 0; i < headScripts.length; i++) {
+          var src = resolveUrl(headScripts[i].getAttribute('src'), url);
+          if (!isLoaded('script', 'src', src)) await loadScript(src);
+        }
+
+        // Replace page content. Mirror the <main> element's class (and id)
+        // from the target page too, otherwise per-page main styling (e.g.
+        // .fc-main on flashcards.html) never gets applied because innerHTML
+        // alone doesn't carry attributes from newMain.
+        var mainEl = document.querySelector('main');
+        mainEl.innerHTML = newMain.innerHTML;
+        mainEl.className = newMain.className;
+        if (newMain.id) mainEl.id = newMain.id; else mainEl.removeAttribute('id');
+        if (pushState !== false) history.pushState(null, '', url);
+        document.title = doc.title || 'Home';
+        renderMath();
+        if (typeof Prism !== 'undefined') Prism.highlightAll();
+        if (typeof initProofToggles === 'function') initProofToggles();
+        setLang(localStorage.getItem('lang') || 'en');
+        if (typeof setActiveNav === 'function') setActiveNav();
+        if (typeof updateLangToggle === 'function') updateLangToggle();
+        window.scrollTo(0, 0);
+
+        // Load and execute body scripts (in order)
+        var bodyScripts = doc.querySelectorAll('body script');
+        for (var i = 0; i < bodyScripts.length; i++) {
+          var el = bodyScripts[i];
+          var elSrc = el.getAttribute('src');
+          if (elSrc) {
+            var resolved = resolveUrl(elSrc, url);
+            if (resolved.indexOf('nav.js') !== -1) continue;
+            if (!isLoaded('script', 'src', resolved)) await loadScript(resolved);
+          } else if (el.textContent.trim()) {
+            var inline = document.createElement('script');
+            inline.textContent = el.textContent;
+            document.body.appendChild(inline);
+          }
+        }
+      } catch (e) {
+        window.location.href = url;
+      }
+    }
+
+    // Base URL for resolving nav links (always relative to index.html location)
+    var baseUrl = new URL('./', window.location.href).href;
+
+    document.addEventListener('click', function(e) {
+      var link = e.target.closest('a[href]');
+      if (!link) return;
+      var href = link.getAttribute('href');
+      if (!href || href === '#' || href.startsWith('http') || href.startsWith('mailto:')) return;
+      if (!href.endsWith('.html')) return;
+      e.preventDefault();
+      var resolved = new URL(href, baseUrl).href;
+      navigateTo(resolved);
+    });
+
+    window.addEventListener('popstate', function() {
+      navigateTo(window.location.href, false);
+    });
+  </script>
+</body>
+</html>

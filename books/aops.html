@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Art of Problem Solving</title>
+  <!-- SEO (generated) -->
+  <meta name="description" content="Lecture notes on The Art of Problem Solving, Volumes 1 and 2.">
+  <link rel="canonical" href="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/books/aops.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:title" content="The Art of Problem Solving">
+  <meta property="og:description" content="Lecture notes on The Art of Problem Solving, Volumes 1 and 2.">
+  <meta property="og:url" content="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/books/aops.html">
+  <meta property="og:locale" content="en_US">
+  <!-- /SEO -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <script src="../nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>The Art of Problem Solving</h1>
+    </header>
+
+    <h2>Volume 1</h2>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Pipe A can fill a pool in 5 hours, while pipe B can fill it in 4 hours. How long will it take to fill the pool if both are operating at the same time?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Combined rate: $\frac{1}{5} + \frac{1}{4} = \frac{9}{20}$ pools per hour, so $t = \frac{20}{9} \approx 2.22$ hours.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> It is 4 o'clock now. How many minutes will pass before the minutes and hour hands of a clock are coincident?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Minute hand: $6°$/min, hour hand: $0.5°$/min. At 4:00, the hour hand is at $120°$. The hands coincide when $6t = 120 + 0.5t$, i.e. $5.5t = 120$, so $t = \frac{240}{11} \approx 21.82$ minutes.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the unit digit of $7^{42} + 42^7$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Unit digits of powers of 7 cycle with period 4: $7, 9, 3, 1, \ldots$ Since $42 \equiv 2 \pmod{4}$, the unit digit of $7^{42}$ is $9$.</p>
+      <p>Unit digits of powers of 2 cycle with period 4: $2, 4, 8, 6, \ldots$ Since $7 \equiv 3 \pmod{4}$, the unit digit of $42^7$ is $8$.</p>
+      <p>Therefore the unit digit of $7^{42} + 42^7$ is $9 + 8 = 17$, i.e. $\mathbf{7}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> It takes 3 days for 4 people to paint 5 houses. How long will it take for 2 people to paint 6 houses?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>One person paints $\frac{5}{4 \times 3} = \frac{5}{12}$ houses per day. Two people paint $\frac{5}{6}$ houses per day, so 6 houses takes $\frac{6}{5/6} = \frac{36}{5} = 7.2$ days.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p_k$ denote the $k$-th prime. Show that $p_1 p_2 \cdots p_n + 1$ cannot be a perfect square.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <em>Method 1 (2-adic valuation):</em> Suppose $p_1 \cdots p_n + 1 = k^2$, so $p_1 \cdots p_n = (k-1)(k+1)$. Since $p_1 = 2$, the left side is even, so $(k-1)(k+1)$ is even. As $k-1$ and $k+1$ have the same parity, they must both be even, giving $v_2((k-1)(k+1)) \geq 2$. But $v_2(p_1 \cdots p_n) = 1$ since 2 appears exactly once, a contradiction.
+      <br>
+      <em>Method 2 (mod 4):</em> Suppose $p_1 \cdots p_n + 1 = k^2$. Since the product is even, $k$ is odd. Writing $k = 2m+1$, we get $k^2 = 4m(m+1) + 1 \equiv 1 \pmod{4}$, which forces $p_1 \cdots p_n \equiv 0 \pmod{4}$. But $p_1 \cdots p_n \equiv 2 \pmod{4}$, a contradiction.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that a number is divisible by 4 (resp. 8) if and only if its last 2 (resp. 3) digits are.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Any integer $n$ can be written as $n = 100q + r$ where $r$ is the number formed by its last 2 digits. Since $4 \mid 100$, we have $4 \mid n \iff 4 \mid r$. Similarly, $n = 1000q + r'$ where $r'$ is the last 3 digits, and since $8 \mid 1000$, we have $8 \mid n \iff 8 \mid r'$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that a number is divisible by 3 (resp. 9) if and only if the sum of its digits is.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Write $n = \sum_{i=0}^{k} d_i \cdot 10^i$. Since $10 \equiv 1 \pmod{9}$, we have $10^i \equiv 1 \pmod{9}$ for all $i$, so $n \equiv \sum_{i=0}^{k} d_i \pmod{9}$. Thus $9 \mid n \iff 9 \mid \sum d_i$, and since $3 \mid 9$, the same holds for 3.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that the sum of 3 consecutive perfect squares cannot be a perfect square.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      $(n-1)^2 + n^2 + (n+1)^2 = 3n^2 + 2$. Suppose $3n^2 + 2 = k^2$. Then $k^2 \equiv 2 \pmod{3}$. But squares mod 3 are only 0 or 1, a contradiction.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> If $a$ and $b$ satisfy $\frac{a+b}{a} = \frac{b}{a+b}$, show that $a$ and $b$ cannot both be real.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Cross-multiplying gives $(a+b)^2 = ab$, i.e. $a^2 + ab + b^2 = 0$. Seen as a quadratic in $a$, its discriminant is $b^2 - 4b^2 = -3b^2 \leq 0$, with equality only when $b = 0$, which forces $a = 0$ and makes the fractions undefined. So there are no valid real solutions.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> If an integer $q$ can be expressed as the sum of two integer squares, show that $2q$ can as well.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      If $q = a^2 + b^2$, then $(a+b)^2 + (a-b)^2 = 2a^2 + 2b^2 = 2q$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\lfloor 2x \rfloor + \lfloor 2y \rfloor \geq \lfloor x \rfloor + \lfloor y \rfloor + \lfloor x+y \rfloor$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Let $\alpha = \{x\}$, $\beta = \{y\}$. Since $\lfloor 2t \rfloor = 2\lfloor t \rfloor + \lfloor 2\{t\} \rfloor$ and $\lfloor x+y \rfloor = \lfloor x \rfloor + \lfloor y \rfloor + \lfloor \alpha + \beta \rfloor$, the inequality reduces to $\lfloor 2\alpha \rfloor + \lfloor 2\beta \rfloor \geq \lfloor \alpha + \beta \rfloor$. If $\lfloor \alpha + \beta \rfloor = 0$ this is trivial. If $\lfloor \alpha + \beta \rfloor = 1$, then $\alpha + \beta \geq 1$, so $\alpha \geq \frac{1}{2}$ or $\beta \geq \frac{1}{2}$, giving $\lfloor 2\alpha \rfloor + \lfloor 2\beta \rfloor \geq 1$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find a closed form for the sum $S = a + (a+d) + (a+2d) + \cdots + (a+(n-1)d)$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Write $S$ in two ways:
+      $$S = a \quad\quad + (a+d) \quad + \cdots + (a+(n-1)d)$$
+      $$S = (a+(n-1)d) + (a+(n-2)d) + \cdots + a$$
+      Adding term by term, each pair sums to $2a + (n-1)d$, and there are $n$ such pairs, so $2S = n(2a+(n-1)d)$, giving:
+      $$S = \frac{n}{2}(2a + (n-1)d)$$
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find a closed form for the sum $S = a + ar + ar^2 + \cdots + ar^{n-1}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Multiply $S$ by $r$: $Sr = ar + ar^2 + \cdots + ar^n$. Subtracting gives $S - Sr = a - ar^n$, i.e. $S(1-r) = a(1-r^n)$, so:
+      $$S = \frac{a(1-r^n)}{1-r} \quad (r \neq 1)$$
+      If $r = 1$, then $S = na$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\sum_{k=1}^{\infty} \frac{1}{k}$ diverges.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Group the terms in blocks of size $1, 1, 2, 4, 8, \ldots$:
+      $$1 + \frac{1}{2} + \left(\frac{1}{3}+\frac{1}{4}\right) + \left(\frac{1}{5}+\cdots+\frac{1}{8}\right) + \cdots$$
+      Each block of $2^n$ terms satisfies $\frac{1}{2^n+1} + \cdots + \frac{1}{2^{n+1}} \geq 2^n \cdot \frac{1}{2^{n+1}} = \frac{1}{2}$, so the sum of the first $2^n$ terms is $\geq \frac{n}{2}$, which diverges.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that any two consecutive Fibonacci numbers are relatively prime.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      By induction. $\gcd(F_1, F_2) = \gcd(1,1) = 1$. Assuming $\gcd(F_n, F_{n+1}) = 1$, since $F_{n+2} = F_{n+1} + F_n$ we have $\gcd(F_{n+1}, F_{n+2}) = \gcd(F_{n+1}, F_{n+1} + F_n) = \gcd(F_{n+1}, F_n) = 1$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> How many 5-digit numbers ending with 1, 2 or 4 are there with no repeated digit?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Fix the last digit: 3 choices. The first digit cannot be 0 or equal to the last digit (which is nonzero), leaving 8 choices. The remaining three positions are filled from the 8 unused digits: $8 \times 7 \times 6$ ways. Total: $3 \times 8 \times 8 \times 7 \times 6 = 8064$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the largest $n$ such that $2^n \mid 100!$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      By Legendre's formula, $v_2(100!) = \sum_{k \geq 1} \lfloor \frac{100}{2^k} \rfloor$. Computing: $50 + 25 + 12 + 6 + 3 + 1 = 97$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two identical dice are rolled. How many distinct outcomes are there? (e.g. $(1,2)$ and $(2,1)$ count as the same outcome)</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Since the dice are indistinguishable, $(a, b)$ and $(b, a)$ count as the same outcome. There are 6 doubles (both dice equal) and $\binom{6}{2} = 15$ outcomes with distinct values, for a total of $6 + 15 = 21$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A word consists of $n$ letters, where letter $i$ appears $k_i$ times, with $k_1 + \cdots + k_r = n$. Find a closed form for the number of distinct arrangements of this word.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      If all $n$ letters were distinct there would be $n!$ arrangements. Since permuting the $k_i$ copies of letter $i$ among themselves yields no new arrangement, we divide by $k_i!$ for each $i$, giving $\frac{n!}{k_1!\, k_2!\, \cdots\, k_r!}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the unit digit of $\sum_{k=1}^{15} k!$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      For $k \geq 5$, $k!$ is divisible by 10 so contributes 0 to the unit digit. Thus the unit digit equals that of $1! + 2! + 3! + 4! = 1 + 2 + 6 + 24 = 33$, which is $\mathbf{3}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Given 5 lines and 2 circles in a plane, what is the maximum number of intersection points?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Count each type of intersection separately. Line-line: each pair of lines meets in at most 1 point, and there are $\binom{5}{2} = 10$ pairs, giving 10 points. Circle-circle: 2 circles meet in at most 2 points, giving 2. Line-circle: each of the 5 lines meets each of the 2 circles in at most 2 points, giving $5 \times 2 \times 2 = 20$. Total: $10 + 2 + 20 = \mathbf{32}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A 5-card hand is dealt from a standard 52-card deck. What is the probability that it contains exactly two aces?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Choose 2 aces from 4 and 3 non-aces from the remaining 48: $\frac{\binom{4}{2}\binom{48}{3}}{\binom{52}{5}}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A 4-digit number not beginning with 0 is chosen at random. What is the probability that all 4 digits are distinct?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      There are $9 \times 10^3$ valid 4-digit numbers. For all digits distinct: 9 choices for the first digit (1–9), then 9, 8, 7 for the remaining, giving $\frac{9 \times 9 \times 8 \times 7}{9 \times 10^3}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A 5-card hand is dealt from a standard 52-card deck. What is the probability that it contains exactly one pair (two cards of the same value, with the other three cards all of different values)?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Choose the pair value (13 ways), its 2 suits ($\binom{4}{2}$), the 3 remaining values from the other 12 ($\binom{12}{3}$), and a suit for each ($4^3$), giving $\frac{13 \cdot \binom{4}{2} \cdot \binom{12}{3} \cdot 4^3}{\binom{52}{5}}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A box contains 3 red balls and 3 green balls. Two balls are drawn one after the other without replacement. What is the probability that the first is red and the second is green?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      $\frac{3}{6} \times \frac{3}{5} = \frac{3}{10}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A box contains 3 red balls and 3 green balls. Two balls are chosen simultaneously. What is the probability that one is red and one is green?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      $\frac{\binom{3}{1}\binom{3}{1}}{\binom{6}{2}}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two digits are selected independently and uniformly at random from 1 to 9. What is the probability that their product is a multiple of 3?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      The product is a multiple of 3 iff at least one digit is. By complement, $1 - \left(\frac{6}{9}\right)^2 = 1 - \frac{4}{9} = \frac{5}{9}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Five dice are tossed simultaneously. What is the probability that the total is at least 29?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      The maximum total is 30, so we need totals of 29 or 30. Total = 30: all five dice show 6, giving 1 outcome. Total = 29: exactly one die shows 5 and the rest show 6, giving 5 outcomes. So the probability is $\frac{6}{6^5} = \frac{1}{1296}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> 4 girls and 4 boys are seated at random around a circular table. What is the probability that boys and girls alternate?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Total circular arrangements: $7!$. Fix one girl; the remaining 3 girls fill the 3 remaining girl seats ($3!$ ways) and the 4 boys fill the 4 boy seats ($4!$ ways), giving $\frac{3! \cdot 4!}{7!} = \frac{1}{35}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The integers from 1 to 10 are partitioned at random into two sets of 5. What is the probability that 1 and 2 are in the same set?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Given that 1 is placed, there are 9 remaining spots of which 4 are in the same set. So the probability that 2 lands in the same set as 1 is $\frac{4}{9}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Three men rent a room and each pays 15, for a total of 45. Later, the manager realizes they were overcharged and sends 5 back with a messenger. The messenger, unable to split 5 three ways, pockets 2 and gives each man 1 back. So each man effectively paid 14, totaling 42. Add the 2 the messenger kept: 42 + 2 = 44. But the men originally paid 45. Where is the missing dollar?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      There is no missing dollar. The reasoning is flawed. The 42 already includes the 2 kept by the messenger (40 to the manager + 2 to the messenger). Adding the 2 again is double-counting. The correct accounting is: 45 paid $-$ 3 returned $=$ 42 $=$ 40 (room) $+$ 2 (messenger).
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that a positive integer has an odd number of distinct divisors if and only if it is a perfect square.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <em>Method 1 (pairing):</em> Pair each divisor $d$ of $n$ with $n/d$. Two distinct divisors $d \neq n/d$ form a pair, contributing 2 to the count. A divisor is unpaired iff $d = n/d$, i.e. $d^2 = n$. So the total count is odd iff there is exactly one unpaired divisor, which happens iff $n$ is a perfect square.
+      <br>
+      <em>Method 2 (prime factorization):</em> Write $n = p_1^{a_1} \cdots p_k^{a_k}$. The number of divisors is $\tau(n) = (a_1+1)\cdots(a_k+1)$. This product is odd iff every factor $(a_i+1)$ is odd, iff every $a_i$ is even, iff $n$ is a perfect square.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $n^5 - n$ is divisible by 10 for all integers $n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Factor: $n^5 - n = n(n-1)(n+1)(n^2+1)$. It suffices to show divisibility by 2 and 5.
+      <br>
+      Divisibility by 2: $(n-1)n$ is a product of 2 consecutive integers, hence even.
+      <br>
+      Divisibility by 5: <em>Method 1 (Fermat):</em> $n^5 \equiv n \pmod{5}$ by Fermat's little theorem. <em>Method 2 (cases mod 5):</em> if $n \equiv 0, 1, 4 \pmod{5}$ then one of $n, n-1, n+1$ is divisible by 5. If $n \equiv 2$ or $3 \pmod{5}$, then $n^2 \equiv 4 \pmod{5}$ so $n^2 + 1 \equiv 0 \pmod{5}$.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A 100-meter-long train heading east at 10 m/s passes a train heading west at 15 m/s. If the two trains take 30 seconds to completely pass each other, how long is the second train?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      Since the trains travel in opposite directions, their relative speed is $10 + 15 = 25$ m/s. For the trains to fully pass each other, the total distance covered equals the sum of their lengths. Thus $25 \times 30 = 100 + L$, giving $L = 750 - 100 = \mathbf{650}$ meters.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A law firm with 4 senior partners and 3 junior partners wishes to form a committee. In how many ways can such a committee be formed if it must include at least 2 senior partners and at most 1 junior partner?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      A valid committee has $s \geq 2$ senior and $j \leq 1$ junior partners. Summing over all valid $(s, j)$:
+      $$\binom{4}{2}\binom{3}{0} + \binom{4}{2}\binom{3}{1} + \binom{4}{3}\binom{3}{0} + \binom{4}{3}\binom{3}{1} + \binom{4}{4}\binom{3}{0} + \binom{4}{4}\binom{3}{1}$$
+      $$= 6 + 18 + 4 + 12 + 1 + 3 = \mathbf{44}.$$
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two players take turns removing between 1 and 5 sticks from a pile of 59. The player forced to take the last stick loses. How many sticks should the first player remove on the opening move to guarantee a win?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      A position is losing for the player to move iff the opponent can always respond to maintain control. If there is 1 stick, the current player must take it and loses. With 2–6 sticks, the current player can leave exactly 1 for the opponent. With 7 sticks, any move leaves 2–6 (a winning position for the opponent), so 7 is again a losing position. In general, the losing positions are $1, 7, 13, \ldots$, i.e. those congruent to $1 \pmod{6}$.
+      <br>
+      The losing positions are $1, 7, 13, \ldots, 55, 61, \ldots$ The nearest one below 59 is 55, so the first player takes $\mathbf{4}$ sticks. From then on, whenever the second player takes $n$ sticks, the first player takes $6 - n$, keeping the pile on $49, 43, \ldots, 7, 1$ and forcing the second player to take the last stick.
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a$ and $b$ be positive real numbers such that $x^2 + ax + 2b = 0$ and $x^2 + 2bx + a = 0$ both have real roots. Find the smallest possible value of $a + b$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      For real roots, the discriminants must be non-negative:
+      $$a^2 - 8b \geq 0 \quad \text{and} \quad 4b^2 - 4a \geq 0,$$
+      giving $b \leq \frac{a^2}{8}$ and $b \geq \sqrt{a}$ (since $b > 0$). To minimize $a + b$, take $b$ as small as possible, i.e. $b = \sqrt{a}$. This is compatible with the first constraint only when $\sqrt{a} \leq \frac{a^2}{8}$, i.e. $a^{3/2} \geq 8$, so $a \geq 4$.
+      <br>
+      Since $f(a) = a + \sqrt{a}$ is increasing, the minimum is at $a = 4$, $b = 2$, where both discriminants vanish. The smallest possible value is $a + b = \mathbf{6}$.
+    </details>
+
+    <h2>Volume 2</h2>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Rational Root Theorem) Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_1 x + a_0$ be a polynomial with integer coefficients, $a_n \neq 0$ and $a_0 \neq 0$. Show that if $\frac{p}{q} \in \mathbb{Q}$ is a root of $P$, with $p, q \in \mathbb{Z}$ coprime and $q > 0$, then $p \mid a_0$ and $q \mid a_n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $P\!\left(\frac{p}{q}\right) = 0$, multiplying by $q^n$ gives
+      $$a_n p^n + a_{n-1} p^{n-1} q + \cdots + a_1 p q^{n-1} + a_0 q^n = 0.$$</p>
+      <p>Isolating $a_0 q^n$:
+      $$a_0 q^n = -p \left( a_n p^{n-1} + a_{n-1} p^{n-2} q + \cdots + a_1 q^{n-1} \right),$$
+      so $p \mid a_0 q^n$. Since $\gcd(p, q) = 1$, we have $\gcd(p, q^n) = 1$, hence $p \mid a_0$.</p>
+      <p>Isolating $a_n p^n$:
+      $$a_n p^n = -q \left( a_{n-1} p^{n-1} + a_{n-2} p^{n-2} q + \cdots + a_0 q^{n-1} \right),$$
+      so $q \mid a_n p^n$. Since $\gcd(q, p^n) = 1$, we conclude $q \mid a_n$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the roots of $2x^3 - 5x^2 + 4x - 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By the rational root theorem, any rational root $\frac{p}{q}$ (in lowest terms) satisfies $p \mid 1$ and $q \mid 2$, so the candidates are $\pm 1, \pm \frac{1}{2}$.</p>
+      <p>Testing $x = 1$: $2 - 5 + 4 - 1 = 0$, so $1$ is a root. Polynomial division yields
+      $$2x^3 - 5x^2 + 4x - 1 = (x - 1)(2x^2 - 3x + 1) = (x - 1)^2 (2x - 1).$$</p>
+      <p>The roots are $x = 1$ (double) and $x = \frac{1}{2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Vieta's formulas) Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$ be a polynomial of degree $n$ over $\mathbb{C}$, with roots $r_1, \ldots, r_n$ (counted with multiplicity). For $1 \leq k \leq n$, define the $k$-th elementary symmetric sum of the roots as
+      $$e_k = \sum_{1 \leq i_1 < i_2 < \cdots < i_k \leq n} r_{i_1} r_{i_2} \cdots r_{i_k}.$$
+      Show that
+      $$e_k = (-1)^k \frac{a_{n-k}}{a_n}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $P$ has roots $r_1, \ldots, r_n$ and leading coefficient $a_n$, we have
+      $$P(x) = a_n \prod_{i=1}^{n} (x - r_i).$$</p>
+      <p>Expanding the product, the coefficient of $x^{n-k}$ is obtained by choosing $x$ from $n - k$ of the factors and $-r_i$ from the remaining $k$ factors, summed over all such choices:
+      $$\prod_{i=1}^{n} (x - r_i) = \sum_{k=0}^{n} \left( \sum_{1 \leq i_1 < \cdots < i_k \leq n} \prod_{j=1}^{k} (-r_{i_j}) \right) x^{n-k} = \sum_{k=0}^{n} (-1)^k e_k \, x^{n-k},$$
+      with the convention $e_0 = 1$.</p>
+      <p>Therefore
+      $$P(x) = \sum_{k=0}^{n} (-1)^k a_n e_k \, x^{n-k}.$$
+      Identifying with $P(x) = \sum_{k=0}^{n} a_{n-k} x^{n-k}$ gives $a_{n-k} = (-1)^k a_n e_k$, hence
+      $$e_k = (-1)^k \frac{a_{n-k}}{a_n}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Three of the roots of $x^4 + Ax^2 + Bx + C$ are $-1$, $2$, and $3$. What is the value of $2C - AB$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $r$ be the fourth root. Since the coefficient of $x^3$ is $0$, Vieta's formulas give $e_1 = 0$:
+      $$-1 + 2 + 3 + r = 0 \implies r = -4.$$</p>
+      <p>The polynomial factors as
+      $$(x+1)(x-2)(x-3)(x+4) = (x^2 - x - 2)(x^2 + x - 12) = x^4 - 15 x^2 + 10 x + 24.$$
+      So $A = -15$, $B = 10$, $C = 24$.</p>
+      <p>Therefore $2C - AB = 48 - (-15)(10) = 48 + 150 = \mathbf{198}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$ with $a_n, a_0 \neq 0$. Show that the polynomial whose roots are the reciprocals of the roots of $P$ is the polynomial with reversed coefficients:
+      $$Q(x) = a_0 x^n + a_1 x^{n-1} + \cdots + a_{n-1} x + a_n.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For any $x \neq 0$,
+      $$x^n P\!\left(\frac{1}{x}\right) = x^n \left( a_n x^{-n} + a_{n-1} x^{-(n-1)} + \cdots + a_0 \right) = a_n + a_{n-1} x + \cdots + a_0 x^n = Q(x).$$</p>
+      <p>Since $a_0 \neq 0$, no root of $P$ is $0$. If $r$ is a root of $P$, then $r \neq 0$ and
+      $$Q(1/r) = (1/r)^n P(r) = 0,$$
+      so $1/r$ is a root of $Q$. Conversely, $a_0 \neq 0$ ensures $\deg Q = n$, so $Q$ has $n$ roots (with multiplicity) just like $P$. Hence the roots of $Q$ are exactly $\{1/r : r \text{ root of } P\}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$ and let $k \neq 0$. Find a polynomial whose roots are $k$ times the roots of $P$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>If $r$ is a root of $P$, we want $kr$ to be a root of the new polynomial $Q$, i.e. $Q(kr) = 0$. This suggests $Q(x) = P(x/k)$:
+      $$P(x/k) = a_n \frac{x^n}{k^n} + a_{n-1} \frac{x^{n-1}}{k^{n-1}} + \cdots + a_0.$$</p>
+      <p>Multiplying by $k^n$ to clear denominators gives the polynomial
+      $$Q(x) = a_n x^n + a_{n-1} k \, x^{n-1} + a_{n-2} k^2 \, x^{n-2} + \cdots + a_0 k^n = \sum_{i=0}^{n} a_i k^{n-i} x^i.$$</p>
+      <p>By construction, $Q(kr) = k^n P(r) = 0$ for every root $r$ of $P$, and since $\deg Q = n$, these are all the roots.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The roots of $x^3 + x^2 - x - 3 = 0$ are $a$, $b$, $c$. Find the value of
+      $$\frac{1}{a+3} + \frac{1}{b+3} + \frac{1}{c+3}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Set $y = \frac{1}{x+3}$, so $x = \frac{1-3y}{y}$. The roots of $P$ in $x$ map to $\frac{1}{a+3}, \frac{1}{b+3}, \frac{1}{c+3}$ in $y$, which are the roots of $y^3 \cdot P\!\left(\frac{1-3y}{y}\right)$:
+      $$(1-3y)^3 + (1-3y)^2 y - (1-3y) y^2 - 3 y^3 = -18 y^3 + 20 y^2 - 8 y + 1.$$</p>
+      <p>By Vieta's, the sum of roots is $\displaystyle -\frac{20}{-18} = \mathbf{\frac{10}{9}}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Newton's sums) Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$ have roots $r_1, \ldots, r_n$ (counted with multiplicity), and define the $k$-th power sum
+      $$s_k = r_1^k + r_2^k + \cdots + r_n^k, \qquad k \geq 0.$$
+      Show that for every $k \geq n$,
+      $$a_n s_k + a_{n-1} s_{k-1} + \cdots + a_1 s_{k-n+1} + a_0 s_{k-n} = 0,$$
+      with the convention $s_0 = n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For each root $r_i$, $P(r_i) = 0$:
+      $$a_n r_i^n + a_{n-1} r_i^{n-1} + \cdots + a_0 = 0.$$
+      Multiplying by $r_i^{k-n}$ (valid since $k \geq n$) gives
+      $$a_n r_i^k + a_{n-1} r_i^{k-1} + \cdots + a_0 r_i^{k-n} = 0.$$</p>
+      <p>Summing over $i = 1, \ldots, n$:
+      $$a_n s_k + a_{n-1} s_{k-1} + \cdots + a_0 s_{k-n} = 0.$$
+      (For $k = n$, the last term is $a_0 s_0 = a_0 n$.)</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $r_1, \ldots, r_{1000}$ be the roots of $x^{1000} - 10x + 10 = 0$. Find $\sum_{i=1}^{1000} r_i^{1000}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Apply Newton's sums with $k = n = 1000$:
+      $$a_{1000} s_{1000} + a_{999} s_{999} + \cdots + a_1 s_1 + a_0 \cdot 1000 = 0.$$
+      Here $a_{1000} = 1$, $a_1 = -10$, $a_0 = 10$, and all other coefficients vanish, so
+      $$s_{1000} - 10 s_1 + 10000 = 0.$$</p>
+      <p>By Vieta's, $s_1 = \sum r_i = -a_{999}/a_{1000} = 0$. Therefore
+      $$s_{1000} = -10000.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Newton's sum for $s_2$) Let $P(x) = a_n x^n + a_{n-1} x^{n-1} + \cdots + a_0$ have roots $r_1, \ldots, r_n$ with $n \geq 2$. Show that
+      $$a_n s_2 + a_{n-1} s_1 + 2 a_{n-2} = 0,$$
+      where $s_k = r_1^k + \cdots + r_n^k$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Expanding the square of $s_1$:
+      $$s_1^2 = \left( \sum_{i=1}^{n} r_i \right)^2 = \sum_{i=1}^{n} r_i^2 + 2 \sum_{i \lt j} r_i r_j = s_2 + 2 e_2,$$
+      where $e_2 = \sum_{i \lt j} r_i r_j$ is the second elementary symmetric sum. Hence $s_2 = s_1^2 - 2 e_2$.</p>
+      <p>By Vieta's, $s_1 = e_1 = -\frac{a_{n-1}}{a_n}$ and $e_2 = \frac{a_{n-2}}{a_n}$, so
+      $$s_2 = \frac{a_{n-1}^2}{a_n^2} - \frac{2 a_{n-2}}{a_n}.$$
+      Multiplying by $a_n$ and rearranging:
+      $$a_n s_2 = \frac{a_{n-1}^2}{a_n} - 2 a_{n-2} = -a_{n-1} s_1 - 2 a_{n-2},$$
+      i.e. $a_n s_2 + a_{n-1} s_1 + 2 a_{n-2} = 0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $r$, $s$, $t$ be the roots of $x^3 - 6x^2 + 5x - 7 = 0$. Find $\displaystyle \frac{1}{r^2} + \frac{1}{s^2} + \frac{1}{t^2}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Reversing the coefficients gives the polynomial whose roots are $\frac{1}{r}, \frac{1}{s}, \frac{1}{t}$ (since $x^3 P(1/x) = -7 x^3 + 5 x^2 - 6 x + 1$ vanishes at $1/r$ whenever $P(r) = 0$):
+      $$Q(x) = -7 x^3 + 5 x^2 - 6 x + 1.$$
+      We want $s_2$ for $Q$. Applying Newton's identity $a_n s_2 + a_{n-1} s_1 + 2 a_{n-2} = 0$ with $a_3 = -7$, $a_2 = 5$, $a_1 = -6$:
+      $$-7 s_2 + 5 s_1 - 12 = 0.$$</p>
+      <p>By Vieta's on $Q$, $s_1 = -\frac{a_2}{a_3} = \frac{5}{7}$, so
+      $$-7 s_2 = 12 - 5 \cdot \frac{5}{7} = \frac{59}{7} \implies s_2 = \mathbf{-\frac{59}{49}}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $P(x) = a_n x^n + \cdots + a_0$ with integer coefficients. Show that if $P(0)$ and $P(1)$ are both odd, then $P$ has no integer root.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $P$ has integer coefficients, $a \equiv b \pmod 2 \implies P(a) \equiv P(b) \pmod 2$.</p>
+      <p>Suppose $r \in \mathbb{Z}$ is a root of $P$. Then $P(r) = 0$ is even. But $r$ is either even or odd:
+      <ul>
+        <li>if $r$ is even, $P(r) \equiv P(0) \equiv 1 \pmod 2$;</li>
+        <li>if $r$ is odd, $P(r) \equiv P(1) \equiv 1 \pmod 2$.</li>
+      </ul>
+      In either case $P(r)$ is odd, contradicting $P(r) = 0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the product of the $n$-th roots of unity, using Vieta's formula.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The $n$-th roots of unity are the roots of $P(x) = x^n - 1$. By Vieta's,
+      $$\prod_{k=0}^{n-1} \omega_k = (-1)^n \frac{a_0}{a_n} = (-1)^n \cdot (-1) = (-1)^{n+1}.$$</p>
+      <p>So the product is $1$ if $n$ is odd, and $-1$ if $n$ is even.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $c, d$ be nonzero constants such that two of the roots of $4x^3 - 12x^2 + cx + d$ add to $0$. Find $\frac{d}{c}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let the roots be $r$, $-r$, $s$. By Vieta's, $r + (-r) + s = \frac{12}{4} = 3$, so $s = 3$.</p>
+      <p><em>Method 1 (more Vieta's):</em> The other two Vieta relations give
+      $$r(-r) + rs + (-r)s = -r^2 = \frac{c}{4}, \qquad r \cdot (-r) \cdot s = -3 r^2 = -\frac{d}{4}.$$
+      So $r^2 = -\frac{c}{4} = \frac{d}{12}$, hence $d = -3c$ and $\displaystyle \frac{d}{c} = \mathbf{-3}$.</p>
+      <p><em>Method 2 (plug in the known root):</em> Since $s = 3$ is a root, $P(3) = 0$:
+      $$4(27) - 12(9) + 3c + d = 108 - 108 + 3c + d = 3c + d = 0,$$
+      so $d = -3c$ and $\displaystyle \frac{d}{c} = \mathbf{-3}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the remainder of $x^{13} + 1$ divided by $x - 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1 (remainder theorem):</em> The remainder of $P(x)$ divided by $x - a$ is $P(a)$. Here $P(x) = x^{13} + 1$ and $a = 1$, so the remainder is $P(1) = 1 + 1 = \mathbf{2}$.</p>
+      <p><em>Method 2 (explicit division):</em> Using the geometric series identity $x^{13} - 1 = (x-1)(x^{12} + x^{11} + \cdots + x + 1)$, we get
+      $$x^{13} + 1 = (x-1)\underbrace{(x^{12} + x^{11} + \cdots + x + 1)}_{Q(x)} + \underbrace{2}_{R}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $(1 + x + x^2)^n = a_0 + a_1 x + a_2 x^2 + \cdots + a_{2n} x^{2n}$. Find $a_0 + a_2 + a_4 + \cdots + a_{2n}$ in terms of $n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Set $P(x) = (1 + x + x^2)^n$. Then
+      $$P(1) = a_0 + a_1 + \cdots + a_{2n}, \qquad P(-1) = a_0 - a_1 + a_2 - \cdots + a_{2n}.$$
+      Adding and dividing by $2$ isolates the even-indexed coefficients:
+      $$a_0 + a_2 + \cdots + a_{2n} = \frac{P(1) + P(-1)}{2} = \frac{3^n + 1^n}{2} = \mathbf{\frac{3^n + 1}{2}}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the remainder of $x^{203} - 1$ divided by $x^4 - 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1 (congruences):</em> Since $x^4 \equiv 1 \pmod{x^4 - 1}$ and $203 = 4 \cdot 50 + 3$,
+      $$x^{203} = (x^4)^{50} \cdot x^3 \equiv x^3 \pmod{x^4 - 1}.$$
+      So $x^{203} - 1 \equiv x^3 - 1 \pmod{x^4 - 1}$, and the remainder is $\mathbf{x^3 - 1}$.</p>
+      <p><em>Method 2 (evaluate at roots):</em> Write the Euclidean division as $x^{203} - 1 = (x^4 - 1) Q(x) + R(x)$ with $R(x) = a x^3 + b x^2 + c x + d$. The roots of $x^4 - 1$ are $1, -1, i, -i$, and at each root the left side equals $R$ evaluated there. Using $i^{203} = i^{4 \cdot 50 + 3} = i^3 = -i$:</p>
+      <ul>
+        <li>$x = 1$: &nbsp; $0 = a + b + c + d$,</li>
+        <li>$x = -1$: &nbsp; $-2 = -a + b - c + d$,</li>
+        <li>$x = i$: &nbsp; $-i - 1 = -a i - b + c i + d$,</li>
+        <li>$x = -i$: &nbsp; $i - 1 = a i - b - c i + d$.</li>
+      </ul>
+      <p>From the first two: $b + d = -1$ and $a + c = 1$. From the last two (real and imaginary parts): $-b + d = -1$ and $a - c = 1$. Solving: $a = 1$, $b = 0$, $c = 0$, $d = -1$, giving $R(x) = \mathbf{x^3 - 1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $k \geq 2$ be a positive integer. Find all real polynomials $P$ such that $P(P(X)) = P(X)^k$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Set $Y = P(X)$. The equation becomes $P(Y) = Y^k$ for every $Y$ in the image of $P$.</p>
+      <p><em>Case 1: $P$ non-constant.</em> Then $P$ takes infinitely many values, so $P(Y) - Y^k$ vanishes at infinitely many points, hence $P(Y) = Y^k$ as polynomials. Conversely, $P(X) = X^k$ satisfies $P(P(X)) = (X^k)^k = X^{k^2} = P(X)^k$.</p>
+      <p><em>Case 2: $P$ constant, $P(X) = c$.</em> Then $c = c^k$, i.e. $c(c^{k-1} - 1) = 0$. Over $\mathbb{R}$, this gives $c = 0$, $c = 1$, or $c = -1$ (the last only when $k$ is odd, so that $k-1$ is even).</p>
+      <p>The real solutions are therefore $P(X) = X^k$, $P(X) = 0$, $P(X) = 1$, and (for odd $k$) $P(X) = -1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f(xy) = x f(y)$ for all $x, y \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Setting $y = 1$ gives $f(x) = x f(1)$, so $f(x) = cx$ with $c = f(1)$.</p>
+      <p>Conversely, $f(x) = cx$ satisfies $f(xy) = c(xy) = x (cy) = x f(y)$. So the solutions are exactly $f(x) = cx$, $c \in \mathbb{R}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $y f(x) = x f(y)$ for all $x, y \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1:</em> Setting $y = 1$ gives $f(x) = x f(1)$. Writing $c = f(1)$, we get $f(x) = cx$ for all $x$.</p>
+      <p><em>Method 2:</em> For $x, y \neq 0$, dividing both sides by $xy$ gives $\frac{f(x)}{x} = \frac{f(y)}{y}$. So $g(t) = \frac{f(t)}{t}$ takes the same value for every nonzero $t$, i.e. $g$ is constant on $\mathbb{R} \setminus \{0\}$. Call this constant $c$; then $f(t) = ct$ for all $t \neq 0$. For $t = 0$, setting $x = 0$ and any $y \neq 0$ in the original equation gives $y f(0) = 0$, hence $f(0) = 0 = c \cdot 0$.</p>
+      <p>Conversely, any $f(x) = cx$ satisfies $y \cdot cx = x \cdot cy$. So the solutions are exactly the linear maps $f(x) = cx$, $c \in \mathbb{R}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f(x + y) + f(x - y) = 2 x^2 + 2 y^2$ for all $x, y \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1:</em> Setting $y = 0$ gives $2 f(x) = 2 x^2$, so $f(x) = x^2$.</p>
+      <p><em>Method 2:</em> Setting $x = y = 0$ gives $2 f(0) = 0$, so $f(0) = 0$. Setting $x = y$ then gives $f(2x) + f(0) = 4 x^2$, so $f(2x) = (2x)^2$, i.e. $f(u) = u^2$ for all $u \in \mathbb{R}$.</p>
+      <p>Conversely, $f(x) = x^2$ satisfies $(x+y)^2 + (x-y)^2 = 2x^2 + 2y^2$. So $f(x) = x^2$ is the unique solution.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f(x + y) + f(x - y) = 2 x^2 - 2 y^2$ for all $x, y \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Setting $y = 0$ gives $2 f(x) = 2 x^2$, so $f(x) = x^2$. Setting $x = 0$ gives $f(y) + f(-y) = -2 y^2$, but $f(y) + f(-y) = y^2 + y^2 = 2 y^2$, forcing $4 y^2 = 0$ for all $y$, a contradiction.</p>
+      <p>Hence <strong>no such function exists</strong>.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R}^* \to \mathbb{R}$ such that $f(x) + 2 f\!\left(\frac{1}{x}\right) = x$ for all $x \neq 0$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Substituting $x \to \frac{1}{x}$ in the equation gives a second relation:
+      $$f(x) + 2 f(1/x) = x, \qquad f(1/x) + 2 f(x) = \frac{1}{x}.$$</p>
+      <p>This is a linear system in $f(x)$ and $f(1/x)$. Multiplying the second by $2$ and subtracting the first:
+      $$3 f(x) = \frac{2}{x} - x \implies f(x) = \frac{2 - x^2}{3 x}.$$</p>
+      <p>Conversely, this $f$ satisfies the equation: $\displaystyle \frac{2 - x^2}{3x} + 2 \cdot \frac{2 - 1/x^2}{3/x} = \frac{2 - x^2 + 4 x^2 - 2}{3 x} = x.$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f\!\left(\frac{1+a}{2}\right) = f\!\left(\frac{1-a}{2}\right) + a$ for all $a \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Note that $a = \frac{1+a}{2} - \frac{1-a}{2}$, so the equation rewrites as
+      $$f\!\left(\frac{1+a}{2}\right) - \frac{1+a}{2} = f\!\left(\frac{1-a}{2}\right) - \frac{1-a}{2}.$$
+      Defining $g(x) = f(x) - x$, this says $g\!\left(\frac{1+a}{2}\right) = g\!\left(\frac{1-a}{2}\right)$ for all $a$, i.e. $g(u) = g(1 - u)$ for all $u$ (since $\frac{1+a}{2} + \frac{1-a}{2} = 1$).</p>
+      <p>Now define $h(x) = g\!\left(x + \tfrac{1}{2}\right)$. The condition $g(u) = g(1-u)$ becomes
+      $$h\!\left(u - \tfrac{1}{2}\right) = h\!\left(\tfrac{1}{2} - u\right),$$
+      i.e. $h(t) = h(-t)$: $h$ must be even.</p>
+      <p>Hence the solutions are exactly
+      $$f(x) = x + h\!\left(x - \tfrac{1}{2}\right),$$
+      where $h : \mathbb{R} \to \mathbb{R}$ is any even function. (Taking $h(t) = t^2$ recovers $f(x) = x + (x - \tfrac{1}{2})^2 = x^2 + \tfrac{1}{4}$.)</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R}^* \to \mathbb{R}^*$ such that $\displaystyle \frac{f(x)}{f(y)} = \frac{y}{x}$ for all $x, y \in \mathbb{R}^*$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Cross-multiplying gives $x f(x) = y f(y)$ for all $x, y$. So $x f(x)$ is independent of $x$: there is a constant $c$ with $x f(x) = c$, i.e. $f(x) = \frac{c}{x}$. Since $f$ is $\mathbb{R}^*$-valued, $c \neq 0$.</p>
+      <p>Conversely, $f(x) = c/x$ satisfies $\frac{c/x}{c/y} = \frac{y}{x}$. So the solutions are $f(x) = \frac{c}{x}$ for $c \in \mathbb{R}^*$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f(x + y) - f(x - y) = 4 x y$ for all $x, y \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Setting $x = y$ gives $f(2x) - f(0) = 4 x^2$, so $f(u) = u^2 + f(0)$ for all $u \in \mathbb{R}$.</p>
+      <p>Conversely, $f(x) = x^2 + c$ satisfies $(x+y)^2 - (x-y)^2 = 4xy$. So the solutions are $f(x) = x^2 + c$, $c \in \mathbb{R}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all functions $f : \mathbb{R} \to \mathbb{R}$ such that $f(1 - x) = f(x) + 1 - 2 x$ for all $x \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $1 - 2x = (1-x) - x$, the equation rewrites as
+      $$f(1-x) - (1-x) = f(x) - x.$$
+      Define $g(x) = f(x) - x$; then $g(1-x) = g(x)$, so $g$ is symmetric about $\tfrac{1}{2}$.</p>
+      <p>Equivalently, letting $h(t) = g(t + \tfrac{1}{2})$, the condition $g(1-x) = g(x)$ becomes $h(-t) = h(t)$: $h$ is even.</p>
+      <p>Hence the solutions are exactly
+      $$f(x) = x + h\!\left(x - \tfrac{1}{2}\right),$$
+      where $h : \mathbb{R} \to \mathbb{R}$ is any even function.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Plot the function $\displaystyle f(x) = \frac{2 x^3 - 3 x^2 + x - 6}{x^2 - 3 x + 2}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Factor the denominator: $x^2 - 3x + 2 = (x-1)(x-2)$. Testing $x = 2$ in the numerator: $16 - 12 + 2 - 6 = 0$, so $x - 2$ divides the numerator:
+      $$2 x^3 - 3 x^2 + x - 6 = (x - 2)(2 x^2 + x + 3).$$
+      Hence for $x \neq 2$,
+      $$f(x) = \frac{2 x^2 + x + 3}{x - 1}.$$
+      The quadratic $2x^2 + x + 3$ has discriminant $1 - 24 \lt 0$, so it has no real roots and $f$ has no $x$-intercepts.</p>
+      <p>Polynomial division yields
+      $$f(x) = 2 x + 3 + \frac{6}{x - 1}.$$
+      Key features:</p>
+      <ul>
+        <li><strong>Removable discontinuity</strong> at $x = 2$: the factor $x - 2$ cancels, so $f$ extends by continuity with $f(2) = 13$ (a "hole" in the graph if we keep the original domain).</li>
+        <li><strong>Vertical asymptote</strong> $x = 1$: $f \to -\infty$ as $x \to 1^-$, $f \to +\infty$ as $x \to 1^+$.</li>
+        <li><strong>Oblique asymptote</strong> $y = 2 x + 3$.</li>
+        <li><strong>$y$-intercept</strong>: $f(0) = -3$.</li>
+      </ul>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $\displaystyle \lim_{x \to 0} \frac{\sin x}{x} = 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Recognize the limit as a derivative at $0$:
+      $$\lim_{x \to 0} \frac{\sin x}{x} = \lim_{x \to 0} \frac{\sin x - \sin 0}{x - 0} = \sin'(0) = \cos(0) = 1.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Compute $\displaystyle \lim_{x \to 0} \frac{\tan 3 x}{4 x}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Write $\tan 3x = \frac{\sin 3x}{\cos 3x}$ and rearrange:
+      $$\frac{\tan 3 x}{4 x} = \frac{\sin 3 x}{3 x} \cdot \frac{3 x}{4 x \cos 3 x}.$$
+      As $x \to 0$, $\frac{\sin 3x}{3x} \to 1$ and $\cos 3x \to 1$, so the limit is $\displaystyle 1 \cdot \frac{3}{4} = \mathbf{\frac{3}{4}}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $\displaystyle \lim_{n \to \infty} \left(1 + \frac{1}{n}\right)^n = e$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Take the log:
+      $$\ln\!\left(1 + \tfrac{1}{n}\right)^n = n \ln\!\left(1 + \tfrac{1}{n}\right) = \frac{\ln(1 + 1/n) - \ln 1}{1/n}.$$
+      As $n \to \infty$, $h = 1/n \to 0$, and this is the difference quotient for $\ln$ at $1$:
+      $$\frac{\ln(1+h) - \ln 1}{h} \longrightarrow \ln'(1) = 1.$$
+      By continuity of $\exp$, $\displaystyle \left(1 + \tfrac{1}{n}\right)^n = e^{n \ln(1 + 1/n)} \longrightarrow e^1 = e$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> I deposit one dollar in the bank at $100\%$ annual interest. If the interest is compounded once, after one year I have $2$ dollars. If it is compounded twice (every 6 months), I have $\left(1 + \tfrac{1}{2}\right) + \tfrac{1}{2}\left(1 + \tfrac{1}{2}\right)$ dollars. If the interest is compounded continuously (infinitely often), how much do I have after one year?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>With $n$ equal compounding periods, the balance after one year is $\left(1 + \tfrac{1}{n}\right)^n$. Letting $n \to \infty$ gives $\displaystyle \lim_{n \to \infty} \left(1 + \tfrac{1}{n}\right)^n = e \approx 2.718$ dollars.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Compute $\displaystyle \lim_{x \to \infty} \left(1 + \frac{2}{x}\right)^{3 x}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $u = x/2$, so $\frac{2}{x} = \frac{1}{u}$ and $3 x = 6 u$:
+      $$\left(1 + \frac{2}{x}\right)^{3 x} = \left(1 + \frac{1}{u}\right)^{6 u} = \left(\left(1 + \frac{1}{u}\right)^{u}\right)^{6}.$$
+      As $x \to \infty$, $u \to \infty$, and $\left(1 + \frac{1}{u}\right)^u \to e$, so the limit is $\mathbf{e^6}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Compute $\displaystyle \lim_{x \to -2} \frac{x^3 + 8}{x + 2}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Factor using the sum of cubes: $x^3 + 8 = (x + 2)(x^2 - 2 x + 4)$, so for $x \neq -2$,
+      $$\frac{x^3 + 8}{x + 2} = x^2 - 2 x + 4.$$
+      Taking $x \to -2$: $(-2)^2 - 2(-2) + 4 = \mathbf{12}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the equations of the asymptotes of $\displaystyle f(x) = \frac{x^2 - x - 2}{x + 2}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Polynomial division gives
+      $$f(x) = x - 3 + \frac{4}{x + 2}.$$
+      As $x \to \pm \infty$, $\frac{4}{x+2} \to 0$, so the oblique asymptote is $\mathbf{y = x - 3}$. Since the numerator does not vanish at $x = -2$ (it equals $4$ there), $f$ also has a vertical asymptote at $\mathbf{x = -2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Compute $\displaystyle \lim_{x \to 0} \frac{1 - \cos x}{x}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Recognize the negative of a difference quotient for $\cos$ at $0$:
+      $$\lim_{x \to 0} \frac{1 - \cos x}{x} = -\lim_{x \to 0} \frac{\cos x - \cos 0}{x - 0} = -\cos'(0) = \sin(0) = \mathbf{0}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all asymptotes of $\displaystyle f(x) = \frac{x^3}{x^2 - 1}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Polynomial division: $x^3 = x(x^2 - 1) + x$, so
+      $$f(x) = x + \frac{x}{x^2 - 1}.$$
+      As $x \to \pm \infty$, $\frac{x}{x^2 - 1} \to 0$, giving the oblique asymptote $\mathbf{y = x}$.</p>
+      <p>The denominator $x^2 - 1 = (x-1)(x+1)$ vanishes at $x = \pm 1$ while the numerator does not, so there are vertical asymptotes at $\mathbf{x = 1}$ and $\mathbf{x = -1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find all cube roots of $4 + 4 i \sqrt{3}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Convert to polar form:
+      $$|4 + 4 i \sqrt{3}| = \sqrt{16 + 48} = 8, \qquad \arg = \arctan(\sqrt{3}) = \frac{\pi}{3}.$$
+      So $4 + 4 i \sqrt{3} = 8 e^{i \pi / 3}$.</p>
+      <p>The three cube roots are
+      $$w_k = 8^{1/3} \, e^{i(\pi/3 + 2 \pi k)/3} = 2 \, e^{i(\pi/9 + 2 \pi k / 3)}, \qquad k = 0, 1, 2.$$
+      Explicitly: $\displaystyle 2 e^{i \pi / 9}, \; 2 e^{i 7 \pi / 9}, \; 2 e^{i 13 \pi / 9}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Express $\cos(3 \theta)$ in terms of $\cos \theta$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By De Moivre's theorem, $(\cos \theta + i \sin \theta)^3 = \cos(3\theta) + i \sin(3\theta)$. Expanding the left side:
+      $$\cos^3 \theta + 3 i \cos^2 \theta \sin \theta - 3 \cos \theta \sin^2 \theta - i \sin^3 \theta.$$
+      Taking the real part and using $\sin^2 \theta = 1 - \cos^2 \theta$:
+      $$\cos(3 \theta) = \cos^3 \theta - 3 \cos \theta (1 - \cos^2 \theta) = \mathbf{4 \cos^3 \theta - 3 \cos \theta}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $\omega$ be an $n$-th root of unity with $\omega \neq 1$. Show that $1 + \omega + \omega^2 + \cdots + \omega^{n-1} = 0$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>This is a geometric series with ratio $\omega \neq 1$, so
+      $$1 + \omega + \omega^2 + \cdots + \omega^{n-1} = \frac{1 - \omega^n}{1 - \omega}.$$
+      Since $\omega$ is an $n$-th root of unity, $\omega^n = 1$, so the numerator vanishes while the denominator $1 - \omega \neq 0$. Hence the sum is $\mathbf{0}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $\omega$ be a root of $x^3 - 1$. Find the product $(1 - \omega + \omega^2)(1 + \omega - \omega^2)$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Case $\omega = 1$:</em> the product is $(1)(1) = 1$.</p>
+      <p><em>Case $\omega \neq 1$ (a primitive cube root):</em> then $1 + \omega + \omega^2 = 0$, so $\omega^2 = -1 - \omega$. Substituting,
+      $$1 - \omega + \omega^2 = (1 + \omega + \omega^2) - 2\omega = -2\omega, \qquad 1 + \omega - \omega^2 = (1 + \omega + \omega^2) - 2\omega^2 = -2\omega^2.$$
+      Hence the product is $(-2\omega)(-2\omega^2) = 4\omega^3 = 4$ (using $\omega^3 = 1$).</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the product of the $n$-th roots of unity, using their complex form.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The $n$-th roots of unity are $\omega_k = e^{2\pi i k / n}$ for $k = 0, 1, \ldots, n-1$. Their product is
+      $$\prod_{k=0}^{n-1} e^{2\pi i k / n} = e^{\frac{2\pi i}{n} \sum_{k=0}^{n-1} k} = e^{\frac{2\pi i}{n} \cdot \frac{n(n-1)}{2}} = e^{\pi i (n-1)} = (-1)^{n+1}.$$
+      So the product is $1$ if $n$ is odd, and $-1$ if $n$ is even.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Expand $(a + b + c)^3$ without multiplying out explicitly.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By the multinomial theorem,
+      $$(a + b + c)^3 = \sum_{i+j+k=3} \binom{3}{i,\,j,\,k} a^i b^j c^k, \qquad \binom{3}{i,\,j,\,k} = \frac{3!}{i!\,j!\,k!}.$$
+      Group the terms by the shape of $(i, j, k)$:</p>
+      <ul>
+        <li>$(3,0,0)$ and permutations: coefficient $\frac{3!}{3!} = 1$, giving $a^3 + b^3 + c^3$;</li>
+        <li>$(2,1,0)$ and permutations: coefficient $\frac{3!}{2!\,1!} = 3$, giving $3(a^2 b + a^2 c + b^2 a + b^2 c + c^2 a + c^2 b)$;</li>
+        <li>$(1,1,1)$: coefficient $\frac{3!}{1!\,1!\,1!} = 6$, giving $6abc$.</li>
+      </ul>
+      <p>Hence
+      $$(a + b + c)^3 = a^3 + b^3 + c^3 + 3(a^2 b + a^2 c + b^2 a + b^2 c + c^2 a + c^2 b) + 6abc.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find $x, y, z$ such that $x + y + z = 7$, $xy + yz + zx = -14$, and $xyz = -120$. How many solutions $(x, y, z)$ are there?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The three quantities are the elementary symmetric sums of $x, y, z$, so by Vieta's formulas $x, y, z$ are the roots of
+      $$t^3 - 7 t^2 - 14 t + 120 = 0.$$
+      By the rational root theorem, any rational root divides $120$. Testing $t = 5$: $125 - 175 - 70 + 120 = 0$, so $t = 5$ is a root. Factoring,
+      $$t^3 - 7 t^2 - 14 t + 120 = (t - 5)(t^2 - 2 t - 24) = (t - 5)(t - 6)(t + 4).$$
+      Hence $\{x, y, z\} = \{5, 6, -4\}$. Since the three values are distinct and the system is symmetric, every ordering gives a valid solution, so there are $3! = \mathbf{6}$ ordered solutions $(x, y, z)$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove, using a polynomial in $c$, that
+      $$\frac{1}{a(a-b)(a-c)} + \frac{1}{b(b-c)(b-a)} + \frac{1}{c(c-a)(c-b)} = \frac{1}{abc},$$
+      where $a, b, c$ are distinct and nonzero.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Multiply both sides by the common denominator $L = abc\,(a-b)(a-c)(b-c)$, which is nonzero. The identity is then equivalent to $f(c) = 0$, where
+      $$f(c) = bc(b-c) - ac(a-c) + ab(a-b) - (a-b)(a-c)(b-c).$$</p>
+      <p>Regard $a, b$ as fixed and $f$ as a polynomial in $c$. Each term is at most quadratic in $c$, so $\deg f \leq 2$. We check that $f$ vanishes at three distinct points:</p>
+      <ul>
+        <li>$f(0) = ab(a-b) - (a-b)\,a\,b = 0$;</li>
+        <li>$f(a) = ab(b-a) + ab(a-b) = 0$ (the other two terms carry a factor $a-a$);</li>
+        <li>$f(b) = -ab(a-b) + ab(a-b) = 0$ (the other two terms carry a factor $b-b$).</li>
+      </ul>
+      <p>A polynomial of degree at most $2$ with three distinct roots $c = 0, a, b$ is identically zero. Hence $f \equiv 0$, and dividing back by $L$ gives the identity.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a, b, c$ be real numbers with $a^2 + b^2 + c^2 = 1$. Find the minimum value of $ab + bc + ca$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since the square of a real number is non-negative,
+      $$0 \leq (a + b + c)^2 = a^2 + b^2 + c^2 + 2(ab + bc + ca) = 1 + 2(ab + bc + ca),$$
+      so $ab + bc + ca \geq -\frac{1}{2}$.</p>
+      <p>Equality holds when $a + b + c = 0$ together with $a^2 + b^2 + c^2 = 1$, for instance $a = \frac{1}{\sqrt 2}$, $b = -\frac{1}{\sqrt 2}$, $c = 0$. So the minimum value is $\mathbf{-\frac{1}{2}}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> For what real values of $n$ does the system
+      $$nx + y = 1, \qquad ny + z = 1, \qquad x + nz = 1$$
+      have no solution?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The coefficient matrix is
+      $$M = \begin{pmatrix} n & 1 & 0 \\ 0 & n & 1 \\ 1 & 0 & n \end{pmatrix}, \qquad \det M = n^3 + 1.$$
+      If $\det M \neq 0$ the system has a unique solution. When $\det M = 0$ the system is not guaranteed to be solvable: it has either no solution or infinitely many. So the only candidate for "no solution" is $n^3 + 1 = 0$, i.e. (over the reals) $n = -1$, and we must check which case occurs there.</p>
+      <p>For $n = -1$ the system is
+      $$-x + y = 1, \qquad -y + z = 1, \qquad x - z = 1.$$
+      Adding the three equations, the left side is $(-x+y) + (-y+z) + (x-z) = 0$, while the right side is $3$. This gives $0 = 3$, a contradiction, so the system is inconsistent.</p>
+      <p>Hence the system has no solution exactly when $\mathbf{n = -1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the minimum value of $x^2 + 2x + 2$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Complete the square:
+      $$x^2 + 2x + 2 = (x + 1)^2 + 1.$$
+      Since $(x+1)^2 \geq 0$, the expression is at least $1$, with equality at $x = -1$. So the minimum value is $\mathbf{1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (AM&ndash;GM inequality) For positive reals $a_1, \ldots, a_n$, the arithmetic mean is at least the geometric mean:
+      $$\frac{a_1 + a_2 + \cdots + a_n}{n} \geq \sqrt[n]{a_1 a_2 \cdots a_n}.$$
+      Prove this.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>We use the single elementary fact that $e^{t} \geq 1 + t$ for all real $t$. To justify it, let $g(t) = e^t - 1 - t$. Then $g'(t) = e^t - 1$, which is negative for $t \lt 0$ and positive for $t \gt 0$, so $g$ is decreasing on $(-\infty, 0]$ and increasing on $[0, \infty)$. Thus $g$ attains its global minimum at $t = 0$, where $g(0) = 0$. Hence $g(t) \geq 0$, i.e. $e^t \geq 1 + t$, with equality only at $t = 0$. Replacing $t$ by $t - 1$, this reads $e^{\,t-1} \geq t$.</p>
+      <p>Let $A = \dfrac{a_1 + \cdots + a_n}{n}$ be the arithmetic mean. Apply the inequality with $t = \dfrac{a_i}{A}$ for each $i$:
+      $$e^{\,a_i/A - 1} \geq \frac{a_i}{A}.$$
+      Multiplying these $n$ inequalities (all sides positive),
+      $$\exp\!\left( \frac{a_1 + \cdots + a_n}{A} - n \right) \geq \frac{a_1 a_2 \cdots a_n}{A^n}.$$
+      Since $a_1 + \cdots + a_n = nA$, the exponent on the left is $n - n = 0$, so the left side is $e^0 = 1$. Hence
+      $$a_1 a_2 \cdots a_n \leq A^n \implies \sqrt[n]{a_1 a_2 \cdots a_n} \leq A,$$
+      which is exactly the claim. Equality requires $e^{\,t-1} = t$ at each step, i.e. every $a_i/A = 1$, so all the $a_i$ are equal.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $x^2 + y^2 + z^2 \geq xy + yz + zx$ for all real $x, y, z$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Apply AM&ndash;GM to the non-negative pairs $x^2, y^2$ etc. For any two reals,
+      $$\frac{x^2 + y^2}{2} \geq \sqrt{x^2 y^2} = |xy| \geq xy, \qquad\text{so}\qquad x^2 + y^2 \geq 2xy.$$
+      Likewise $y^2 + z^2 \geq 2yz$ and $z^2 + x^2 \geq 2zx$. Adding the three inequalities,
+      $$2(x^2 + y^2 + z^2) \geq 2(xy + yz + zx),$$
+      hence $x^2 + y^2 + z^2 \geq xy + yz + zx$, with equality if and only if $x = y = z$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Cauchy&ndash;Schwarz inequality) For real numbers $a_1, \ldots, a_n$ and $b_1, \ldots, b_n$,
+      $$\left( \sum_{i=1}^{n} a_i b_i \right)^2 \leq \left( \sum_{i=1}^{n} a_i^2 \right) \left( \sum_{i=1}^{n} b_i^2 \right).$$
+      Prove this.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>If every $a_i = 0$ both sides are $0$ and the inequality holds. Otherwise $\sum a_i^2 \gt 0$, and we consider the function
+      $$f(t) = \sum_{i=1}^{n} (a_i t + b_i)^2 = \left( \sum a_i^2 \right) t^2 + 2 \left( \sum a_i b_i \right) t + \left( \sum b_i^2 \right).$$
+      Being a sum of squares, $f(t) \geq 0$ for every real $t$. So this quadratic in $t$ (with positive leading coefficient) has at most one real root, which forces its discriminant to be $\leq 0$:
+      $$\left( 2 \sum a_i b_i \right)^2 - 4 \left( \sum a_i^2 \right) \left( \sum b_i^2 \right) \leq 0.$$
+      Dividing by $4$ rearranges to
+      $$\left( \sum a_i b_i \right)^2 \leq \left( \sum a_i^2 \right) \left( \sum b_i^2 \right),$$
+      which is the inequality. Equality holds iff $f$ has a real root, i.e. $a_i t + b_i = 0$ for all $i$ at some $t$, meaning the vectors $(a_i)$ and $(b_i)$ are proportional.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $\displaystyle 1^2 + 2^2 + \cdots + n^2 \geq \frac{\left( 1 + 2 + \cdots + n \right)^2}{n}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Work backwards. Multiplying by $n \gt 0$, the claim is equivalent to
+      $$n \left( 1^2 + 2^2 + \cdots + n^2 \right) \geq (1 + 2 + \cdots + n)^2.$$
+      Writing $n = 1^2 + 1^2 + \cdots + 1^2$, this reads
+      $$\left( 1^2 + \cdots + n^2 \right)\left( 1^2 + \cdots + 1^2 \right) \geq (1\cdot 1 + \cdots + n \cdot 1)^2,$$
+      which is Cauchy&ndash;Schwarz with $a_k = k$, $b_k = 1$. As the steps are equivalences, the original holds.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Given $xyz = 27$ with $x, y, z \geq 0$, find the minimum value of $x + y + z$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By AM&ndash;GM,
+      $$\frac{x + y + z}{3} \geq \sqrt[3]{xyz} = \sqrt[3]{27} = 3,$$
+      so $x + y + z \geq 9$, with equality when $x = y = z = 3$. The minimum value is $\mathbf{9}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> With $96$ square meters of wrapping paper, what is the volume of the largest rectangular box you can fully cover?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let the box have edge lengths $x, y, z \gt 0$. Covering it uses paper equal to its surface area, so
+      $$2(xy + yz + zx) = 96 \implies xy + yz + zx = 48.$$
+      We maximize the volume $V = xyz$. By AM&ndash;GM applied to the three positive numbers $xy, yz, zx$,
+      $$\frac{xy + yz + zx}{3} \geq \sqrt[3]{(xy)(yz)(zx)} = \sqrt[3]{(xyz)^2},$$
+      so $16 \geq (xyz)^{2/3}$, giving $xyz \leq 16^{3/2} = 64$.</p>
+      <p>Equality holds when $xy = yz = zx$, i.e. $x = y = z$; then $6x^2 = 96$ gives $x = 4$ (a cube). The largest box has volume $\mathbf{64}$ cubic meters.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x$ and $y$ be real numbers with $x + y = 4$. Find the maximum value of $\min(x, y)$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1 (average bound):</em> Since the smaller of two numbers is at most their average,
+      $$\min(x, y) \leq \frac{x + y}{2} = 2,$$
+      with equality precisely when $x = y$, i.e. $x = y = 2$. So the maximum value of $\min(x, y)$ is $\mathbf{2}$.</p>
+      <p><em>Method 2 (order the variables):</em> Without loss of generality, assume $x \geq y$, so $\min(x, y) = y$. Then $x + y \geq 2y$, i.e. $4 \geq 2y$, giving $y \leq 2$. So $\min(x, y) \leq 2$, with equality when $x = y = 2$, and the maximum is $\mathbf{2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (RMS&ndash;AM inequality) For real numbers $a_1, \ldots, a_n$, show that the root mean square is at least the arithmetic mean:
+      $$\sqrt{\frac{a_1^2 + a_2^2 + \cdots + a_n^2}{n}} \geq \frac{a_1 + a_2 + \cdots + a_n}{n}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By the Cauchy&ndash;Schwarz inequality with $b_i = 1$ for all $i$,
+      $$\left( \sum_{i=1}^{n} a_i \right)^2 = \left( \sum_{i=1}^{n} a_i \cdot 1 \right)^2 \leq \left( \sum_{i=1}^{n} a_i^2 \right) \left( \sum_{i=1}^{n} 1^2 \right) = n \sum_{i=1}^{n} a_i^2.$$
+      Dividing by $n^2$ gives
+      $$\left( \frac{a_1 + \cdots + a_n}{n} \right)^2 \leq \frac{a_1^2 + \cdots + a_n^2}{n}.$$
+      The right-hand side is non-negative, so taking square roots,
+      $$\frac{a_1 + \cdots + a_n}{n} \leq \left| \frac{a_1 + \cdots + a_n}{n} \right| \leq \sqrt{\frac{a_1^2 + \cdots + a_n^2}{n}},$$
+      which is the claim. Equality requires the Cauchy&ndash;Schwarz vectors to be proportional, i.e. all the $a_i$ equal, and the arithmetic mean to be non-negative.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (GM&ndash;HM inequality) For positive reals $a_1, \ldots, a_n$, show that the geometric mean is at least the harmonic mean:
+      $$\sqrt[n]{a_1 a_2 \cdots a_n} \geq \frac{n}{\frac{1}{a_1} + \frac{1}{a_2} + \cdots + \frac{1}{a_n}}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Apply AM&ndash;GM to the positive reals $\frac{1}{a_1}, \ldots, \frac{1}{a_n}$:
+      $$\frac{\frac{1}{a_1} + \cdots + \frac{1}{a_n}}{n} \geq \sqrt[n]{\frac{1}{a_1} \cdots \frac{1}{a_n}} = \frac{1}{\sqrt[n]{a_1 \cdots a_n}}.$$
+      Both sides are positive, so taking reciprocals reverses the inequality:
+      $$\frac{n}{\frac{1}{a_1} + \cdots + \frac{1}{a_n}} \leq \sqrt[n]{a_1 \cdots a_n},$$
+      which is exactly $\mathrm{HM} \leq \mathrm{GM}$. Equality holds iff all the $\frac{1}{a_i}$ are equal, i.e. all the $a_i$ are equal.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x, y$ be real numbers with $x^2 + y^2 = 1$. Find the maximum value of $(x + y)^2$, and the values of $x, y$ where it is attained.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1 (AM&ndash;GM):</em> Expand using the constraint:
+      $$(x + y)^2 = x^2 + 2xy + y^2 = 1 + 2xy.$$
+      Since $x^2 + y^2 \geq 2xy$ for all reals (it rearranges to $(x - y)^2 \geq 0$), we have $2xy \leq x^2 + y^2 = 1$, so
+      $$(x + y)^2 = 1 + 2xy \leq 2.$$
+      Equality requires $x = y$; combined with $x^2 + y^2 = 1$ this gives $x = y = \pm\frac{1}{\sqrt 2}$. The maximum value is $\mathbf{2}$.</p>
+      <p><em>Method 2 (trigonometry):</em> Since $x^2 + y^2 = 1$, write $x = \cos\theta$, $y = \sin\theta$. Then
+      $$(x + y)^2 = (\cos\theta + \sin\theta)^2 = 1 + 2\sin\theta\cos\theta = 1 + \sin 2\theta.$$
+      Since $\sin 2\theta \leq 1$, we get $(x + y)^2 \leq 2$, with equality when $\sin 2\theta = 1$, i.e. $\theta = \frac{\pi}{4}$ (so $x = y = \frac{1}{\sqrt 2}$) or $\theta = \frac{5\pi}{4}$ (so $x = y = -\frac{1}{\sqrt 2}$). The maximum value is $\mathbf{2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x, y, z$ be positive reals with $xyz = 1$. Show that $\min(x + y, \, x + z, \, y + z)$ has no maximum value.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>It suffices to exhibit a family of valid $(x, y, z)$ on which the minimum grows without bound. For a parameter $n \gt 1$, take
+      $$x = y = n, \qquad z = \frac{1}{n^2},$$
+      which is positive and satisfies $xyz = n \cdot n \cdot \frac{1}{n^2} = 1$.</p>
+      <p>The three pairwise sums are
+      $$x + y = 2n, \qquad x + z = y + z = n + \frac{1}{n^2}.$$
+      For $n \gt 1$ we have $\frac{1}{n^2} \lt n$, so $n + \frac{1}{n^2} \lt 2n$, and therefore
+      $$\min(x + y, \, x + z, \, y + z) = n + \frac{1}{n^2} \gt n.$$
+      As $n \to \infty$ this exceeds any fixed bound, so $\min(x + y, x + z, y + z)$ is unbounded above and has no maximum.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x, y, z$ be positive reals with $xyz = 1$. Show that $\min\big(\max(x + y, \, x + z, \, y + z)\big) = 2$, where the minimum is taken over all such triples.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Method 1 (sum of the pairwise sums):</em> Write $M = \max(x + y, \, x + z, \, y + z)$. Each of the three pairwise sums is at most $M$, and adding them gives
+      $$2(x + y + z) = (x + y) + (x + z) + (y + z) \leq 3M,$$
+      so $M \geq \frac{2}{3}(x + y + z)$.</p>
+      <p>By AM&ndash;GM, $x + y + z \geq 3\sqrt[3]{xyz} = 3$, hence
+      $$M \geq \frac{2}{3} \cdot 3 = 2.$$
+      So no triple makes the maximum smaller than $2$. The value $2$ is attained at $x = y = z = 1$ (where $xyz = 1$ and all three pairwise sums equal $2$), so the minimum of $\max(x + y, x + z, y + z)$ is exactly $\mathbf{2}$.</p>
+      <p><em>Method 2 (order the variables):</em> Without loss of generality, assume $x \leq y \leq z$. Then the largest pairwise sum is the sum of the two largest variables, so $M = y + z$.</p>
+      <p>Since $x$ is the smallest, $x \leq 1$: otherwise $x \gt 1$ would force $y, z \gt 1$ as well, giving $xyz \gt 1$, a contradiction. By AM&ndash;GM, $x + y + z \geq 3\sqrt[3]{xyz} = 3$, so
+      $$M = y + z = (x + y + z) - x \geq 3 - x \geq 2,$$
+      with equality at $x = y = z = 1$. Hence the minimum is $\mathbf{2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x, y, z$ be positive reals with $x + y + z = 3$. Find $\max\big(\min(xy, \, xz, \, yz)\big)$, the maximum over all such triples of the smallest pairwise product.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Without loss of generality, assume $x \leq y \leq z$. Then the smallest pairwise product is that of the two smallest variables, so $\min(xy, xz, yz) = xy$.</p>
+      <p>Since $z$ is the largest, $z \geq 1$ (the largest of three numbers averaging $1$), so $x + y = 3 - z \leq 2$. By AM&ndash;GM,
+      $$xy \leq \left(\frac{x + y}{2}\right)^2 \leq 1,$$
+      with equality at $x = y = z = 1$. Hence the maximum is $\mathbf{1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> For non-negative reals $a, b$, show that
+      $$\frac{(a + b)^2}{2} \geq \sqrt{2ab(a^2 + b^2)}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Apply AM&ndash;GM to the two non-negative numbers $2ab$ and $a^2 + b^2$:
+      $$\sqrt{2ab(a^2 + b^2)} \leq \frac{2ab + (a^2 + b^2)}{2} = \frac{(a + b)^2}{2},$$
+      which is the claim. Equality holds when $2ab = a^2 + b^2$, i.e. $a = b$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $r_1, r_2, \ldots, r_n \geq 0$ and let $x \gt 0$. Prove that
+      $$(x + r_1)(x + r_2) \cdots (x + r_n) \leq \left(x + \frac{r_1 + r_2 + \cdots + r_n}{n}\right)^n.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The $n$ numbers $x + r_1, \ldots, x + r_n$ are positive, so AM&ndash;GM applies:
+      $$\sqrt[n]{(x + r_1)(x + r_2) \cdots (x + r_n)} \leq \frac{(x + r_1) + (x + r_2) + \cdots + (x + r_n)}{n} = x + \frac{r_1 + \cdots + r_n}{n}.$$
+      Raising both sides to the $n$-th power gives the claim. Equality holds when all the $x + r_i$ are equal, i.e. all the $r_i$ are equal.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The polynomial $x^3 - 12x^2 + ax - 64$ has three real, non-negative roots. Find $a$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let the roots be $p, q, r \geq 0$. By Vieta's formulas,
+      $$p + q + r = 12, \qquad pq + qr + rp = a, \qquad pqr = 64.$$
+      By AM&ndash;GM,
+      $$\frac{p + q + r}{3} \geq \sqrt[3]{pqr} \quad\Longrightarrow\quad 4 \geq \sqrt[3]{64} = 4.$$
+      Equality holds, which forces $p = q = r = 4$. Therefore
+      $$a = pq + qr + rp = 3 \cdot 16 = \mathbf{48}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\sqrt{n} \leq \sqrt[n]{n!}$ for every positive integer $n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Raising both sides to the $2n$-th power, the claim is equivalent to $n^n \leq (n!)^2$. Write
+      $$(n!)^2 = \prod_{k=1}^{n} k \cdot \prod_{k=1}^{n} (n + 1 - k) = \prod_{k=1}^{n} k(n + 1 - k),$$
+      where the second product just runs over the same factors in reverse order. For each $k$ with $1 \leq k \leq n$,
+      $$k(n + 1 - k) - n = (k - 1)(n - k) \geq 0,$$
+      so $k(n + 1 - k) \geq n$. Multiplying these $n$ inequalities gives $(n!)^2 \geq n^n$, which is the claim.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\binom{n}{k}\binom{k}{m} = \binom{n}{m}\binom{n - m}{k - m}$ for integers $0 \leq m \leq k \leq n$. (Combinatorial proof.)</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count pairs $(A, B)$ with $A \subseteq B \subseteq \{1, \ldots, n\}$, $|B| = k$, $|A| = m$ in two ways.</p>
+      <p>Picking $B$ then $A$: $\binom{n}{k}$ ways for $B$, then $\binom{k}{m}$ for $A$ inside $B$.</p>
+      <p>Picking $A$ then $B$: $\binom{n}{m}$ ways for $A$, then $\binom{n - m}{k - m}$ for the remaining elements of $B$, chosen from outside $A$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\sum_{k=0}^{n} k\binom{n}{k} = n \cdot 2^{n-1}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $S = \sum_{k=0}^{n} k\binom{n}{k}$. Using $\binom{n}{k} = \binom{n}{n-k}$ and reindexing, write the same sum in reverse:
+      $$S = \sum_{k=0}^{n} (n - k)\binom{n}{n - k} = \sum_{k=0}^{n} (n - k)\binom{n}{k}.$$
+      Adding the two expressions for $S$,
+      $$2S = \sum_{k=0}^{n} \big(k + (n - k)\big)\binom{n}{k} = n \sum_{k=0}^{n} \binom{n}{k} = n \cdot 2^n,$$
+      so $S = n \cdot 2^{n-1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\sum_{k=0}^{n} \binom{n}{k}^2 = \binom{2n}{n}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count the ways to choose an $n$-element committee from a group of $n$ men and $n$ women, which is $\binom{2n}{n}$.</p>
+      <p>Split by the number $k$ of men chosen: pick $k$ of the $n$ men in $\binom{n}{k}$ ways and $n - k$ of the $n$ women in $\binom{n}{n - k} = \binom{n}{k}$ ways, giving $\binom{n}{k}^2$ committees. Summing over $k$ from $0$ to $n$ counts every committee once, so $\sum_{k=0}^{n} \binom{n}{k}^2 = \binom{2n}{n}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the constant term in the expansion of $\left(x^2 + \frac{1}{x}\right)^6$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The general term is
+      $$\binom{6}{k}(x^2)^{6 - k}\left(\frac{1}{x}\right)^k = \binom{6}{k} x^{12 - 3k}.$$
+      The exponent vanishes when $12 - 3k = 0$, i.e. $k = 4$, giving the constant term $\binom{6}{4} = \mathbf{15}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the coefficient of $x^2 y^3 z w^4$ in the expansion of $(x + y + z + w)^{10}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The exponents $2 + 3 + 1 + 4 = 10$ match the power, so the coefficient is the multinomial coefficient
+      $$\binom{10}{2,\,3,\,1,\,4} = \frac{10!}{2!\,3!\,1!\,4!} = \mathbf{12600}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Write the expansion of $(x + y + z)^n$ in sigma notation.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>$$(x + y + z)^n = \sum_{\substack{i + j + k = n \\ i,\, j,\, k \geq 0}} \frac{n!}{i!\,j!\,k!}\, x^i y^j z^k,$$
+      where the sum runs over all non-negative integer triples $(i, j, k)$ with $i + j + k = n$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\sum_{k=0}^{n} \binom{n}{k}\binom{m}{k} = \binom{n + m}{n}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count the $m$-element subsets of an $(n + m)$-element set partitioned into a part $X$ of size $n$ and a part $Y$ of size $m$. There are $\binom{n + m}{m} = \binom{n + m}{n}$ of them.</p>
+      <p>Split by the number $k$ of elements taken from $X$: pick $k$ from $X$ in $\binom{n}{k}$ ways and the remaining $m - k$ from $Y$ in $\binom{m}{m - k} = \binom{m}{k}$ ways, giving $\binom{n}{k}\binom{m}{k}$ subsets. Summing over $k$ counts every $m$-subset once.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Evaluate $\displaystyle\sum_{i=1}^{10} \sum_{k=1}^{i} \binom{i}{k}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The inner sum is $\sum_{k=1}^{i} \binom{i}{k} = 2^i - \binom{i}{0} = 2^i - 1$. Therefore
+      $$\sum_{i=1}^{10} (2^i - 1) = \sum_{i=1}^{10} 2^i - 10 = (2^{11} - 2) - 10 = 2046 - 10 = \mathbf{2036}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that
+      $$\binom{n - 1}{0} + \binom{n}{1} + \binom{n + 1}{2} + \cdots + \binom{n + k}{k + 1} = \binom{n + k + 1}{k + 1}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Start from the right-hand side and repeatedly apply Pascal's rule $\binom{m}{j} = \binom{m - 1}{j} + \binom{m - 1}{j - 1}$, each time splitting off one term of the sum:
+      $$\binom{n + k + 1}{k + 1} = \binom{n + k}{k + 1} + \binom{n + k}{k} = \binom{n + k}{k + 1} + \binom{n + k - 1}{k} + \binom{n + k - 1}{k - 1} = \cdots$$
+      Splitting the rightmost binomial each step peels off the terms $\binom{n + k}{k + 1}, \binom{n + k - 1}{k}, \ldots, \binom{n}{1}$ in turn, and the last remainder is $\binom{n}{0} = \binom{n - 1}{0}$. Collecting these is exactly the left-hand side.</p>
+      <p><em>Alternative proof by counting subsets.</em> The right-hand side $\binom{n + k + 1}{k + 1} = \binom{n + k + 1}{n}$ counts the $n$-element subsets of $\{1, 2, \ldots, n + k + 1\}$. Classify each subset by its largest element $m$: the other $n - 1$ elements lie in $\{1, \ldots, m - 1\}$, giving $\binom{m - 1}{n - 1}$ subsets, and $m$ ranges from $n$ to $n + k + 1$. Writing $m = n + j$ for $j = 0, \ldots, k + 1$, this term is $\binom{n - 1 + j}{n - 1} = \binom{n - 1 + j}{j}$, the $j$-th term of the left-hand side. Summing over $m$ counts every subset once.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the sum of all coefficients in the expansion of $(a + b + c + d)^{10}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The sum of the coefficients is the value of the expansion at $a = b = c = d = 1$, namely $(1 + 1 + 1 + 1)^{10} = \mathbf{4^{10}}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Evaluate $\binom{n}{1} + 3\binom{n}{3} + 5\binom{n}{5} + \cdots$ for $n \geq 2$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The sum is $\sum_{k \text{ odd}} k\binom{n}{k}$. Using the absorption identity $k\binom{n}{k} = n\binom{n - 1}{k - 1}$,
+      $$\sum_{k \text{ odd}} k\binom{n}{k} = n \sum_{k \text{ odd}} \binom{n - 1}{k - 1} = n \sum_{j \text{ even}} \binom{n - 1}{j}.$$
+      The even-indexed binomial coefficients of any positive integer $m$ sum to $2^{m - 1}$; with $m = n - 1$ this gives $\mathbf{n \cdot 2^{n-2}}$.</p>
+      <p><em>Alternative proof.</em> Let $S_{\text{odd}} = \sum_{k \text{ odd}} k\binom{n}{k}$ and $S_{\text{even}} = \sum_{k \text{ even}} k\binom{n}{k}$. From the earlier identity $\sum_{k} k\binom{n}{k} = n \cdot 2^{n-1}$,
+      $$S_{\text{odd}} + S_{\text{even}} = n \cdot 2^{n-1}.$$
+      For the difference, use $k\binom{n}{k} = n\binom{n - 1}{k - 1}$:
+      $$S_{\text{even}} - S_{\text{odd}} = \sum_{k} (-1)^k\, k\binom{n}{k} = n \sum_{k} (-1)^k \binom{n - 1}{k - 1} = -n\,(1 - 1)^{n-1} = 0$$
+      for $n \geq 2$. Hence $S_{\text{odd}} = S_{\text{even}}$, and adding the two relations gives $S_{\text{odd}} = n \cdot 2^{n-2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Evaluate $\displaystyle\sum_{k=1}^{n} \binom{n}{k}\binom{n}{k - 1}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count the $(n + 1)$-element subsets of a set split into two parts $X$ and $Y$ of size $n$ each, of which there are $\binom{2n}{n + 1}$. Splitting by the number $k$ of elements taken from $X$: pick $k$ from $X$ in $\binom{n}{k}$ ways and the remaining $n + 1 - k$ from $Y$ in $\binom{n}{n + 1 - k} = \binom{n}{k - 1}$ ways. Summing over $k$ gives
+      $$\sum_{k=1}^{n} \binom{n}{k}\binom{n}{k - 1} = \binom{2n}{n + 1}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $\displaystyle\sum_{k=0}^{m} \binom{n}{k}\binom{n - k}{m - k} = 2^m \binom{n}{m}$ for $m \leq n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Both sides count the pairs $(A, B)$ with $A \subseteq B \subseteq \{1, \ldots, n\}$ and $|B| = m$.</p>
+      <p>Picking $A$ then $B$: choose $A$ of size $k$ in $\binom{n}{k}$ ways, then the remaining $m - k$ elements of $B$ from the $n - k$ elements outside $A$ in $\binom{n - k}{m - k}$ ways. Summing over $k = 0, \ldots, m$ gives the left-hand side.</p>
+      <p>Picking $B$ then $A$: choose the $m$-element set $B$ in $\binom{n}{m}$ ways, then any subset $A \subseteq B$ in $2^m$ ways, giving the right-hand side.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find $\displaystyle\sum_{k=1}^{n} k^2$ using the identity $k^2 = k(k - 1) + k$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Split the sum with $k^2 = k(k - 1) + k$:
+      $$\sum_{k=1}^{n} k^2 = \sum_{k=1}^{n} k(k - 1) + \sum_{k=1}^{n} k.$$
+      Since $k(k - 1) = 2\binom{k}{2}$, the hockey-stick identity $\sum_{i=r}^{n} \binom{i}{r} = \binom{n + 1}{r + 1}$ gives $\sum_{k=1}^{n} k(k - 1) = 2\sum_{k=1}^{n} \binom{k}{2} = 2\binom{n + 1}{3}$, and $\sum_{k=1}^{n} k = \binom{n + 1}{2}$. Therefore
+      $$\sum_{k=1}^{n} k^2 = 2\binom{n + 1}{3} + \binom{n + 1}{2} = \frac{n(n + 1)(2n + 1)}{6}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the partial fraction decomposition of $\dfrac{2x - 1}{x^2 - 4x + 3}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Factor the denominator as $x^2 - 4x + 3 = (x - 1)(x - 3)$ and write
+      $$\frac{2x - 1}{(x - 1)(x - 3)} = \frac{A}{x - 1} + \frac{B}{x - 3}, \qquad 2x - 1 = A(x - 3) + B(x - 1).$$
+      Setting $x = 1$ gives $1 = -2A$, so $A = -\frac{1}{2}$; setting $x = 3$ gives $5 = 2B$, so $B = \frac{5}{2}$. Therefore
+      $$\frac{2x - 1}{x^2 - 4x + 3} = -\frac{1}{2(x - 1)} + \frac{5}{2(x - 3)}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Determine whether $\sum_{n=1}^{\infty} \dfrac{n}{(n+1)(n+2)}$ converges.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Write $n = (n+1) - 1$ in the numerator:
+      $$\frac{n}{(n+1)(n+2)} = \frac{(n+1) - 1}{(n+1)(n+2)} = \frac{1}{n+2} - \frac{1}{(n+1)(n+2)}.$$
+      The second piece telescopes: $\dfrac{1}{(n+1)(n+2)} = \dfrac{1}{n+1} - \dfrac{1}{n+2}$, so $\displaystyle\sum_{n=1}^{\infty} \frac{1}{(n+1)(n+2)} = \frac{1}{2}$ converges. The first piece $\displaystyle\sum_{n=1}^{\infty} \frac{1}{n+2}$ is a tail of the harmonic series, which diverges. A convergent series minus a divergent one diverges, so the sum diverges.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find $\sum_{n=1}^{\infty} \dfrac{2n}{3^{n+1}}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $S = \displaystyle\sum_{n=1}^{\infty} \frac{2n}{3^{n+1}}$ and subtract a shifted copy:
+      $$S = \frac{2}{3^2} + \frac{4}{3^3} + \frac{6}{3^4} + \cdots, \qquad \frac{S}{3} = \frac{2}{3^3} + \frac{4}{3^4} + \cdots.$$
+      Subtracting term by term, each numerator difference is $2$:
+      $$S - \frac{S}{3} = \frac{2}{3^2} + \frac{2}{3^3} + \frac{2}{3^4} + \cdots = 2\sum_{k=2}^{\infty} \frac{1}{3^k} = 2 \cdot \frac{1/9}{1 - 1/3} = \frac{1}{3}.$$
+      Thus $\dfrac{2}{3}S = \dfrac{1}{3}$, giving $S = \dfrac{1}{2}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $n$ be a multiple of $4$. Evaluate $1 + 2i + 3i^2 + \cdots + (n+1)i^n$, where $i^2 = -1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The powers of $i$ repeat with period $4$: $i^0 = 1$, $i^1 = i$, $i^2 = -1$, $i^3 = -i$. Group the terms into blocks of four starting at $k = 4m$. Using $i^{4m} = 1$, the block is
+      $$(4m+1) + (4m+2)i - (4m+3) - (4m+4)i = -2 - 2i,$$
+      the same constant for every block. Since $n$ is a multiple of $4$, the terms $k = 0, \ldots, n-1$ form exactly $\frac{n}{4}$ complete blocks, leaving the final term $(n+1)i^n = n+1$. Therefore
+      $$S = \frac{n}{4}(-2 - 2i) + (n+1) = \frac{(n+2) - ni}{2}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a_1 = 2$ and $a_{n+1} = a_n + 2n$. Find $a_{100}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Summing the recurrence from $1$ to $n-1$ telescopes:
+      $$a_n = a_1 + \sum_{k=1}^{n-1} 2k = 2 + (n-1)n = n^2 - n + 2.$$
+      Hence $a_{100} = 100^2 - 100 + 2 = 9902$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> In how many ways can we buy $n$ items chosen from $r$ types, where any number of each type may be taken (order does not matter)?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A purchase is determined by how many of each type we take: nonnegative integers $x_1, x_2, \ldots, x_r$ with
+      $$x_1 + x_2 + \cdots + x_r = n.$$
+      Encode such a solution as a row of $n$ stars and $r - 1$ bars: the stars before the first bar give $x_1$, those between the first and second bar give $x_2$, and so on. Every arrangement of $n$ stars and $r - 1$ bars corresponds to exactly one solution and vice versa. There are $n + r - 1$ symbols, and a purchase is fixed by choosing which $r - 1$ of them are bars, so the number of ways is
+      $$\binom{n + r - 1}{r - 1} = \binom{n + r - 1}{n}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> How many solutions does $x_1 + x_2 + \cdots + x_r = n$ have in nonnegative integers $x_i$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Represent a solution by $n$ stars split into $r$ groups by $r - 1$ bars, where the number of stars in the $i$-th group is $x_i$:
+      $$\underbrace{\star\cdots\star}_{x_1}\;\big|\;\underbrace{\star\cdots\star}_{x_2}\;\big|\;\cdots\;\big|\;\underbrace{\star\cdots\star}_{x_r}.$$
+      Each arrangement of the $n + r - 1$ symbols gives exactly one solution, so the count is the number of ways to place the $r - 1$ bars among the $n + r - 1$ positions:
+      $$\binom{n + r - 1}{r - 1} = \binom{n + r - 1}{n}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> How many solutions does $x_1 + x_2 + x_3 \le 50$ have in nonnegative integers $x_i$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The slack variable $x_4 = 50 - (x_1 + x_2 + x_3)$ is a nonnegative integer exactly when the inequality holds, so solutions correspond to those of $x_1 + x_2 + x_3 + x_4 = 50$. By stars and bars with $n = 50$, $r = 4$,
+      $$\binom{53}{3}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> In how many ways can $5$ people be seated in a row of $20$ chairs so that no two of them sit next to each other?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>First choose the $5$ occupied chairs so that no two are adjacent, then seat the $5$ distinct people in them. Line up the $15$ empty chairs; they create $16$ gaps (one before each empty chair, one after the last) into which the occupied chairs may be inserted. Choosing $5$ of these gaps, at most one per gap, guarantees no two occupied chairs are adjacent, so there are $\binom{16}{5}$ valid sets of chairs. The $5$ people can then be arranged in $5!$ ways, giving
+      $$\binom{16}{5}\cdot 5!.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> In how many ways can $3$ squares be chosen from a $5 \times 5$ grid so that no two lie in the same row or the same column?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The squares occupy $3$ distinct rows and $3$ distinct columns. Choose the rows in $\binom{5}{3}$ ways, the columns in $\binom{5}{3}$ ways, then pair them up in $3!$ ways:
+      $$\binom{5}{3}^{2}\cdot 3!.$$</p>
+      <p><em>Alternative solution.</em> Place the squares in order: $25$ choices for the first, $16$ for the second (a $4 \times 4$ subgrid remains), $9$ for the third, then divide by $3!$ since the squares are unordered, giving $\frac{25 \cdot 16 \cdot 9}{3!}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> How many positive integers $n \le 1000$ have none of $2$, $3$, $5$ among their prime factors?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count the complement by inclusion-exclusion, using $\lfloor 1000/d \rfloor$ for the multiples of $d$. The number divisible by at least one of $2, 3, 5$ is
+      $$(500 + 333 + 200) - (166 + 100 + 66) + 33 = 734,$$
+      so the answer is $1000 - 734 = 266$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> For a set $S$, let $n(S)$ denote the number of subsets of $S$. If $n(A) + n(B) + n(C) = n(A \cup B \cup C)$ and $|A| = |B| = 100$, find the minimum possible value of $|A \cap B \cap C|$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $n(S) = 2^{|S|}$, the hypothesis reads $2^{101} + 2^{|C|} = 2^{|A \cup B \cup C|}$. A sum of two powers of $2$ is a power of $2$ only when the two are equal, forcing $|C| = 101$ and $|A \cup B \cup C| = 102$. Writing $t = |A \cap B \cap C|$, inclusion-exclusion gives
+      $$102 = 301 - \big(|A \cap B| + |A \cap C| + |B \cap C|\big) + t.$$
+      All three sets lie in the $102$-element union, so $|X \cap Y| \ge |X| + |Y| - 102$, making the pairwise sum at least $98 + 99 + 99 = 296$ and hence $t \ge 97$. Taking $U = \{1, \ldots, 102\}$ with $A = U \setminus \{1,2\}$, $B = U \setminus \{3,4\}$, $C = U \setminus \{102\}$ attains it, so the minimum is $97$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> How many solutions does $x_1 + x_2 + \cdots + x_8 = 19$ have in strictly positive integers $x_i$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Setting $y_i = x_i - 1$ makes the $y_i$ nonnegative with $y_1 + \cdots + y_8 = 11$, so stars and bars with $n = 11$, $r = 8$ gives
+      $$\binom{18}{7}.$$</p>
+      <p><em>Alternative solution.</em> Lay out $19$ stars and split them into $8$ nonempty groups by placing $7$ bars in the $18$ gaps between consecutive stars, at most one per gap.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A self-avoiding walk on the square lattice is a path that starts at the origin and repeatedly steps one unit left, right, up or down, never visiting the same point twice. Let $f(n)$ be the number of such walks of $n$ steps. Show that
+      $$2^n \le f(n) \le 4 \cdot 3^{n-1}.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For the lower bound, restrict to walks that only ever step right or up. Along such a walk the sum $x + y$ of the coordinates increases by $1$ at each step, so all $n + 1$ visited points are distinct and the walk is self-avoiding; the $2^n$ step sequences give $2^n$ distinct walks. For the upper bound, the first step has $4$ choices, and every later step must avoid reversing its predecessor, which would return the walk to the point two steps back, leaving at most $3$ choices.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $n$ be a positive integer. Find the sum of all positive integers whose base $2$ representation has exactly $2n$ digits, of which $n$ are $0$ and $n$ are $1$ (so the leading digit is $1$).</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The leading digit of a $2n$-digit number is $1$, so the remaining $2n - 1$ digits carry $n - 1$ ones and $n$ zeros. Sum by place value rather than by number. The leading place, worth $2^{2n-1}$, holds a $1$ in every one of the $\binom{2n-1}{n-1}$ such numbers. A lower place $2^k$ with $0 \le k \le 2n-2$ holds a $1$ in $\binom{2n-2}{n-2}$ of them, since fixing that digit and the leading digit to $1$ leaves $n - 2$ ones to distribute among the other $2n - 2$ places. As $\sum_{k=0}^{2n-2} 2^k = 2^{2n-1} - 1$, the total is
+      $$\binom{2n-1}{n-1}2^{2n-1} + \binom{2n-2}{n-2}\left(2^{2n-1} - 1\right),$$
+      where the second binomial is $0$ when $n = 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two numbers are chosen independently and uniformly at random from the interval $[0, 10]$. What is the probability that they differ by no more than $5$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The pair is a point $(x, y)$ distributed uniformly over the square $[0, 10]^2$, so the probability is a ratio of areas. The complementary event $|x - y| \gt 5$ is the union of the two corner triangles above $y = x + 5$ and below $y = x - 5$, each a right triangle with legs $5$, of combined area $25$. Hence the probability is
+      $$1 - \frac{25}{100} = \frac{3}{4}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A prize sits behind one of three closed doors, chosen uniformly at random. You point at a door, and the host, who knows where the prize is, opens one of the two remaining doors, always one that is empty. You may keep your door or switch to the last unopened one. Find the probability that switching wins, first in this game and then in the variant with $1000$ doors, where the host opens $998$ empty ones.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Your initial guess is correct with probability $\frac{1}{3}$, and the host's move cannot change that number: whatever door you point at, he is able to open an empty one, so seeing him do it tells you nothing about your own door. Its probability stays $\frac{1}{3}$, the prize is somewhere, and the only other closed door absorbs the rest, so switching wins with probability $\frac{2}{3}$, twice as often as staying.</p>
+      <p>With $1000$ doors the same argument gives $\frac{1}{1000}$ for your door against $\frac{999}{1000}$ for the survivor, and at that scale the mechanism is hard to miss: you were almost certainly wrong at the start, and the host, forbidden from opening the prize door, has swept that entire $\frac{999}{1000}$ onto a single door.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Box $X$ holds $5$ white and $2$ black balls, box $Y$ holds $3$ white and $5$ black. One of the two boxes is chosen at random and a ball drawn from it turns out to be white. What is the probability that the box was $X$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $W$ be the event that the drawn ball is white. Drawing from $X$ gives white with probability $\frac{5}{7}$ and from $Y$ with probability $\frac{3}{8}$, and the two boxes are equally likely, so those equal priors cancel in Bayes' theorem:
+      $$P(X \mid W) = \frac{\frac{5}{7}}{\frac{5}{7} + \frac{3}{8}} = \frac{40}{61}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two teams play a series of games, each won independently by either team with probability $\frac{1}{2}$, until one of them has won $4$ games. What is the probability that the sixth game is the last one?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A team ends the series at game $6$ precisely when it takes game $6$ and exactly $3$ of the first $5$, since winning $4$ of the first $5$ would have ended the series earlier. That leaves $\binom{5}{3}$ sequences for a given team, each of probability $2^{-6}$, and the two teams cannot both win, so the events are disjoint:
+      $$2\binom{5}{3}\frac{1}{2^{6}} = \frac{5}{16}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A fair die is rolled three times. Given that all three results are greater than $3$, what is the probability that they all show the same number?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Conditioning on all three rolls exceeding $3$ leaves each one uniform on $\{4, 5, 6\}$ and still independent of the others, so the $3^3$ triples are equally likely. Three of them are constant, giving
+      $$\frac{3}{27} = \frac{1}{9}.$$</p>
+      <p><em>Alternative solution.</em> Let $E$ be the event that the three rolls are equal and $F$ the event that all three exceed $3$. Then $E \cap F$ consists of the three outcomes $444$, $555$, $666$ among the $6^3$ equally likely triples, while $F$ has probability $\left(\frac{1}{2}\right)^3$, so
+      $$P(E \mid F) = \frac{P(E \cap F)}{P(F)} = \frac{3/216}{1/8} = \frac{1}{9}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A class of $5$ boys and $5$ girls is seated at random around a circular table. What is the probability that at least two of the girls sit next to each other?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Work with the complementary event, that no two girls are adjacent. Number the seats $1$ through $10$ around the table; only which of them hold girls matters, and the $\binom{10}{5} = 252$ such choices are equally likely. Five pairwise non-adjacent seats in a circle of $10$ must be every other seat, leaving just two possibilities, the odd-numbered seats and the even-numbered ones. Hence the answer is
+      $$1 - \frac{2}{252} = \frac{125}{126}.$$</p>
+      <p><em>Alternative solution.</em> Treat the students as distinct, so that identifying rotations leaves $9!$ circular orderings. To keep the girls apart, seat the $5$ boys first, in $4!$ circular orders, then place the girls one per gap into the $5$ gaps they create, in $5!$ ways. This gives
+      $$1 - \frac{4!\,5!}{9!} = \frac{125}{126}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> In a certain population $20\%$ of people always lie and the rest always tell the truth. Three people drawn independently from it are asked whether it is raining, and all three answer yes. Taking rain and no rain to be equally likely beforehand, what is the probability that it is raining?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $R$ be the event that it is raining and $Y$ the event that all three answer yes. If it is raining, a person answers yes exactly when truthful, so $P(Y \mid R) = \left(\frac{4}{5}\right)^3$; if it is not, a person answers yes exactly when lying, giving $\left(\frac{1}{5}\right)^3$. The two prior probabilities are equal, so they cancel in Bayes' theorem:
+      $$P(R \mid Y) = \frac{\left(\frac{4}{5}\right)^3}{\left(\frac{4}{5}\right)^3 + \left(\frac{1}{5}\right)^3} = \frac{64}{65}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a$ and $b$ be positive integers with $\gcd(a, b) = 1$. Show that if $ab$ is a perfect square, then $a$ and $b$ are both perfect squares.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Write $v_p(n)$ for the exponent of the prime $p$ in $n$, so that $n$ is a perfect square precisely when $v_p(n)$ is even for every $p$. Fix a prime $p$. Since $ab$ is a square, $v_p(a) + v_p(b) = v_p(ab)$ is even. Coprimality forbids $p$ from dividing both $a$ and $b$, so one of $v_p(a)$, $v_p(b)$ is $0$ and the other equals that even sum, making both even. As $p$ was arbitrary, every prime occurs to an even power in $a$ and in $b$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Solve $1233x + 45 \equiv 9090 \pmod{24}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Reducing the coefficients modulo $24$ gives $1233 \equiv 9$, $45 \equiv 21$ and $9090 \equiv 18$, so the congruence becomes
+      $$9x \equiv -3 \equiv 21 \pmod{24}.$$
+      Here $\gcd(9, 24) = 3$ divides $21$, so the congruence is solvable and dividing it through by $3$, modulus included, yields the equivalent $3x \equiv 7 \pmod 8$. Multiplying by $3$, which is its own inverse modulo $8$, gives $x \equiv 21 \equiv 5 \pmod 8$, that is
+      $$x \equiv 5, \; 13, \; 21 \pmod{24}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $n = p_1^{a_1} \cdots p_k^{a_k}$ be the prime factorization of a positive integer. Find an explicit formula for $\sigma(n)$, the sum of the positive divisors of $n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The divisors of $n$ are exactly the products $p_1^{b_1} \cdots p_k^{b_k}$ with $0 \le b_i \le a_i$, each arising from one choice of the exponents. Expanding the product below therefore produces every divisor exactly once, so the sum factors into geometric series:
+      $$\sigma(n) = \prod_{i=1}^{k}\left(1 + p_i + p_i^2 + \cdots + p_i^{a_i}\right) = \prod_{i=1}^{k}\frac{p_i^{a_i + 1} - 1}{p_i - 1}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A positive integer $n$ is called perfect when $\sigma(n) = 2n$. Show that if $2^{k+1} - 1$ is prime, then $2^k\left(2^{k+1} - 1\right)$ is perfect.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Put $p = 2^{k+1} - 1$, so the number in question is $n = 2^k p$. Being prime, $p$ is not $1$, which rules out $k = 0$. So $k \ge 1$, and $p$ is odd, hence a prime different from $2$. This makes $2^k p$ the prime factorization of $n$, and the formula above gives
+      $$\sigma(n) = \frac{2^{k+1} - 1}{2 - 1} \cdot \frac{p^2 - 1}{p - 1} = p(p + 1) = p \cdot 2^{k+1} = 2 \cdot 2^k p = 2n.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Fermat's little theorem) Let $p$ be a prime and let $a$ be an integer not divisible by $p$. Show that $a^{p-1} \equiv 1 \pmod p$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Consider the $p - 1$ numbers $a, 2a, \ldots, (p-1)a$ modulo $p$. None is divisible by $p$, since $p$ divides neither $a$ nor any of $1, \ldots, p-1$, and no two are congruent: $ia \equiv ja$ gives $p \mid a(i - j)$, hence $p \mid i - j$ and $i = j$. Being $p - 1$ distinct nonzero residues, they are a rearrangement of $1, 2, \ldots, p-1$, so multiplying them all together gives
+      $$a^{p-1}(p-1)! \equiv (p-1)! \pmod p.$$
+      Finally $(p-1)!$ is a product of integers none of which $p$ divides, so it is coprime to $p$ and may be cancelled.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p$ be a prime and $g$ an integer not divisible by $p$. The order of $g$ modulo $p$ is the smallest positive integer $d$ such that $g^d \equiv 1 \pmod p$, which exists because the previous exercise supplies $g^{p-1} \equiv 1$. Call $g$ a primitive root modulo $p$ when its order is exactly $p - 1$. Show that if $g$ is a primitive root, then every one of $1, 2, \ldots, p-1$ is congruent modulo $p$ to a power of $g$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Consider the $p - 1$ powers $g, g^2, \ldots, g^{p-1}$. None is divisible by $p$, since $p \nmid g$. They are also pairwise incongruent: if $g^i \equiv g^j$ with $1 \le i \lt j \le p - 1$, then cancelling $g^i$, which is legitimate as $g$ is coprime to $p$, leaves $g^{j-i} \equiv 1$ with $0 \lt j - i \lt p - 1$, contradicting that the order of $g$ is $p - 1$. So the powers occupy $p - 1$ distinct classes among the $p - 1$ nonzero classes modulo $p$, which forces them to occupy all of them.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p$ be a prime admitting a primitive root $g$, and let $d$ be any divisor of $p - 1$. Show that some integer has order exactly $d$ modulo $p$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>First observe that $g^m \equiv 1$ holds precisely when $(p-1) \mid m$: writing $m = q(p-1) + r$ with $0 \le r \lt p - 1$ leaves $g^r \equiv 1$, and the minimality in the definition of the order forces $r = 0$. Now take $h = g^{(p-1)/d}$, which makes sense since $d$ divides $p - 1$. Then $h^d = g^{p-1} \equiv 1$, so $h$ has some order at most $d$, and if $h^e \equiv 1$ then $g^{e(p-1)/d} \equiv 1$, so the observation gives $(p-1) \mid e(p-1)/d$, that is $d \mid e$. The smallest positive $e$ with $h^e \equiv 1$ is therefore $d$ itself.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Wilson's theorem) Let $p$ be a prime. Show that $(p-1)! \equiv -1 \pmod p$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For $p = 2$ the claim reads $1 \equiv -1$, which holds, so take $p$ odd. Every $a$ in $\{1, \ldots, p-1\}$ has an inverse there, since Fermat's little theorem gives $a \cdot a^{p-2} \equiv 1$. Such an $a$ is its own inverse exactly when $a^2 \equiv 1$, that is when $p \mid (a-1)(a+1)$, which for prime $p$ leaves only $a = 1$ and $a = p - 1$. The other $p - 3$ elements therefore fall into pairs $\{a, a^{-1}\}$ of distinct elements, each pair contributing a factor $1$ to the product, so
+      $$(p-1)! \equiv 1 \cdot (p-1) \equiv -1 \pmod p.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $24 \mid p^2 - 1$ for every prime $p \gt 3$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Factor $p^2 - 1 = (p-1)(p+1)$. Being a prime above $3$, $p$ is odd, so $p - 1$ and $p + 1$ are consecutive even numbers and one of the two is divisible by $4$, making their product divisible by $8$. Again because $p$ is a prime above $3$, it is not divisible by $3$, yet exactly one of the three consecutive integers $p - 1$, $p$, $p + 1$ must be, so $3$ divides $(p-1)(p+1)$ as well. Since $8$ and $3$ are coprime, their product $24$ divides $p^2 - 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the largest integer that divides $n^5 - n$ for every integer $n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Taking $n = 2$ gives $2^5 - 2 = 30$, so any integer dividing them all divides $30$. Conversely $30$ always works. Fermat's little theorem in the form $n^q \equiv n \pmod q$, valid for every integer $n$ since the case $q \mid n$ is immediate, gives $n^5 \equiv n \pmod 5$ at once; modulo $3$ it gives $n^3 \equiv n$, so $n^5 = n^2 n^3 \equiv n^3 \equiv n$; and modulo $2$ it gives $n^2 \equiv n$, so $n^5 \equiv n$ likewise. Thus $2$, $3$ and $5$ each divide $n^5 - n$, and as distinct primes so does their product. The answer is $30$.</p>
+      <p><em>Alternative solution.</em> Fermat can be avoided by factoring further, $n^5 - n = (n-1)\,n\,(n+1)\,(n^2+1)$. The first three factors are consecutive integers, so one is even and one is a multiple of $3$, giving $6$. For the factor $5$, argue on $n$ modulo $5$: if $n \equiv 0$ or $\pm 1$ then one of $n - 1$, $n$, $n + 1$ is divisible by $5$, while if $n \equiv \pm 2$ then $n^2 \equiv 4$ and $5$ divides $n^2 + 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> What is the last digit of $7^{7^7}$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The last digit is the residue modulo $10$, where the powers of $7$ repeat with period $4$, running $7, 9, 3, 1$. So only the exponent $7^7$ modulo $4$ matters, and there $7 \equiv -1$, giving $7^7 \equiv (-1)^7 \equiv 3 \pmod 4$. The last digit is thus the same as that of $7^3 = 343$, namely $3$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $n \gt 1$. How many primes $m$ satisfy $n! + 1 \lt m \le n! + n$?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>None. Such an $m$ is $n! + k$ for some $k$ with $2 \le k \le n$, and this $k$ is one of the factors making up $n!$, so $k$ divides $n!$ and therefore divides $n! + k$ as well. Since $n! + k$ is strictly larger than $k$, which is itself larger than $1$, this makes $n! + k$ a proper multiple of $k$, hence composite. Letting $n$ grow, this produces runs of consecutive composite numbers of any desired length.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p \gt 3$ be such that $p$ and $p + 2$ are both prime. Show that $6 \mid p + 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Both $p$ and $p + 2$ are primes larger than $3$, so both are odd and neither is divisible by $3$. Since $p$ is odd, $p + 1$ is even. Exactly one of the three consecutive integers $p$, $p + 1$, $p + 2$ is a multiple of $3$, and it is neither $p$ nor $p + 2$, so it has to be $p + 1$. As $2$ and $3$ are coprime, their product divides $p + 1$.</p>
+      <p><em>Alternative solution.</em> A prime larger than $3$ must be congruent to $1$ or $5$ modulo $6$, the classes $0$, $2$, $4$ being even and the class $3$ divisible by $3$. Were $p \equiv 1$, then $p + 2 \equiv 3 \pmod 6$ would be divisible by $3$ and could not be prime. So $p \equiv 5$, which is exactly $p + 1 \equiv 0 \pmod 6$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that a positive integer is a sum of two or more consecutive positive integers if and only if it is not a power of $2$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A run of $k$ consecutive integers starting at $a$ sums to $ka + \frac{k(k-1)}{2}$, so writing $n$ this way with $k \ge 2$ and $a \ge 1$ is the same as factoring
+      $$2n = k\,(2a + k - 1).$$
+      The two factors differ by $2a - 1$, which is odd and positive, so exactly one of them is odd and the second is the larger. If $n = 2^m$, then $2n$ has no odd divisor beyond $1$, forcing the odd factor to be $1$; it cannot be the larger one, so it would have to be $k$, contradicting $k \ge 2$. If instead $n$ is not a power of $2$, write $n = 2^m q$ with $q \ge 3$ odd, so that $2n = 2^{m+1} q$ is a product of an even and an odd factor, each at least $2$. Let $k$ be the smaller of the two and $l$ the larger, and put $a = \frac{l - k + 1}{2}$, a positive integer because $l - k$ is odd and positive. Then $2a + k - 1 = l$, so $k(2a + k - 1) = 2n$ and the run works.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> (Euler's formula) A graph is connected if any two of its vertices are joined by a path of edges, and planar if it can be drawn in the plane with no two edges crossing. Such a drawing divides the plane into regions called faces, one of them unbounded. Let $G$ be a connected planar graph, drawn in the plane without crossings, with $V$ vertices, $E$ edges and $F$ faces. Prove that
+      $$V - E + F = 2.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Induct on the number of edges. With $E = 0$, connectedness leaves $G$ a single vertex and the plane uncut, so $V - E + F = 1 - 0 + 1 = 2$. For $E \ge 1$ there are two cases, and each deletes one edge while keeping the drawing connected and free of crossings, so the induction hypothesis applies to what is left.</p>
+      <p>Suppose first that some edge $e$ lies on a cycle. That cycle is a closed curve, so $e$ has a different face on either side of it. Deleting $e$ merges the two into a single face and leaves $G$ connected, the rest of the cycle still joining the endpoints of $e$. So $V$ stays put while $E$ and $F$ each fall by $1$, and $V - E + F$ is unchanged.</p>
+      <p>Suppose instead that no edge lies on a cycle, and take a path in $G$ of greatest length. Its last vertex $v$ meets only one edge, since a second one would either lengthen the path or close a cycle. Deleting $v$ along with that edge leaves $G$ connected, and leaves the faces alone, an edge with a free end enclosing nothing. So $V$ and $E$ each fall by $1$ while $F$ stays put, and again $V - E + F$ is unchanged.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $G$ be a connected planar graph with at least $3$ vertices, no loops and no multiple edges, drawn in the plane without crossings, with $E$ edges and $F$ faces. Show that
+      $$E \ge \tfrac{3}{2} F.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count the pairs made of a face and an edge on its boundary, an edge that borders the same face on both sides being counted twice. Each edge has two sides and so occurs in exactly $2$ pairs, giving $2E$ in total. Each face contributes at least $3$, since with at least $3$ vertices, no loops and no multiple edges the boundary of a region cannot be closed up in fewer than $3$ steps. Comparing the two counts gives $3F \le 2E$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $G$ be a connected planar graph with at least $3$ vertices, no loops and no multiple edges, having $V$ vertices and $E$ edges. Show that
+      $$E \le 3V - 6.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Fix a drawing without crossings and let $F$ be its number of faces. Euler's formula rearranges to $F = E - V + 2$, while the previous exercise gives $F \le \frac{2}{3}E$. Putting the two together,
+      $$E - V + 2 \le \tfrac{2}{3}E, \qquad \text{so} \qquad \tfrac{1}{3}E \le V - 2,$$
+      which is the claim.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $K_5$, the complete graph on $5$ vertices, is not planar.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>$K_5$ is connected, has more than $3$ vertices and has neither loops nor multiple edges, so were it planar the previous exercise would apply. But its $V = 5$ vertices and $E = \binom{5}{2} = 10$ edges give
+      $$3V - 6 = 9 \lt 10 = E,$$
+      contradicting that bound. No crossing-free drawing of $K_5$ exists.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A tree is a connected graph containing no cycle. How many edges does a tree with $n$ vertices have?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>It has $n - 1$, by induction on $n$. A tree with a single vertex has no edge. For $n \ge 2$, take a path of greatest length in the tree; its last vertex meets exactly one edge, since a second one would either lengthen the path or close a cycle. Removing that vertex together with its edge leaves a graph still connected and still without cycles, so a tree on $n - 1$ vertices, which by induction has $n - 2$ edges. Restoring the vertex gives $n - 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A graph is bipartite when its vertices can be split into two groups so that every edge joins a vertex of one group to a vertex of the other. Let $G$ be a connected bipartite planar graph with at least $3$ vertices and no multiple edges, having $V$ vertices and $E$ edges. Show that
+      $$E \le 2V - 4.$$</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A bipartite graph has no cycle of odd length, since travelling along a cycle alternates between the two groups and returning to the starting vertex takes an even number of steps. Its shortest cycle therefore has length at least $4$, so in a crossing-free drawing the boundary of a face closes up only after at least $4$ steps. Counting pairs of a face and an edge on its boundary as before, each edge still contributing $2$, this gives $4F \le 2E$, that is $F \le \frac{E}{2}$. Euler's formula rearranges to $F = E - V + 2$, so
+      $$E - V + 2 \le \tfrac{1}{2}E, \qquad \text{so} \qquad \tfrac{1}{2}E \le V - 2,$$
+      which is the claim.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The complete bipartite graph $K_{s,t}$ has its vertices split into a group of $s$ and a group of $t$, with an edge joining every vertex of one group to every vertex of the other and no edges inside a group. Prove that $K_{s,t}$ is not planar when $s \ge 3$ and $t \ge 3$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>$K_{s,t}$ is connected and bipartite with no multiple edges, and it has $V = s + t \ge 6$ vertices and $E = st$ edges. Were it planar, the previous exercise would give $E \le 2V - 4$. But
+      $$E - (2V - 4) = st - 2(s + t) + 4 = (s - 2)(t - 2) \ge 1,$$
+      because $s$ and $t$ are both at least $3$. So $E$ exceeds $2V - 4$ and no crossing-free drawing exists.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Prove that $K_{2,t}$ is planar for every $t$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A drawing suffices. Put the two vertices of the first group at $(0, 1)$ and $(0, -1)$, put the $t$ vertices of the second group at $(1, 0), (2, 0), \ldots, (t, 0)$, and draw every edge as a straight segment. The segments leaving $(0,1)$ head in pairwise distinct directions, so they meet only at that vertex, and the same holds for those leaving $(0,-1)$. A segment of the first kind stays in the half plane $y \ge 0$ and reaches $y = 0$ only at its endpoint on the axis, while a segment of the second kind stays in $y \le 0$ and likewise, so the two kinds can meet only at a shared endpoint. No two edges cross.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The girth of a graph containing a cycle is the length of its shortest cycle. Let $G$ be a connected planar graph with at least $3$ vertices and girth $g$, having $V$ vertices and $E$ edges. Find and prove an upper bound on $E$ in terms of $V$ and $g$ that generalises the bounds $E \le 3V - 6$ and $E \le 2V - 4$ above.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The bound is $E \le \frac{g}{g-2}(V-2)$. Note first that $g \ge 3$ on its own rules out loops and multiple edges, which would be cycles of length $1$ and $2$. In a crossing-free drawing the boundary of a face closes up only after at least $g$ steps, while each edge contributes $2$ to the count of pairs of a face and an edge on its boundary, so $gF \le 2E$, that is $F \le \frac{2E}{g}$. Euler's formula rearranges to $F = E - V + 2$, whence
+      $$E - V + 2 \le \frac{2E}{g}, \qquad \text{so} \qquad E\left(1 - \frac{2}{g}\right) \le V - 2.$$
+      Multiplying by $\frac{g}{g-2}$, which is positive because $g \ge 3$, gives the bound. Setting $g = 3$ and $g = 4$ returns $E \le 3V - 6$ and $E \le 2V - 4$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The degree $\deg(v)$ of a vertex $v$ is the number of edges meeting it, a loop counting twice. Prove that a graph with $E$ edges satisfies
+      $$\sum_{v} \deg(v) = 2E,$$
+      the sum running over all its vertices.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Count in two ways the pairs made of an edge and one of its two ends. Every edge has exactly two ends and so supplies exactly two pairs, giving $2E$ in total. Grouping the same pairs by vertex instead, a vertex $v$ belongs to exactly $\deg(v)$ of them, a loop at $v$ supplying two of its ends and being counted twice, which is precisely the convention above. The two counts agree.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A graph has $20$ edges, no loops and no multiple edges, and all of its vertices have the same degree. What numbers of vertices are possible?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Write $V$ for the number of vertices and $d$ for the common degree. The previous exercise gives $Vd = 2 \cdot 20 = 40$, so $V$ divides $40$ and $d = 40/V$. Having no loops and no multiple edges caps a degree at $V - 1$, so $40/V \le V - 1$, that is $40 \le V(V-1)$, which forces $V \ge 7$. The divisors of $40$ that are at least $7$ are $8$, $10$, $20$ and $40$, with $d = 5, 4, 2, 1$ respectively, and each is realised: delete an $8$-cycle from $K_8$; join every vertex of a $10$-cycle to the two vertices two steps away; take a $20$-cycle; take $20$ disjoint edges.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> $N$ players are split into seven teams so that every two teams share exactly one member and every player belongs to exactly two teams. Find $N$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Send each player to the pair of teams they belong to, which is well defined because every player is on exactly two. The map is injective, as two players sent to the same pair would leave that pair with two common members. It is surjective, since any two teams share a member and that member, belonging to exactly two teams, belongs to those two. Players therefore correspond one to one with pairs of teams, so
+      $$N = \binom{7}{2} = 21.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> What is the smallest number of vertices a graph with $50$ edges can have, given that it has no loops and no multiple edges?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>With no loops and no multiple edges, a graph on $V$ vertices has at most one edge per pair of vertices, hence at most $\binom{V}{2}$ edges. Now $\binom{10}{2} = 45$ falls short of $50$, so ten vertices cannot suffice, while $\binom{11}{2} = 55$, and deleting any $5$ edges from $K_{11}$ leaves a graph on eleven vertices with exactly $50$. The answer is $11$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> What is the smallest number of vertices a planar graph with $50$ edges can have, given that it has no loops and no multiple edges?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The bound $E \le 3V - 6$ proved above turns into $50 \le 3V - 6$, that is $V \ge \frac{56}{3}$, so at least $19$ vertices are needed. Nineteen suffice. Begin with a triangle, which has $V = 3$ and $E = 3 = 3V - 6$, and repeatedly drop a new vertex inside a triangular face, joining it to the three corners of that face: each step keeps the drawing planar while adding one vertex and three edges, so it preserves $E = 3V - 6$. After sixteen steps $V = 19$ and $E = 51$, and deleting a single edge leaves $50$. The answer is $19$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every planar graph with no loops and no multiple edges has a vertex of degree at most $5$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Work inside a single connected component $H$, which is legitimate because a component carries all the edges at its own vertices, so degrees in $H$ agree with degrees in the whole graph. If $H$ has at most $2$ vertices, no degree there exceeds $1$ and there is nothing to prove. Otherwise suppose every vertex of $H$ had degree at least $6$. Summing over the $V$ vertices of $H$ and using $\sum_v \deg(v) = 2E$ gives $2E \ge 6V$, that is $E \ge 3V$, while $H$ is connected and planar with at least $3$ vertices and so satisfies $E \le 3V - 6$. These cannot both hold.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $G$ be a connected planar graph in which every vertex has degree $4$, drawn in the plane without crossings so that the drawing has $10$ faces. Find the number $V$ of vertices.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Every vertex having degree $4$, the identity $\sum_v \deg(v) = 2E$ gives $4V = 2E$, so $E = 2V$. Euler's formula then reads $V - 2V + 10 = 2$, leaving $V = 8$. Such a graph does exist: the square antiprism, two squares joined by a band of eight triangles, has $8$ vertices of degree $4$, $16$ edges and $10$ faces.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $A$ be a set with $13$ elements. What fraction of the functions from $A$ to $A$ have a well defined inverse function?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>A function has an inverse exactly when it is a bijection. A function from $A$ to $A$ is built by choosing an image for each of the $13$ elements independently, giving $13^{13}$ of them, while a bijection amounts to listing the $13$ images in order with no repetition, giving $13!$. The fraction is
+      $$\frac{13!}{13^{13}}.$$</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The population of a city was a perfect square. After an increase of $100$ it became one more than a perfect square, and after a further increase of $100$ it was a perfect square again. What was the original population?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Write the original population as $a^2$. The two conditions say $a^2 + 100 = b^2 + 1$ and $a^2 + 200 = c^2$, that is
+      $$b^2 - a^2 = 99, \qquad c^2 - a^2 = 200.$$
+      In the second, $(c-a)(c+a) = 200$ has two factors of equal parity, necessarily both even since their product is; writing $c - a = 2m$ and $c + a = 2n$ turns it into $mn = 50$ with $a = n - m$. The factorizations $50 = 1 \cdot 50 = 2 \cdot 25 = 5 \cdot 10$ therefore leave $a = 49$, $23$ or $5$. Only the first also satisfies $b^2 = a^2 + 99$, since $49^2 + 99 = 2500 = 50^2$ while $23^2 + 99 = 628$ and $5^2 + 99 = 124$ are not squares. The population was $49^2 = 2401$.</p>
+    </details>
+
+    <!-- Volume 2 content goes here -->
+
+  </main>
+</body>
+</html>

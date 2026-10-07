@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brain Teasers</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <script src="nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>Brain Teasers</h1>
+    </header>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Two dice are rolled. You are told that at least one of them shows a 6. What is the probability that the other die also shows a 6?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>There are 36 equally likely outcomes when rolling two dice. The event "at least one die shows a 6" contains 11 outcomes: $(1,6),(2,6),(3,6),(4,6),(5,6),(6,6),(6,1),(6,2),(6,3),(6,4),(6,5)$. Of these, only $(6,6)$ has both dice showing a 6. By conditional probability:</p>
+      $$P(\text{both are 6} \mid \text{at least one is 6}) = \frac{1}{11}.$$
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A train departs from $A$ toward $B$ at $300$ km/h. Simultaneously, a fly departs from $B$ toward $A$ at $10$ km/h, with $AB = 1000$ km. Each time the train and the fly meet, the train immediately reverses direction; the fly never reverses. When the fly arrives at $A$, what total distance has the train traveled?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The fly travels $1000$ km at $10$ km/h, so it arrives after $t = 100$ hours. Throughout this entire duration, the train is in motion at $300$ km/h regardless of direction. Therefore the total distance traveled by the train is:</p>
+      $$300 \times 100 = 30{,}000 \text{ km}.$$
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> You have $1$ dollar and earn interest of $x\%$ per year, compounded annually. How much do you have after $y$ years?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>After one year, the balance is multiplied by $1 + \frac{x}{100}$. Applying this factor $y$ times:</p>
+      $$\left(1 + \frac{x}{100}\right)^{y} \text{ dollars}.$$
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> In a room of $100$ people, $99\%$ are left-handed. How many must leave the room so that $98\%$ of those remaining are left-handed?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>There are $99$ left-handed people and $1$ right-handed person. Only left-handed people leave (removing the right-handed person would change the count of non-left-handed people). Let $n$ be the number remaining. The single right-handed person must account for $2\%$ of the room:</p>
+      $$\frac{1}{n} = 0.02 \quad \Longrightarrow \quad n = 50.$$
+      <p>So $100 - 50 = 50$ people must leave.</p>
+    </details>
+
+  </main>
+</body>
+</html>

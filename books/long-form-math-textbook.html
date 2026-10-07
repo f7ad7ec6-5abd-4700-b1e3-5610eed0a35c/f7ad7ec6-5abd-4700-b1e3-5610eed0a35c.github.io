@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Long-Form Mathematics Textbook</title>
+  <!-- SEO (generated) -->
+  <meta name="description" content="Lecture notes on A Long-Form Mathematics Textbook: proofs and analysis.">
+  <link rel="canonical" href="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/books/long-form-math-textbook.html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="Notes">
+  <meta property="og:title" content="A Long-Form Mathematics Textbook">
+  <meta property="og:description" content="Lecture notes on A Long-Form Mathematics Textbook: proofs and analysis.">
+  <meta property="og:url" content="https://f7ad7ec6-5abd-4700-b1e3-5610eed0a35c.github.io/books/long-form-math-textbook.html">
+  <meta property="og:locale" content="en_US">
+  <!-- /SEO -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: false},
+        {left: '$', right: '$', display: false}
+      ]
+    });"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dreampulse/computer-modern-web-font@master/fonts.css">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+  <script src="../nav.js"></script>
+
+  <main>
+    <header class="page-banner">
+      <h1>A Long-Form Mathematics Textbook</h1>
+    </header>
+
+    <h2>Proofs</h2>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that an $8 \times 8$ chessboard with one corner removed cannot be tiled by $1 \times 2$ dominoes.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The board has $64 - 1 = 63$ squares. Each domino covers exactly 2 squares, so a complete tiling would require $63/2$ dominoes, which is not an integer. Hence no tiling exists.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that an $8 \times 8$ chessboard with the top-left and bottom-right corners removed cannot be tiled by $1 \times 2$ dominoes.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Color the board like a standard chessboard, alternating black and white. The top-left and bottom-right corners share the same color (say, both are white). The original board has 32 black and 32 white squares; removing both corners leaves 32 black and 30 white squares. Each domino covers exactly one black square and one white square, so any tiling covers equal numbers of each color. Since $32 \neq 30$, no tiling exists.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that given any 5 numbers chosen from $\{1, 2, 3, 4, 5, 6, 7, 8\}$, some two of them sum to 9.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Partition the set into four pairs: $\{1,8\},\{2,7\},\{3,6\},\{4,5\}$, each summing to 9. Since 5 numbers are chosen from 4 pairs, by the pigeonhole principle at least two come from the same pair, and those two sum to 9.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that given any 101 integers chosen from $\{1, 2, \ldots, 200\}$, at least one divides another.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Every positive integer can be written uniquely as $2^k \cdot m$ where $m$ is odd. The odd parts of integers in $\{1,\ldots,200\}$ all lie in $\{1,3,5,\ldots,199\}$, which has exactly 100 elements. By the pigeonhole principle, among any 101 chosen integers, two share the same odd part: $a = 2^j \cdot m$ and $b = 2^k \cdot m$ with $j < k$. Then $a \mid b$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $G$ be a graph with $n \geq 2$ vertices. Show that $G$ has two vertices of the same degree.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The degree of any vertex lies in $\{0, 1, \ldots, n-1\}$, which has $n$ values. However, 0 and $n-1$ cannot both occur: if some vertex has degree $n-1$ it is adjacent to every other vertex, so no vertex can have degree 0. Thus the $n$ vertices take values in a set of at most $n-1$ possible degrees, and by the pigeonhole principle two vertices share the same degree.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Given any 5 points on the surface of a sphere, show that there exists a closed hemisphere containing at least 4 of them.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Pick any two of the 5 points. There is a great circle passing through both of them, which divides the sphere into two closed hemispheres (each including its boundary great circle). The remaining 3 points are each in at least one of the two hemispheres. By the pigeonhole principle, one hemisphere contains at least $\lceil 3/2 \rceil = 2$ of those 3 points. That same hemisphere also contains the two points on the great circle, for a total of at least 4.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that if one chooses 31 numbers from $\{1, 2, \ldots, 60\}$, two of them are relatively prime.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Partition $\{1, \ldots, 60\}$ into 30 consecutive pairs: $\{1,2\}, \{3,4\}, \ldots, \{59,60\}$. Any two consecutive integers $n$ and $n+1$ are relatively prime, since any common divisor must divide their difference 1. By the pigeonhole principle, choosing 31 numbers from these 30 pairs forces at least two chosen numbers to fall in the same pair, and those two are relatively prime.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $n \geq 1$. Show that if one chooses $n+1$ distinct odd integers from $\{1, 2, \ldots, 3n\}$, at least one of them divides another.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Every odd integer $m$ can be written uniquely as $m = 3^k q$ where $k \geq 0$ and $q$ is an odd integer not divisible by 3. Call $q$ the <em>3-free part</em> of $m$. For each such $q$, define the chain $C_q = \{q,\, 3q,\, 9q,\, \ldots\} \cap \{1,\ldots,3n\}$. These chains partition all odd integers in $\{1,\ldots,3n\}$, and within each chain every element divides the next.</p>
+      <p>The chains are indexed by the odd integers in $\{1,\ldots,3n\}$ that are not divisible by 3. In $\{1,\ldots,3n\}$ there are exactly $2n$ integers not divisible by 3, and exactly half of them are odd, giving exactly $n$ chains. By the pigeonhole principle, choosing $n+1$ odd integers from these $n$ chains forces two of them into the same chain, and the smaller of the two divides the larger.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p$ be a prime and $a$ an integer with $p \nmid a$. Show that $a^{p-1} \equiv 1 \pmod{p}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Proof 1 (rearrangement).</em> Consider the $p-1$ integers $a, 2a, \ldots, (p-1)a$. They are all distinct modulo $p$ and nonzero modulo $p$: if $ia \equiv ja \pmod{p}$ then $p \mid (j-i)a$, and since $p \nmid a$ we get $p \mid j-i$, impossible for $1 \leq i < j \leq p-1$. So $\{a, 2a, \ldots, (p-1)a\}$ is a permutation of $\{1, 2, \ldots, p-1\}$ modulo $p$. Multiplying all elements: $a^{p-1}(p-1)! \equiv (p-1)! \pmod{p}$. Since $\gcd((p-1)!, p) = 1$, we cancel to obtain $a^{p-1} \equiv 1 \pmod{p}$.</p>
+      <p><em>Proof 2 (binomial theorem).</em> We first show $\binom{p}{k} \equiv 0 \pmod{p}$ for $0 < k < p$. Indeed, $\binom{p}{k} = \frac{p!}{k!(p-k)!}$ is an integer, $p$ divides the numerator, and $k!$ and $(p-k)!$ have no factor of $p$ since $k, p-k < p$. We now prove $a^p \equiv a \pmod{p}$ for all $a \geq 1$ by induction. The base case $a = 1$ is clear. Assuming $a^p \equiv a$, the binomial theorem gives $(a+1)^p = \sum_{k=0}^{p} \binom{p}{k} a^k$, and every middle term vanishes mod $p$, leaving $(a+1)^p \equiv a^p + 1 \equiv a + 1 \pmod{p}$. So $p \mid a(a^{p-1} - 1)$, and since $p \nmid a$, we get $a^{p-1} \equiv 1 \pmod{p}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that the square of any integer ending in 5 ends in 25.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Any integer ending in 5 can be written as $n = 10k + 5$ for some integer $k$. Then $n^2 = (10k+5)^2 = 100k^2 + 100k + 25 = 100k(k+1) + 25$. Since $100k(k+1)$ is divisible by 100, the last two digits of $n^2$ are exactly 25.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a, b, c$ be integers satisfying $a^2 + b^2 = c^2$. Show that at least one of $a$ or $b$ is divisible by 3.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Any integer is congruent to $0$, $1$, or $2$ modulo 3, so its square is congruent to $0$ or $1$ modulo 3. Suppose for contradiction that $3 \nmid a$ and $3 \nmid b$. Then $a^2 \equiv 1$ and $b^2 \equiv 1 \pmod{3}$, giving $c^2 \equiv 2 \pmod{3}$. But no square is congruent to 2 modulo 3, a contradiction. Therefore 3 divides $a$ or $b$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every odd integer is the difference of two perfect squares.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $n = 2k+1$ be any odd integer. Then $(k+1)^2 - k^2 = 2k + 1 = n$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that for every positive integer $n$, there exist $n$ consecutive integers, none of which is prime.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Consider the $n$ consecutive integers $(n+1)! + 2,\ (n+1)! + 3,\ \ldots,\ (n+1)! + (n+1)$. For each $k$ with $2 \leq k \leq n+1$, we have $k \mid (n+1)!$ and $k \mid k$, so $k \mid (n+1)! + k$. Since $(n+1)! + k > k$, it is composite.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every prime greater than 3 is within 1 of a multiple of 6.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Every integer is congruent to $0, 1, 2, 3, 4,$ or $5$ modulo 6. A prime $p > 3$ cannot be divisible by 2 (ruling out $0, 2, 4$) or by 3 (ruling out $0, 3$), so $p \equiv 1$ or $5 \pmod{6}$. Both cases mean $p$ is within 1 of a multiple of 6.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $\varphi(n)$ denote the number of integers in $\{1, \ldots, n\}$ coprime to $n$. Show that if $\gcd(a, n) = 1$, then $a^{\varphi(n)} \equiv 1 \pmod{n}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $r_1, r_2, \ldots, r_{\varphi(n)}$ be the integers in $\{1, \ldots, n\}$ coprime to $n$. Since $\gcd(a, n) = 1$, the products $ar_1, ar_2, \ldots, ar_{\varphi(n)}$ are also coprime to $n$ and distinct modulo $n$, so they are a permutation of $r_1, \ldots, r_{\varphi(n)}$ modulo $n$. Multiplying all terms: $a^{\varphi(n)} \prod r_i \equiv \prod r_i \pmod{n}$. Since each $r_i$ is coprime to $n$, so is their product, and we can cancel to get $a^{\varphi(n)} \equiv 1 \pmod{n}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $A \subseteq \{1, \ldots, 100\}$ with $|A| = 10$. Show that there exist two distinct non-empty subsets $X, Y \subseteq A$ with equal sums.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The number of non-empty subsets of $A$ is $2^{10} - 1 = 1023$. The sum of any non-empty subset of $A$ is at most $91 + 92 + \cdots + 100 = 955$ (the largest possible 10-element subset of $\{1,\ldots,100\}$), and at least 1. So all subset sums take values in $\{1, \ldots, 955\}$, giving at most 955 distinct values. Since $1023 > 955$, by the pigeonhole principle two distinct non-empty subsets must have the same sum.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> An L-tromino is an L-shaped piece covering 3 squares; it may be placed in any orientation. Show that for any $n \geq 1$, if any single square is removed from a $2^n \times 2^n$ chessboard, the remaining squares can be perfectly tiled by L-trominoes.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. The base case $n = 1$ is immediate: removing any one square from a $2 \times 2$ board leaves exactly one L-tromino. For the inductive step, divide the $2^n \times 2^n$ board into four quadrants of size $2^{n-1} \times 2^{n-1}$. The removed square lies in exactly one quadrant. Place one L-tromino at the center of the board, covering one corner square from each of the other three quadrants. Each quadrant now has exactly one square missing, so by the induction hypothesis each can be tiled by L-trominoes.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $\mathbb{Q}$ is dense in $\mathbb{R}$: for any $a, b \in \mathbb{R}$ with $a < b$, there exists $q \in \mathbb{Q}$ such that $a < q < b$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Since $b - a > 0$, by the Archimedean property there exists $n \in \mathbb{N}$ with $n > \frac{1}{b-a}$, i.e. $\frac{1}{n} < b - a$. Let $m = \lfloor na \rfloor + 1$, so $m - 1 \leq na < m$, giving $a < \frac{m}{n}$. Also $m \leq na + 1 < na + n(b-a) = nb$, so $\frac{m}{n} < b$. Thus $q = \frac{m}{n} \in \mathbb{Q}$ satisfies $a < q < b$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Consider an $n \times m$ chocolate bar. How many breaks are needed to split it into $nm$ individual $1 \times 1$ squares?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Exactly $nm - 1$ breaks are needed. Each break takes one piece and splits it into two, increasing the number of pieces by exactly 1. We start with 1 piece and need $nm$ pieces, so we need exactly $nm - 1$ breaks regardless of the order in which we break.</p>
+      <p><em>Alternative proof by strong induction.</em> Let $P(k)$ be the statement that any rectangular piece of $k$ squares requires exactly $k - 1$ breaks. The base case $k = 1$ holds since no break is needed. For the inductive step, take a piece of $k > 1$ squares and make one break, splitting it into two pieces of $a$ and $b$ squares with $a + b = k$ and $a, b \geq 1$. By strong induction, these require $a - 1$ and $b - 1$ further breaks respectively. The total is $1 + (a-1) + (b-1) = a + b - 1 = k - 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the flaw in the following "proof" that all people on Earth share the same first name. Let $P(n)$ be the statement that any group of $n$ people all have the same name. $P(1)$ is trivially true. Assume $P(n)$ holds. Given any $n+1$ people, split them into the first $n$ and the last $n$. By $P(n)$, each group shares a common name; since the two groups overlap, that name must be the same, so all $n+1$ people share it. Hence $P(n+1)$ holds.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The step $P(1) \Rightarrow P(2)$ fails: the two subgroups of size 1 are $\{p_1\}$ and $\{p_2\}$, which are disjoint, so there is no shared member to force the names to agree.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every positive integer $n$ can be expressed as a sum of distinct powers of 2 in exactly one way.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Existence</em> by strong induction. The base case $n = 1 = 2^0$ holds. For $n > 1$, let $2^k$ be the largest power of 2 with $2^k \leq n$. Then $n - 2^k < 2^k$ (otherwise $2^{k+1} \leq n$), so by induction $n - 2^k$ is a sum of distinct powers of 2, all strictly less than $2^k$. Prepending $2^k$ gives a representation of $n$ using distinct powers.</p>
+      <p><em>Uniqueness.</em> Suppose $n = 2^{a_1} + \cdots + 2^{a_r} = 2^{b_1} + \cdots + 2^{b_s}$ with $a_1 > \cdots > a_r$ and $b_1 > \cdots > b_s$. Then $2^{a_1} \leq n < 2^{a_1+1}$ and similarly $2^{b_1} \leq n < 2^{b_1+1}$, so $a_1 = b_1$. Subtracting $2^{a_1}$ from both sides and repeating gives $r = s$ and $a_i = b_i$ for all $i$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise (Mantel's theorem).</span> Let $G$ be a graph with $2n$ vertices and $n^2 + 1$ edges. Show that $G$ contains a triangle.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. For the base case $n = 1$, a graph on 2 vertices has at most 1 edge, so the hypothesis ($n^2 + 1 = 2$ edges) cannot be satisfied and there is nothing to prove.</p>
+      <p>For the inductive step, assume the result holds for $n$. Let $G$ have $2(n+1)$ vertices and $(n+1)^2 + 1$ edges, and pick any edge $uv$. Let $G'$ be the subgraph induced by the remaining $2n$ vertices.</p>
+      <p>If $G'$ has at least $n^2 + 1$ edges, the induction hypothesis gives a triangle in $G'$, and we are done.</p>
+      <p>Otherwise $G'$ has at most $n^2$ edges. The remaining $(n+1)^2 + 1 - n^2 = 2n + 2$ edges all involve $u$ or $v$; one of them is $uv$ itself, so at least $2n + 1$ edges go from $\{u, v\}$ to the $2n$ other vertices. By the pigeonhole principle, some vertex $w$ among those $2n$ is adjacent to both $u$ and $v$, and $u, v, w$ form a triangle.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> The <em>Fermat numbers</em> are defined by $F_n = 2^{2^n} + 1$ for $n \geq 0$. Show that $F_0 \cdot F_1 \cdots F_n = F_{n+1} - 2$ for all $n \geq 0$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. The base case $n = 0$ holds since $F_0 = 3 = F_1 - 2$. For the inductive step, assume $F_0 \cdots F_{n-1} = F_n - 2$. Multiplying both sides by $F_n$ gives $F_0 \cdots F_{n-1} \cdot F_n = (F_n - 2) \cdot F_n$. Writing $F_n = 2^{2^n} + 1$, the right side factors as a difference of squares: $(2^{2^n} - 1)(2^{2^n} + 1) = 2^{2^{n+1}} - 1 = F_{n+1} - 2$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $x \geq -1$. Show that for every integer $n \geq 0$, $1 + nx \leq (1 + x)^n$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. The base case $n = 0$ gives $1 \leq 1$, which holds. For the inductive step, assume $1 + nx \leq (1+x)^n$. Since $x \geq -1$ we have $1 + x \geq 0$, so multiplying both sides by $1 + x$ preserves the inequality: $(1 + nx)(1 + x) \leq (1 + x)^{n+1}$. Expanding the left side gives $(1 + nx)(1 + x) = 1 + (n+1)x + nx^2 \geq 1 + (n+1)x$, since $nx^2 \geq 0$. Chaining the two inequalities gives $1 + (n+1)x \leq (1+x)^{n+1}$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that for every $n \geq 1$, there exist $n$ distinct positive integers $a_1, \ldots, a_n$ such that $a_1^2 + \cdots + a_n^2$ is a perfect square.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. The base case $n = 1$ holds with $a_1 = 1$, since $1^2 = 1^2$. For the inductive step, suppose $a_1, \ldots, a_n$ are distinct positive integers with $a_1^2 + \cdots + a_n^2 = k^2$. Set $b_i = 3a_i$ for each $i$ and $b_{n+1} = 4k$. Then $b_1^2 + \cdots + b_n^2 + b_{n+1}^2 = 9k^2 + 16k^2 = (5k)^2$. The values $b_1, \ldots, b_n$ are distinct since the $a_i$ are. If $b_{n+1} = 3a_j$ for some $j$, then $a_j = 4k/3$, giving $a_j^2 = 16k^2/9 > k^2$, which contradicts $a_j^2 \leq a_1^2 + \cdots + a_n^2 = k^2$. So $b_{n+1}$ is distinct from every $b_i$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every tree with $n$ vertices has exactly $n - 1$ edges.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>By induction on $n$. The base case $n = 1$ holds: a single vertex has no edges, and $1 - 1 = 0$. For the inductive step, let $T$ be a tree with $n \geq 2$ vertices. Every tree with at least two vertices has a leaf, i.e. a vertex $v$ of degree 1. Remove $v$ and its unique incident edge to obtain a graph $T'$ on $n - 1$ vertices. Since $T$ is connected and acyclic, $T'$ is also connected and acyclic, so $T'$ is a tree. By the induction hypothesis, $T'$ has $n - 2$ edges. Restoring $v$ and its edge gives $T$ exactly $(n - 2) + 1 = n - 1$ edges.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p$ be a prime. Show that $\sqrt{p}$ is irrational.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Suppose for contradiction that $\sqrt{p} = a/b$ with $a, b \in \mathbb{Z}$ and $\gcd(a, b) = 1$. Then $pb^2 = a^2$, so $b^2 \mid a^2$. Since $\gcd(a, b) = 1$ we have $\gcd(a^2, b^2) = 1$, forcing $b^2 = 1$, i.e. $b = \pm 1$. Then $p = a^2$, but a prime cannot be a perfect square, a contradiction.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every integer $n \geq 2$ is a product of primes, using a minimal counterexample argument.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Suppose for contradiction that the set $S$ of integers $\geq 2$ that are not products of primes is nonempty. By the well-ordering principle, $S$ has a least element $n$. Then $n$ is not prime (otherwise $n$ itself is a product of one prime, contradicting $n \in S$), so $n = ab$ for some integers $2 \leq a, b < n$. Since $a$ and $b$ are less than the minimal counterexample, neither belongs to $S$, so both are products of primes. But then $n = ab$ is also a product of primes, a contradiction.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a$ be an odd integer. Show that $x^2 + x - a^2 = 0$ has no integer solution.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Proof 1 (parity).</em> Rewrite the equation as $x(x + 1) = a^2$. The left side is the product of two consecutive integers, so it is always even. But $a$ is odd, so $a^2$ is odd. An even number cannot equal an odd number, a contradiction.</p>
+      <p><em>Proof 2 (discriminant).</em> For $x^2 + x - a^2 = 0$ to have an integer solution, its discriminant $\Delta = 1 + 4a^2$ must be a perfect square, say $k^2$. Then $k^2 - 4a^2 = 1$, i.e., $(k - 2a)(k + 2a) = 1$. The only integer factorizations of 1 are $1 \cdot 1$ and $(-1) \cdot (-1)$, both of which give $k - 2a = k + 2a$, forcing $a = 0$. Since 0 is even, no odd integer $a$ satisfies this, so no integer solution exists.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $\dfrac{1}{n} \to 0$ using the definition of a limit.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $\varepsilon > 0$. By the Archimedean property, there exists $N \in \mathbb{N}$ with $N > 1/\varepsilon$. Then for all $n > N$, we have $\left|\frac{1}{n} - 0\right| = \frac{1}{n} < \frac{1}{N} < \varepsilon$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $a_n = 2 - \dfrac{1}{n^2}$ converges to $2$ using the definition of a limit.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $\varepsilon > 0$. By the Archimedean property, there exists $N \in \mathbb{N}$ with $N > 1/\sqrt{\varepsilon}$. Then for all $n > N$, we have $\left|\left(2 - \frac{1}{n^2}\right) - 2\right| = \frac{1}{n^2} < \frac{1}{N^2} < \varepsilon$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $a, b, c$ be integers with $a^2 + b^2 = c^2$. Show that at least one of $a$ or $b$ is even.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Suppose for contradiction that both $a$ and $b$ are odd. Any odd integer squares to $1$ modulo $4$, so $a^2 + b^2 \equiv 1 + 1 = 2 \pmod{4}$. But any integer squares to either $0$ or $1$ modulo $4$, so $c^2 \not\equiv 2 \pmod{4}$, a contradiction.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $m, n$ be integers. Show that if $4 \mid m^2 + n^2$ then $m$ and $n$ are not both odd.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>We prove the contrapositive: if $m$ and $n$ are both odd, then $4 \nmid m^2 + n^2$. Any odd integer squares to $1$ modulo $4$, so $m^2 + n^2 \equiv 1 + 1 = 2 \pmod{4}$, hence $4 \nmid m^2 + n^2$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that for every integer $n \geq 1$, $n^2 + n + 1$ is not a perfect square.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p><em>Proof 1 (contradiction).</em> Suppose $n^2 + n + 1 = k^2$ for some integer $k$. Then $n(n + 1) = k^2 - 1 = (k-1)(k+1)$. Since $k^2 > n^2$ we have $k \geq n + 1$, so $k - 1 \geq n$ and $k + 1 \geq n + 2$. Thus $(k-1)(k+1) \geq n(n+2) > n(n+1)$, a contradiction.</p>
+      <p><em>Proof 2 (squeeze).</em> For $n \geq 1$, we have $n^2 < n^2 + n + 1$ and $n^2 + n + 1 < n^2 + 2n + 1 = (n+1)^2$. So $n^2 + n + 1$ lies strictly between two consecutive perfect squares $n^2$ and $(n+1)^2$, and therefore cannot itself be a perfect square.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that a function $f : A \to B$ is invertible if and only if it is a bijection.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>$(\Rightarrow)$ Suppose $f$ has an inverse $g : B \to A$, so $g \circ f = \mathrm{id}_A$ and $f \circ g = \mathrm{id}_B$. For injectivity, if $f(x) = f(y)$ then $x = g(f(x)) = g(f(y)) = y$. For surjectivity, given $y \in B$, set $x = g(y)$; then $f(x) = f(g(y)) = y$.</p>
+      <p>$(\Leftarrow)$ Suppose $f$ is a bijection. For each $y \in B$, surjectivity gives some $x$ with $f(x) = y$, and injectivity makes it unique; define $g(y) = x$. Then $g(f(x)) = x$ and $f(g(y)) = y$ for all $x, y$, so $g$ is an inverse of $f$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that every sequence of real numbers has a monotone subsequence.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Call index $n$ a <em>peak</em> if $a_n \geq a_k$ for all $k > n$. There are two cases.</p>
+      <p>If there are infinitely many peaks $n_1 < n_2 < \cdots$, then for each $i$, since $n_i$ is a peak and $n_{i+1} > n_i$, we have $a_{n_i} \geq a_{n_{i+1}}$. So $(a_{n_i})$ is non-increasing.</p>
+      <p>If there are finitely many peaks, let $N$ be the last one. Define $n_1 = N + 1$; since $n_1$ is not a peak, there exists $n_2 > n_1$ with $a_{n_2} > a_{n_1}$. Since $n_2$ is not a peak either, there exists $n_3 > n_2$ with $a_{n_3} > a_{n_2}$. Continuing inductively gives a strictly increasing subsequence.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Suppose $n$ ants are placed on a 1-meter stick, each walking at 1 m/s left or right. When two ants meet, they each instantly reverse direction. What is the longest possible time until all ants have fallen off?</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The answer is <strong>1 second</strong>, achieved by placing one ant at an end facing inward. It is also the worst case for any $n$: when two ants collide and reverse, the result is indistinguishable from them passing through each other (since ants are identical). So each ant effectively walks at constant speed in its original direction, and any ant at position $x \in [0,1]$ falls off after at most $\max(x, 1-x) \leq 1$ second.</p>
+    </details>
+
+    <h2>Analysis</h2>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise (Zeno's paradox).</span> Achilles runs at constant speed $v$ and a tortoise at constant speed $w$, with $0 < w < v$, and the tortoise starts a distance $d > 0$ ahead of him. Achilles first runs to the tortoise's starting point; by the time he arrives, the tortoise has advanced to a new position, so Achilles runs to that position, and so on, producing an infinite sequence of stages. Show that the total duration of all the stages is finite, and find it.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $g_n$ be the gap between Achilles and the tortoise at the start of stage $n$, so $g_1 = d$ and stage $n$ lasts $t_n = g_n / v$. During that stage the tortoise advances $w t_n$, which is the new gap, so $g_{n+1} = (w/v) g_n$ and hence $t_n = \frac{d}{v} r^{n-1}$ with $r = w/v \in (0,1)$. The total duration is the geometric series $\sum_{n=1}^{\infty} \frac{d}{v} r^{n-1} = \frac{d}{v} \cdot \frac{1}{1 - w/v} = \frac{d}{v - w}$, which is finite. Infinitely many stages therefore occupy only finitely much time, and $\frac{d}{v-w}$ is exactly the catch-up time obtained by setting $vt = d + wt$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise (Zeno's paradox, the arrow).</span> Zeno argues that at any single instant a flying arrow occupies a space exactly equal to itself and so does not move at that instant, and that since time is made of instants, the arrow never moves. Let the position of the arrow be given by a differentiable function $f : [0,1] \to \mathbb{R}$, and let $t_0 \in [0,1]$ and $x_0 \in \mathbb{R}$. Show that for every $c \in \mathbb{R}$ there is such an $f$ with $f(t_0) = x_0$ and $f'(t_0) = c$, and show that $[0,1]$ is not a countable union of one-element sets.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For the first part, $f(t) = x_0 + c(t - t_0)$ works. So the state of the arrow at the instant $t_0$, namely the single number $f(t_0)$, is compatible with every velocity: the velocity $f'(t_0) = \lim_{h \to 0} \frac{f(t_0 + h) - f(t_0)}{h}$ is determined by the values of $f$ on a neighborhood of $t_0$, not by its value at $t_0$ alone, so "motionless at an instant" confuses $f$ taking one value at $t_0$ with $f$ being constant near $t_0$. For the second part, a countable union of one-element sets is countable, while $[0,1]$ is uncountable by Cantor's diagonal argument. Zeno's summation over all instants is therefore not a series at all; the correct way to aggregate the motion is the integral $f(1) - f(0) = \int_0^1 f'(t)\,dt$, which is nonzero for the $f$ above whenever $c \neq 0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $S = \left\{\frac{1}{n} : n \in \mathbb{N},\, n \geq 1\right\}$. Show that $\sup S = 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>For every $n \geq 1$ we have $\frac{1}{n} \leq 1$, so $1$ is an upper bound for $S$. Moreover $1 = \frac{1}{1} \in S$, so every upper bound $b$ of $S$ satisfies $b \geq 1$. Hence $1$ is the least upper bound, i.e. $\sup S = 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> A single-elimination tournament has 64 teams: every game eliminates its loser, and play continues until a single champion remains. Find the number of games played in the tournament.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Each game eliminates exactly one team, and every team except the champion is eliminated exactly once, so the games are in bijection with the eliminated teams. Since 63 teams are eliminated, exactly 63 games are played, whatever the bracket looks like.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Define $f : \mathbb{N} \times \mathbb{N} \to \mathbb{N}$ by $f(m, n) = 2^{n-1}(2m - 1)$. Show that $f$ is a bijection, and conclude that $\mathbb{N} \times \mathbb{N}$ is countably infinite.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Every positive integer $k$ can be written uniquely as $k = 2^a b$ with $a \geq 0$ and $b$ odd: existence by dividing out factors of 2 until the quotient is odd, and uniqueness because $2^a b = 2^{a'} b'$ with $a < a'$ would make the odd number $b = 2^{a'-a} b'$ even. Since $n \mapsto n - 1$ is a bijection from $\{1, 2, \ldots\}$ onto $\{0, 1, \ldots\}$ and $m \mapsto 2m - 1$ is a bijection from $\{1, 2, \ldots\}$ onto the odd positive integers, the pair $(m, n)$ with $f(m, n) = k$ is exactly $n = a + 1$ and $m = (b+1)/2$, which exists and is unique. So $f$ is a bijection, and $\mathbb{N} \times \mathbb{N}$ is countably infinite.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Show that $a_n = 5 - \dfrac{1}{n^2}$ converges to $5$ using the definition of a limit.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $\varepsilon > 0$. By the Archimedean property, there exists $N \in \mathbb{N}$ with $N > 1/\sqrt{\varepsilon}$. Then for all $n > N$, we have $\left|\left(5 - \frac{1}{n^2}\right) - 5\right| = \frac{1}{n^2} < \frac{1}{N^2} < \varepsilon$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $p$ be a real number. Show that $\sum_{k=1}^{\infty} \frac{1}{k^p}$ converges if and only if $p > 1$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>If $p \leq 0$ then $\frac{1}{k^p} \geq 1$ for all $k$, so the terms do not tend to $0$ and the series diverges. Assume $p > 0$, so all terms are positive and the partial sums increase: the series converges if and only if the partial sums are bounded. Group the terms into dyadic blocks, the $j$-th block consisting of the indices $2^j \leq k < 2^{j+1}$. That block has $2^j$ terms, each at most $2^{-jp}$ and at least $2^{-(j+1)p}$, so its sum lies between $\frac{1}{2^p}\left(2^{1-p}\right)^j$ and $\left(2^{1-p}\right)^j$. The partial sums are therefore bounded if and only if the geometric series $\sum_j \left(2^{1-p}\right)^j$ converges, which happens if and only if $2^{1-p} < 1$, i.e. $p > 1$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise (Thomae's function).</span> Define $f : \mathbb{R} \to \mathbb{R}$ by $f(x) = \frac{1}{q}$ when $x$ is rational and written as $x = \frac{p}{q}$ in lowest terms with $q \geq 1$, and $f(x) = 0$ when $x$ is irrational. Show that $f$ is continuous at every irrational number and discontinuous at every rational number.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>At a rational $x_0 = \frac{p}{q}$ we have $f(x_0) = \frac{1}{q} > 0$, while every interval around $x_0$ contains an irrational $x$, at which $f(x) = 0$. Taking $\varepsilon = \frac{1}{q}$, no $\delta > 0$ satisfies the definition of continuity, so $f$ is discontinuous at $x_0$. At an irrational $x_0$ we have $f(x_0) = 0$. Let $\varepsilon > 0$ and pick an integer $N > \frac{1}{\varepsilon}$. Only finitely many rationals with denominator at most $N$ lie in $(x_0 - 1, x_0 + 1)$, since for each $q \leq N$ there are at most $2q + 1$ multiples of $\frac{1}{q}$ in that interval. None of them equals $x_0$, so their minimum distance $\delta$ to $x_0$ is positive. If $|x - x_0| < \min(\delta, 1)$, then either $x$ is irrational and $f(x) = 0$, or $x = \frac{p}{q}$ in lowest terms with $q > N$, giving $f(x) = \frac{1}{q} < \frac{1}{N} < \varepsilon$. In both cases $|f(x) - f(x_0)| < \varepsilon$, so $f$ is continuous at $x_0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Define $f : \mathbb{R} \to \mathbb{R}$ by $f(x) = x$ when $x$ is rational and $f(x) = 0$ when $x$ is irrational. Show that $f$ is continuous at $0$ and at no other point.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>At $0$ we have $f(0) = 0$ and $|f(x) - f(0)| = |f(x)| \leq |x|$ for every $x$, so $\delta = \varepsilon$ works and $f$ is continuous there. Now let $x_0 \neq 0$. Since the rationals and the irrationals are both dense in $\mathbb{R}$, choose a sequence of irrationals $x_n \to x_0$ if $x_0$ is rational, and a sequence of rationals $x_n \to x_0$ if $x_0$ is irrational. In the first case $f(x_n) = 0 \to 0 \neq x_0 = f(x_0)$, and in the second case $f(x_n) = x_n \to x_0 \neq 0 = f(x_0)$. Either way $f(x_n)$ does not converge to $f(x_0)$, so $f$ is discontinuous at $x_0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Let $g(x) = x^2$ and let $f$ be the Dirichlet function, equal to $1$ at every rational number and $0$ at every irrational number. Find $g(f(x)) - f(x)$ for $x \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>The function $f$ takes only the values $0$ and $1$, and both satisfy $t^2 = t$. Hence $g(f(x)) = f(x)^2 = f(x)$ for every $x$, and $g(f(x)) - f(x) = 0$: the difference is the zero function, even though $f$ itself is nowhere continuous.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Define $f : \mathbb{R} \to \mathbb{R}$ by $f(x) = x \sin\left(\frac{1}{x}\right)$ for $x \neq 0$ and $f(0) = 0$. Show that $f$ is continuous at $0$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $\varepsilon > 0$ and take $\delta = \varepsilon$. For $0 < |x| < \delta$, the bound $\left|\sin\left(\frac{1}{x}\right)\right| \leq 1$ gives $|f(x) - f(0)| = \left|x \sin\left(\frac{1}{x}\right)\right| \leq |x| < \varepsilon$, and the inequality is trivial at $x = 0$. So $f$ is continuous at $0$, even though $\sin\left(\frac{1}{x}\right)$ has no limit there.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find a function $f : \mathbb{R} \to \mathbb{R}$ that is discontinuous at $\frac{1}{n}$ for every integer $n \geq 1$ and continuous at every other real number.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>Let $S = \left\{\frac{1}{n} : n \geq 1\right\}$ and define $f(x) = x$ for $x \in S$ and $f(x) = 0$ otherwise. At a point $\frac{1}{n} \in S$ we have $f\left(\frac{1}{n}\right) = \frac{1}{n} > 0$, while every interval around it contains points outside $S$, where $f$ vanishes, so $f$ is discontinuous there. At $0$ we have $f(0) = 0$ and $|f(x)| \leq |x|$ for every $x$, so $\delta = \varepsilon$ gives continuity. At any other point $x_0$, the set $S \cup \{0\}$ is closed and does not contain $x_0$, so some interval around $x_0$ misses it entirely and $f$ is identically $0$ there, hence continuous. Attaching the value $x$ rather than a constant is what saves continuity at $0$, the one accumulation point of $S$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Find the number of continuous functions $f : \mathbb{R} \to \mathbb{R}$ satisfying $f(x)^2 = x^2$ for all $x \in \mathbb{R}$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>There are exactly $4$, namely $x$, $-x$, $|x|$ and $-|x|$. The hypothesis forces $f(x) \in \{x, -x\}$ for each $x$, so $f(0) = 0$, and on $(0, \infty)$ the function $g(x) = f(x)/x$ is continuous with values in $\{1, -1\}$; since $(0, \infty)$ is connected and $g$ is continuous, $g$ is constant there, and likewise on $(-\infty, 0)$. The sign may thus be chosen independently on the two half-lines, giving $4$ candidates, and each of them is continuous at $0$ because $|f(x)| = |x| \to 0$.</p>
+    </details>
+
+    <div class="thm-block exercise">
+      <p><span class="thm-label">Exercise.</span> Define $f : \mathbb{R} \to \mathbb{R}$ by $f(x) = \frac{x}{2}$ when $x$ is rational and $f(x) = x$ when $x$ is irrational. Determine whether $f$ is differentiable at $0$.</p>
+    </div>
+
+    <details class="proof">
+      <summary class="proof-label">Solution.</summary>
+      <p>It is not. Since $f(0) = 0$, the difference quotient is $\frac{f(x) - f(0)}{x} = \frac{1}{2}$ for every rational $x \neq 0$ and $1$ for every irrational $x$. Both the rationals and the irrationals accumulate at $0$, so the quotient takes the values $\frac{1}{2}$ and $1$ arbitrarily close to $0$ and has no limit as $x \to 0$. The function is nevertheless continuous at $0$, since $|f(x)| \leq |x|$.</p>
+    </details>
+
+  </main>
+</body>
+</html>
